@@ -1,0 +1,175 @@
+/*  ==========
+    UTILITIES
+    ==========  */
+
+/***** Border-box *****/
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/***** Clearfix *****/
+
+.cf:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/*  ===============
+    CSS VARIABLES
+    ===============  */
+
+    /***** Colors *****/
+    /* Palette #21: https://www.canva.com/learn/website-color-schemes/ */
+
+    :root {
+        --main-bg-color: #6B7A8F; /* Blueberry */
+        --sec-color: #F7882F; /* Apricot */
+        --sec-color-dark10: #DE6F16; 
+        --ter-color: #F7C331; /* Citrus */
+        --qrt-color: #DCC7AA; /* Apple Core */
+
+        --primary-text-color: #FFFFFF; /* White */
+        --mid-text-color: #686868; /* Grey */
+        --dark-text-color: #333333; /* Dark Grey */
+    }
+
+    /***** Fonts *****/
+    :root {
+        --display-font: 'Audiowide', cursive;
+        /* Also consider: 'Barrio', 'Permanent Marker' */
+        --heading-font: 'BioRhyme';
+        --body-font: 'Exo 2';
+    }
+
+/*  ============================
+    BLOCKS__ELEMENTS--MODIFIERS
+      - Classes are organized using the BEM model:
+        http://getbem.com/
+    ============================  */
+
+    /***** page-background *****/
+    
+    .page-background {
+        background-color: #6B7A8F; /* fallback */
+        /* Created using https://trianglify.io/ */
+        background-image: url('img/trianglify.svg');
+        background-size: cover;
+        margin: 0;
+        height: 100vh;
+    }
+
+    /***** page-header *****/
+    
+    .page-header {
+        height: 90vh;
+        width: 100%;
+    }
+
+    .page-header__title-container {
+        position: relative;
+        max-width: 600px;
+        min-width: 320px;
+        margin: 0 auto;
+    }
+
+   .page-header__title {
+        color: var(--primary-text-color);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        z-index: 100;
+        text-align: center;
+        font-family: var(--display-font);
+        font-size: 12vmin;
+    }
+
+    @media (min-width: 600px) and (min-height: 600px) {
+        .page-header__title {
+            font-size: 72px;
+        }
+    } 
+
+    .page-header__speech-bubble {
+        width: 100%;
+        max-height: 50vh;
+        padding: 10px 10px 0 10px;
+    }
+
+    .page-header__btn-container {
+        width: 100vmin;
+        max-width: 600px;
+        min-width: 320px;
+        margin: 0 auto;
+    }
+
+    .page-header__tagline {
+        color: var(--primary-text-color);
+        text-align: center;
+        font-family: var(--heading-font);
+        font-size: 5vmin;
+        margin: 20px;
+    }
+
+
+    /***** page-footer *****/
+
+    .page-footer {
+        height: 10vh;
+        color: var(--primary-text-color);
+        text-align: center;
+        border-top: solid white;
+        padding-top: 5vh;
+        font-family: var(--body-font);
+    }
+    
+    /***** btn *****/
+    
+    .btn {
+        background: var(--sec-color);
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+        color: var(--primary-text-color);
+        font-size: 1rem;
+        font-weight: bold;
+        font-family: var(--body-font);
+        padding: .75rem 1rem;
+    }
+
+    .btn:hover,
+    .btn:focus {
+        background-color: var(--sec-color-dark10);
+    }
+
+    .btn--pagehead {
+        display: block;
+        margin: 0 10px 0 auto;
+        font-size: 5vmin;
+    }
+
+    @media (min-width: 600px) and (min-height: 600px) {
+        .btn--pagehead {
+            font-size: 30px;
+        }
+    } 
+
+    .btn--quoted:before {
+        content: '\201c';
+        vertical-align: top;
+    }
+
+    .btn--quoted:after {
+        content: '\201d';
+        vertical-align: top;
+    }
+
+    .btn__inlnblck {
+        display: inline-block;
+    }

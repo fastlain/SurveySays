@@ -7,15 +7,25 @@
     <title>Survey Says</title>
     <meta description='A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation.'>
     <link rel='stylesheet' src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel="stylesheet">
     <link rel='stylesheet' href="main.css">
 </head>
 
-<body>
-    <main role='main'>
-        <h1>Survey Says</h1>
-        <button type='button'>"Start Game"</button>
-        <h2>A voice-enabled Family Feud-style quiz game</h2>
-    </main>
+<body class='page-background'>
+    <header class='page-header' role='banner'>
+        <div class='page-header__title-container'>
+            <h1 class='page-header__title'>Survey<br>Says</h1>
+            <img class='page-header__speech-bubble' src="img/bubble.svg" alt='speech bubble'>
+        </div>
+        <div class='page-header__btn-container'>
+            <button class='btn btn--pagehead btn--quoted' type='button'><div class='btn__inlnblck'>Start<br>Game</div></button>
+        </div>
+        <h2 class='page-header__tagline'>A voice-enabled Family Feud-style quiz game</h2>
+    </header>
+
+    <footer class='page-footer' role='contentinfo'>
+        Footer placeholder
+    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="app.js"></script>
