@@ -142,6 +142,54 @@ html {
     .main {
         height: 75vh;
     }
+
+    /***** game-info *****/
+    .game-info {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        max-width: 900px;
+        margin: 0 auto;
+        color: var(--primary-text-color);
+        font-family: var(--heading-font);
+        padding: 0 20px;
+    }
+
+    .game-info__flex-item {
+        flex: 1 1 calc(100% / 3);
+    }
+
+    .game-info__heading {
+        text-align: center;
+    }
+
+    .game-info__round{
+
+    }
+
+    .game-info__guesses{
+
+    }
+
+    .game-info__tot-score{
+
+    }
+
+    /***** question *****/
+    .question {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .question__text {
+        color: var(--primary-text-color);
+        font-family: var(--body-font);
+        font-size: 1.25rem;
+        line-height: 1.6rem;
+        margin: 0;
+    }
+
     /***** page-footer *****/
 
     .page-footer {
@@ -174,7 +222,7 @@ html {
 
     .btn--front {
         display: block;
-        margin: 0 10px 0 auto;
+        margin: 0 20px 0 auto;
         font-size: 5vmin;
     }
 
