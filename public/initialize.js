@@ -6,38 +6,43 @@ const STORE = {
     totScore: 0,
 }
 
+const Model = {};
+const View = {};
+const Controller = {};
+
 // check and render total game score
-function updateTotScore() {
+View.updateTotScore = () => {
     $('#js-tot-score').text(STORE.totScore);
 }
 
 // check and render remaining round guesses
-function updateGuesses() {
+View.updateGuesses = () => {
     $('#js-guesses').text(STORE.guesses);
 }
 
 // check and render current game round
-function updateRound() {
+View.updateRound = () => {
     $('#js-round').text(STORE.round);
 }
 
-function renderGame() {
+View.renderGame = () => {
     $('.front-header').hide();
     $('.game-header').show();
     $('.main').show();
-    updateRound();
-    updateGuesses();
-    updateTotScore();
+    View.updateRound();
+    View.updateGuesses();
+    View.updateTotScore();
 }
 
-function handleStartBtn() {
+Controller.handleStartBtn = () => {
     $('#js-start-btn').click((evt) => {
-        renderGame();
+        View.renderGame();
     });
 }
 
 function initialize() {
-    handleStartBtn();
+    Controller.handleStartBtn();
+    // $('#js-start-btn').click() //temp
 }
 
 $(initialize);
