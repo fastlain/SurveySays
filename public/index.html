@@ -12,16 +12,28 @@
 </head>
 
 <body class='page-background'>
-    <header class='page-header' role='banner'>
-        <div class='page-header__title-container'>
-            <h1 class='page-header__title'>Survey<br>Says</h1>
-            <img class='page-header__speech-bubble' src="img/bubble.svg" alt='speech bubble'>
+    <header class='front-header' role='banner'>
+        <div class='front-header__title-container'>
+            <h1 class='front-header__title'>Survey<br>Says</h1>
+            <img class='front-header__speech-bubble' src="img/bubble.svg" alt='speech bubble'>
         </div>
-        <div class='page-header__btn-container'>
-            <button class='btn btn--pagehead btn--quoted' type='button'><div class='btn__inlnblck'>Start<br>Game</div></button>
+        <div class='front-header__btn-container'>
+            <button id='js-start-btn' class='btn btn--front btn--quoted' type='button'><div class='btn__inlnblck'>Start<br>Game</div></button>
         </div>
-        <h2 class='page-header__tagline'>A voice-enabled Family Feud-style quiz game</h2>
+        <h2 class='front-header__tagline'>A voice-enabled Family Feud-style quiz game</h2>
     </header>
+
+    <header class='game-header' role='banner' hidden>
+        <h1 class='game-header__title'>
+            Survey
+            <img class='game-header__speech-bubble' src="img/bubble--noshadow.svg" alt='speech bubble'>
+            Says
+        </h1>
+    </header>
+
+    <main class='main' hidden role='main'>
+       
+    </main>
 
     <footer class='page-footer' role='contentinfo'>
         Footer placeholder

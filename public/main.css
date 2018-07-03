@@ -63,21 +63,21 @@ html {
         height: 100vh;
     }
 
-    /***** page-header *****/
+    /***** front-header *****/
     
-    .page-header {
+    .front-header {
         height: 90vh;
         width: 100%;
     }
 
-    .page-header__title-container {
+    .front-header__title-container {
         position: relative;
         max-width: 600px;
         min-width: 320px;
         margin: 0 auto;
     }
 
-   .page-header__title {
+   .front-header__title {
         color: var(--primary-text-color);
         position: absolute;
         top: 50%;
@@ -91,25 +91,25 @@ html {
     }
 
     @media (min-width: 600px) and (min-height: 600px) {
-        .page-header__title {
+        .front-header__title {
             font-size: 72px;
         }
     } 
 
-    .page-header__speech-bubble {
+    .front-header__speech-bubble {
         width: 100%;
         max-height: 50vh;
         padding: 10px 10px 0 10px;
     }
 
-    .page-header__btn-container {
+    .front-header__btn-container {
         width: 100vmin;
         max-width: 600px;
         min-width: 320px;
         margin: 0 auto;
     }
 
-    .page-header__tagline {
+    .front-header__tagline {
         color: var(--primary-text-color);
         text-align: center;
         font-family: var(--heading-font);
@@ -117,7 +117,31 @@ html {
         margin: 20px;
     }
 
+    /***** game-header *****/
+    
+    .game-header {
+        height: 15vh;
+        border-bottom: solid white;
+        padding: 2vh;
+    }
 
+    .game-header__title {
+        color: var(--primary-text-color);
+        margin: 0;
+        text-align: center;
+        font-family: var(--display-font);
+        font-size: 5vmin;
+    }
+
+    .game-header__speech-bubble {
+        height: 11vh;
+        vertical-align: middle;
+    }
+
+    /***** main *****/
+    .main {
+        height: 75vh;
+    }
     /***** page-footer *****/
 
     .page-footer {
@@ -125,7 +149,7 @@ html {
         color: var(--primary-text-color);
         text-align: center;
         border-top: solid white;
-        padding-top: 5vh;
+        padding-top: 3vh;
         font-family: var(--body-font);
     }
     
@@ -148,14 +172,14 @@ html {
         background-color: var(--sec-color-dark10);
     }
 
-    .btn--pagehead {
+    .btn--front {
         display: block;
         margin: 0 10px 0 auto;
         font-size: 5vmin;
     }
 
     @media (min-width: 600px) and (min-height: 600px) {
-        .btn--pagehead {
+        .btn--front {
             font-size: 30px;
         }
     } 
