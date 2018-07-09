@@ -70,6 +70,10 @@ html {
     width: 100%;
 }
 
+.front-header--hidden {
+    display: none;
+}
+
 .front-header__title-container {
     position: relative;
     max-width: 600px;
@@ -120,8 +124,15 @@ html {
 /***** game-header *****/
 
 .game-header {
-    height: 15vh;
+    height: 10vh;
     padding: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game-header--hidden {
+    display: none;
 }
 
 .game-header__title {
@@ -133,23 +144,25 @@ html {
 }
 
 .game-header__speech-bubble {
-    height: 11vh;
+    height: 8vmin;
+    min-height: 30px;
     vertical-align: middle;
 }
 
-@media (max-width: 400px), (max-height: 400px) {
+ @media (max-width: 400px), (max-height: 400px) {
     .game-header__title {
         font-size: 20px;
     }
     
-    .game-header__speech-bubble {
-        height: 44px;
-    }
-}
+} 
 
 /***** main *****/
 .main {
-    height: 75vh;
+    height: 80vh;
+}
+
+.main--hidden {
+    display: none;
 }
 
 /***** game-info *****/

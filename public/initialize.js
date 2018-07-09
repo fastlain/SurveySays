@@ -25,10 +25,11 @@ View.updateRound = () => {
     $('#js-round').text(STORE.round);
 }
 
+// set up game screen by showing hiding elements and setting game variables
 View.renderGame = () => {
-    $('.front-header').hide();
-    $('.game-header').show();
-    $('.main').show();
+    $('.front-header').toggleClass('front-header--hidden');
+    $('.game-header').toggleClass('game-header--hidden');
+    $('.main').toggleClass('main--hidden');
     View.updateRound();
     View.updateGuesses();
     View.updateTotScore();
