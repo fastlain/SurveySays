@@ -190,26 +190,22 @@ body {
 }
 
 .game-info__flex-item {
-    flex: 1 1 calc(100% / 3);
-    font-size: 2vmin;
-}
-
-@media (max-width: 600px), (max-height: 600px) {
-    .game-info__flex-item {
-        font-size: 12px;
-    }
+    flex: 1 1 calc(50%);
 }
 
 .game-info__heading {
     text-align: center;
-    margin: 0.5em;
+    margin: 0 0 5px;
+    font-size: 2.5vmin;
+}
+
+@media (max-width: 640px), (max-height: 640px) {
+    .game-info__heading {
+        font-size: 16px;
+    }
 }
 
 .game-info__round{
-
-}
-
-.game-info__guesses{
 
 }
 
