@@ -18,6 +18,19 @@ html {
     clear: both;
 }
 
+/*  ===============
+    BODY DEFAULTS
+    ===============  */
+
+body {
+    font-size: 2.5vmin;
+}
+
+@media (max-width: 640px), (max-height: 640px) {
+    body {
+        font-size: 16px;
+    }
+}
 
 /*  ===============
     CSS VARIABLES
@@ -169,7 +182,6 @@ html {
 .game-info {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
     max-width: 900px;
     margin: 0 auto;
     color: var(--primary-text-color);
@@ -207,9 +219,10 @@ html {
 
 /***** question *****/
 .question {
-    max-width: 400px;
+    width: 90%;
+    max-width: 600px;
     margin: 0 auto 20px;
-    padding: 20px;
+    padding: 10px;
     border: solid white 2px;
     border-radius: 10px;
 }
@@ -217,18 +230,8 @@ html {
 .question__text {
     color: var(--primary-text-color);
     font-family: var(--body-font);
-    line-height: 3.5vmin;
     margin: 0;
-    font-size: 3vmin;
 }
-
-@media (max-width: 600px), (max-height: 600px) {
-    .question__text {
-        font-size: 18px;
-        line-height: 21px;
-    }
-}
-
 
 /***** answers *****/
 .answers {    
@@ -237,22 +240,20 @@ html {
     grid-template-rows: auto;
     color: var(--primary-text-color);
     margin: 0 auto;
+    width: 90%;
     max-width: 300px;
     border: solid white 2px;
     border-radius: 10px;
     padding: 20px;
     grid-gap: 10px;
+    text-align: center;
 }
 
 .answers__text {
     grid-column: 1 / 2;
-    text-align: center;
-    font-size: 1.5rem;
+    background: var(--qrt-color);
     font-family: var(--body-font);
     padding: 5px;
-    background: var(--qrt-color);
-    height: 100%;
-    width: 100%;
     border-radius: 5px;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
 }
@@ -263,13 +264,9 @@ html {
 
 .answers__points {
     grid-column: 2 / 3;
-    text-align: center;
-    font-size: 1.5rem;
-    font-family: var(--body-font);
     background: var(--ter-color);
+    font-family: var(--body-font);
     padding: 5px;
-    height: 100%;
-    width: 100%;
     border-radius: 5px;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
 
@@ -277,13 +274,9 @@ html {
 
 .answers__sum {
     grid-column: 2 / 3;
-    text-align: center;
-    font-size: 1.5rem;
-    font-family: var(--body-font);
     background: var(--main-bg-color);
+    font-family: var(--body-font);
     padding: 5px;
-    height: 100%;
-    width: 100%;
     border-radius: 5px;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
 }
