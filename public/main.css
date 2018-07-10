@@ -286,6 +286,10 @@ html {
     padding: 0 10px;
 }
 
+.guess-form--hidden {
+    display: none;
+}
+
 .guess-form__flex-wrapper {
     display: flex;
     justify-content: space-between;
@@ -411,6 +415,15 @@ html {
 .btn--quoted:after {
     content: '\201d';
     vertical-align: top;
+}
+
+.btn--centered {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn--hidden {
+    display: none;
 }
 
 .btn__inlnblck {

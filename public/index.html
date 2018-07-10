@@ -57,9 +57,9 @@
                     <div class='guesses__icon guesses__icon--x'>X</div>
                 </div>
         </section>
-        
+
         <section class='question' role='region'>
-            <p class='question__text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            <p id='question-text' class='question__text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
                 magna aliqua?</p>
         </section>
 
@@ -77,7 +77,7 @@
             <div class='answers__sum'>100</div>
         </section>
 
-        <form class='guess-form'>
+        <form class='guess-form' id='guess-form'>
             <label class='lbl' for='guess-input'>Enter a guess:</label>
             <div class='guess-form__flex-wrapper'>
                 <button id='showme-btn' class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
@@ -85,6 +85,7 @@
             </div>
         </form>
 
+        <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered' type='button'> Next </button>
 
     </main>
 
