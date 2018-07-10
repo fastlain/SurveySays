@@ -180,6 +180,12 @@ html {
     display: none;
 }
 
+/***** game-container *****/
+
+.game-container--hidden {
+    display: none;
+}
+
 /***** game-info *****/
 
 .game-info {
@@ -240,7 +246,7 @@ html {
     width: 90%;
     max-width: 300px;
     /* border: solid white 2px; */
-    border-radius: 10px;
+    /* border-radius: 10px; */
     padding: 10px 0;
     grid-gap: 10px;
     text-align: center;
@@ -365,6 +371,52 @@ html {
 
 .guesses__icon--x {
     background-color: var(--sec-color-dark10);
+}
+
+/***** results-container *****/
+
+.results-container--hidden {
+    display: none;
+}
+
+/***** results *****/
+
+.results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    margin: 35px auto;
+    /* border: solid white 2px; */
+    /* border-radius: 10px; */
+    grid-gap: 10px;
+}
+
+.results__heading {
+    grid-column: 1 / 2;
+    padding: 5px;
+    border-radius: 5px;
+    /* background: var(--qrt-color); */
+    justify-self: flex-end;
+    font-size: 1.25rem;
+    font-family: var(--heading-font);
+}
+
+
+.results__score-box {
+    grid-column: 2 / 3;
+    background: var(--ter-color);
+    padding: 10px;
+    border-radius: 5px;
+    align-self: center;
+    justify-self: flex-start;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+    max-width: 90%;
+}
+
+.results__score-box--total {
+    background: var(--main-bg-color);
 }
 
 /***** page-footer *****/

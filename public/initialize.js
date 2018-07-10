@@ -122,9 +122,10 @@ View.updateAnswers = () => {
 // set up game screen by showing hiding elements and setting game variables
 View.renderGame = () => {
     View.renderNewRound();
-    $('.front-header').toggleClass('front-header--hidden');
-    $('.game-header').toggleClass('game-header--hidden');
-    $('.main').toggleClass('main--hidden');
+    $('.front-header').addClass('front-header--hidden');
+    $('.game-header').removeClass('game-header--hidden');
+    $('.main').removeClass('main--hidden');
+    $('.game-container').removeClass('game-container--hidden');
 }
 
 // update DOM elements from STORE at beginning of new round
@@ -137,7 +138,8 @@ View.renderNewRound = () => {
 }
 
 View.renderResults = () => {
-    
+    $('.game-container').addClass('game-container--hidden');
+    $('.results-container').removeClass('results-container--hidden');
 } 
 
 // show/hide "Show Me..." and "Next" buttons
@@ -175,7 +177,8 @@ function initialize() {
     Controller.handleStartBtn();
     Controller.handleShowMeBtn();
     Controller.handleNextBtn();
-    // $('#js-start-btn').click() //temp to skip front screen
+    // $('#start-btn').click() //temp to skip front screen
+    // View.renderResults(); // temp to skip to results screen
 }
 
 $(initialize);
