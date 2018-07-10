@@ -4,19 +4,19 @@ const STORE = {
     round: 1,
     roundScore: 0,
     guesses: 3,
-    question: 'This is a placeholder question for the Survey Says game',
+    QA: {},
     roundHistory: [
         {
             score:0,
-            possible:95
+            possible:0
         },
         {
             score:0,
-            possible:100
+            possible:0
         },
         {
             score:0,
-            possible:92
+            possible:0
         }
     ]
 }
@@ -25,10 +25,43 @@ const Model = {};
 const View = {};
 const Controller = {};
 
+// get new question and answers/points from server
+Model.getNewQA = () => {
+    // temp: currently just provides dummy data
+    STORE.QA = {
+        question: 'Name a part time job that kids do to make money',
+        answers: [
+            {
+                ans: 'Mow Lawns/Yard Work',
+                pts: 20
+            },
+            {
+                ans: 'Newspaper Route',
+                pts: 19
+            },
+            {
+                ans: 'Food Services',
+                pts: 18
+            },
+            {
+                ans: 'Babysitting',
+                pts: 17
+            },
+            {
+                ans: 'Lemonade Stand',
+                pts: 9
+            }
+        ]
+    }
+}
+
+// update game data at the end of each round
 Model.endRound = () => {
+    STORE.round += 1;
     Model.storeRoundScore();
+    Model.storeRoundPossible();
     Model.resetGuesses();
-    Model.incRound();
+    Model.getNewQA();
 } 
 
 // decrease remaining guesses in current round
@@ -41,15 +74,16 @@ Model.resetGuesses = () => {
     STORE.guesses = 3;
 }
 
-// increment the current round
-Model.incRound = () => {
-    STORE.round += 1;
-}
-
 // store the current round score in roundHistory and zero roundScore
 Model.storeRoundScore = () => {
     STORE.roundHistory[STORE.round - 1].score = STORE.roundScore;
     STORE.roundScore = 0;
+}
+
+// calculate and store the total possible round score in roundHistory
+Model.storeRoundPossible = () => {
+    STORE.roundHistory[STORE.round - 1].possible = 
+        STORE.QA.answers.reduce((accum, elem) => (accum + elem.pts),0);
 }
 
 // get the total score for all combined rounds
@@ -78,7 +112,7 @@ View.updateRound = () => {
 }
 
 View.updateQuestion = () => {
-    $('#question-text').text(STORE.question);
+    $('#question-text').text(STORE.QA.question);
 }
 
 View.updateAnswers = () => {
@@ -132,6 +166,7 @@ Controller.handleShowMeBtn = () => {
 
 Controller.handleStartBtn = () => {
     $('#start-btn').click((evt) => {
+        Model.getNewQA();
         View.renderGame();        
     });
 }
