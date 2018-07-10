@@ -19,7 +19,7 @@
             <img class='front-header__speech-bubble' src="img/bubble.svg" alt='speech bubble'>
         </div>
         <div class='front-header__btn-container'>
-            <button id='js-start-btn' class='btn btn--front btn--quoted' type='button'>
+            <button id='start-btn' class='btn btn--front btn--quoted' type='button'>
                 <div class='btn__inlnblck'>Start
                     <br>Game</div>
             </button>
@@ -39,12 +39,12 @@
         <header class='game-info'>
             <div class='game-info__flex-item game-info__round'>
                 <h2 class='game-info__heading'>Round:
-                    <span id='js-round'></span> / 3</h2>
+                    <span id='round'></span> / 3</h2>
             </div>
 
             <div class='game-info__flex-item game-info__tot-score'>
                 <h2 class='game-info__heading'>Score:
-                    <span id='js-tot-score'></span>
+                    <span id='tot-score'></span>
                 </h2>
             </div>
         </header>
@@ -71,7 +71,7 @@
         <form class='guess-form'>
             <label class='lbl' for='guess-input'>Enter a guess:</label>
             <div class='guess-form__flex-wrapper'>
-                <button class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
+                <button id='showme-btn' class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
                 <input id='guess-input' class='inpt guess-form__flex-inpt' type="text">
             </div>
         </form>
