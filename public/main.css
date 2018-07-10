@@ -51,14 +51,14 @@ html {
     BODY DEFAULTS
     ===============  */
 
-body {
+html {
     font-size: 2.5vmin;
     font-family: var(--body-font);
     color: var(--primary-text-color);
 }
 
 @media (max-width: 640px), (max-height: 640px) {
-    body {
+    html {
         font-size: 16px;
     }
 }
@@ -241,7 +241,7 @@ body {
     max-width: 300px;
     /* border: solid white 2px; */
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 0;
     grid-gap: 10px;
     text-align: center;
 }
@@ -282,7 +282,7 @@ body {
     width: 90%;
     max-width: 500px;
     /* border: solid white 2px; */
-    border-radius: 10px;
+    /* border-radius: 10px; */
     padding: 0 10px;
 }
 
@@ -318,6 +318,49 @@ body {
     font-size: inherit;
     padding: 0.5em 0.75em;
     color: var(--dark-text-color);
+}
+
+/***** guesses *****/
+
+.guesses {
+    margin: 0 auto 10px;
+    width: 90%;
+    max-width: 500px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.guesses__header {
+    margin: 0 0 5px;
+    font-size: 1rem;
+    font-family: var(--heading-font);
+}
+
+.guesses__flex-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.guesses__icon {
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    margin: 0 5px;
+    line-height: 3rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: var(--display-font);
+}
+
+.guesses__icon--checked {
+    background-color: var(--qrt-color);
+}
+
+.guesses__icon--x {
+    background-color: var(--sec-color-dark10);
 }
 
 /***** page-footer *****/
