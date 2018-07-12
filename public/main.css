@@ -191,7 +191,7 @@ html {
 .game-info {
     display: flex;
     flex-flow: row nowrap;
-    max-width: 900px;
+    max-width: 600px;
     margin: 0 auto;
     font-family: var(--heading-font);
     padding: 0 20px;
@@ -328,7 +328,7 @@ html {
     grid-template-rows: auto;
     margin: 0 auto;
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
     /* border: solid white 2px; */
     /* border-radius: 10px; */
     padding: 0;
@@ -341,13 +341,13 @@ html {
     background: var(--qrt-color);
     padding: 5px;
     border-radius: 5px;
+    font-weight: bold;
     /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
 }
 
 .answers__text--guessed {
     text-align: left;
     background: var(--sec-color);
-    font-weight: bold;
 }
 
 .answers__points {
@@ -374,6 +374,7 @@ html {
     font-style: italic;
     width: 90%;
     max-width: 600px;
+    margin: 10px auto;
 }
 
 /***** results-container *****/
