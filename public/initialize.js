@@ -69,12 +69,12 @@ Model.getNewQA = () => {
 
 // update game data at the end of each round
 Model.endRound = () => {
-    STORE.round += 1;
     Model.storeRoundScore();
     Model.storeRoundPossible();
     Model.resetGuesses();
     Model.resetGuessHistory();
     Model.getNewQA();
+    STORE.round += 1;
 } 
 
 // decrease remaining guesses in current round
@@ -260,9 +260,22 @@ View.renderNewRound = () => {
     View.resetAnswerBoard();
 }
 
+// show final results screen with game data for each round
 View.renderResults = () => {
     $('.game-container').addClass('game-container--hidden');
     $('.results-container').removeClass('results-container--hidden');
+    
+    // get and show data for each round
+    for (let i = 0; i < 3; i += 1) {
+        $(`.results__score-box:nth-child(${2*(i+1)})`)
+            .text(`${STORE.roundHistory[i].score} / ${STORE.roundHistory[i].possible}`);
+    }
+    
+
+    // get and show total score data
+    const totScore = Model.getTotScore();
+    const totPossible = Model.getTotPossible();
+    $('#total-score').text(`${totScore} / ${totPossible} (${Math.round(totScore/totPossible*100)}%)`);
 } 
 
 // show/hide "Show Me..." and "Next" buttons
