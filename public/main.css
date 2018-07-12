@@ -213,76 +213,6 @@ html {
     }
 }
 
-.game-info__round{
-
-}
-
-.game-info__tot-score{
-
-}
-
-/***** question *****/
-
-.question {
-    width: 90%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 10px;
-    /* border: solid white 2px; */
-    border-radius: 10px;
-}
-
-.question__text {
-    margin: 0;
-}
-
-/***** answers *****/
-
-.answers {    
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: auto;
-    margin: 0 auto;
-    width: 90%;
-    max-width: 300px;
-    /* border: solid white 2px; */
-    /* border-radius: 10px; */
-    padding: 10px 0;
-    grid-gap: 10px;
-    text-align: center;
-}
-
-.answers__text {
-    grid-column: 1 / 2;
-    background: var(--qrt-color);
-    padding: 5px;
-    border-radius: 5px;
-    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
-}
-
-.answers__text--guessed {
-    text-align: left;
-    background: var(--sec-color);
-    font-weight: bold;
-}
-
-.answers__points {
-    grid-column: 2 / 3;
-    background: var(--ter-color);
-    padding: 5px;
-    border-radius: 5px;
-    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
-
-}
-
-.answers__sum {
-    grid-column: 2 / 3;
-    background: var(--main-bg-color);
-    padding: 5px;
-    border-radius: 5px;
-    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
-}
-
 /***** guess-form *****/
 
 .guess-form {
@@ -338,15 +268,15 @@ html {
     margin: 0 auto;
     width: 90%;
     max-width: 500px;
-    padding: 0 10px;
+    padding: 0 10px 10px;
     text-align: center;
 }
 
-.guesses__header {
+/* .guesses__header {
     margin: 0 0 5px;
     font-size: 1rem;
     font-family: var(--heading-font);
-}
+} */
 
 .guesses__flex-wrapper {
     display: flex;
@@ -373,6 +303,77 @@ html {
 
 .guesses__icon--x {
     background-color: var(--sec-color-dark10);
+}
+
+/***** question *****/
+
+.question {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 5px;
+    /* border: solid white 2px; */
+    /* border-radius: 10px; */
+}
+
+.question__text {
+    margin: 0;
+}
+
+/***** answers *****/
+
+.answers {    
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: auto;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 500px;
+    /* border: solid white 2px; */
+    /* border-radius: 10px; */
+    padding: 0;
+    grid-gap: 10px;
+    text-align: center;
+}
+
+.answers__text {
+    grid-column: 1 / 2;
+    background: var(--qrt-color);
+    padding: 5px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
+}
+
+.answers__text--guessed {
+    text-align: left;
+    background: var(--sec-color);
+    font-weight: bold;
+}
+
+.answers__points {
+    grid-column: 2 / 3;
+    background: var(--ter-color);
+    padding: 5px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
+
+}
+
+.answers__sum {
+    grid-column: 2 / 3;
+    background: var(--main-bg-color);
+    padding: 5px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
+}
+
+/***** message *****/
+
+.message {
+    text-align: center;
+    font-style: italic;
+    width: 90%;
+    max-width: 600px;
 }
 
 /***** results-container *****/

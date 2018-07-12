@@ -37,29 +37,29 @@
     <main class='main main--hidden' role='main'>
         <div class='game-container'>
             <header class='game-info'>
-                <div class='game-info__flex-item game-info__round'>
+                <div class='game-info__flex-item'>
                     <h2 class='game-info__heading'>Round:
                         <span id='round'>1</span> / 3</h2>
                 </div>
 
-                <div class='game-info__flex-item game-info__tot-score'>
+                <div class='game-info__flex-item'>
                     <h2 class='game-info__heading'>Score:
                         <span id='tot-score'>0</span>
                     </h2>
                 </div>
             </header>
 
+            <section class='question' role='region'>
+                <p id='question-text' class='question__text'></p>
+            </section>
+
             <section class='guesses' role='region'>
-                    <h3 class='guesses__header'>Guesses:</h3>
+                    <!-- <h3 class='guesses__header'>Guesses:</h3> -->
                     <div class='guesses__flex-wrapper'>
                         <div class='guesses__icon guesses__icon--checked'>&#10004</div>
                         <div class='guesses__icon guesses__icon--checked'>&#10004</div>
                         <div class='guesses__icon guesses__icon--checked'>&#10004</div>
                     </div>
-            </section>
-
-            <section class='question' role='region'>
-                <p id='question-text' class='question__text'></p>
             </section>
 
             <section class='answers' role='region'>
@@ -85,6 +85,9 @@
             </form>
 
             <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered' type='button'> Next </button>
+
+            <p class='message' role='region'></p>
+
         </div>
 
         <div class='results-container results-container--hidden'>

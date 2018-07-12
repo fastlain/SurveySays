@@ -29,41 +29,117 @@ const Controller = {};
 // get new question and answers/points from server
 Model.getNewQA = () => {
     // temp: currently just provides dummy data
-    STORE.QA = {
-        question: 'Name a part time job that kids do to make money',
-        answers: [
-            {
-                display: 'Mow Lawns/Yard Work',
-                matches: ['mow', 'lawn', 'grass', 'lawncare', 'yard', 'yardwork'],
-                pts: 20,
-                guessed: false
-            },
-            {
-                display: 'Newspaper Route',
-                matches: ['newspaper', 'paper', 'route'],
-                pts: 19,
-                guessed: false
-            },
-            {
-                display: 'Food Services',
-                matches: ['restaurant', 'burgers', 'waiter', 'waitress', 'busboy', 'food'],
-                pts: 18,
-                guessed: false
-            },
-            {
-                display: 'Babysitting',
-                matches: ['babysit', 'childcare'],
-                pts: 17,
-                guessed: false
-            },
-            {
-                display: 'Lemonade Stand',
-                matches: ['lemonade'],
-                pts: 9,
-                guessed: false
-            }
-        ],
-        remainingAns: 5 
+    if (STORE.round === 1) {
+        STORE.QA = {
+            question: 'Name a part time job that kids do to make money',
+            answers: [
+                {
+                    display: 'Mow Lawns/Yard Work',
+                    matches: ['mow', 'lawn', 'grass', 'lawncare', 'yard', 'yardwork'],
+                    pts: 20,
+                    guessed: false
+                },
+                {
+                    display: 'Newspaper Route',
+                    matches: ['newspaper', 'paper', 'route'],
+                    pts: 19,
+                    guessed: false
+                },
+                {
+                    display: 'Food Services',
+                    matches: ['restaurant', 'burgers', 'waiter', 'waitress', 'busboy', 'food'],
+                    pts: 18,
+                    guessed: false
+                },
+                {
+                    display: 'Babysitting',
+                    matches: ['babysit', 'childcare'],
+                    pts: 17,
+                    guessed: false
+                },
+                {
+                    display: 'Lemonade Stand',
+                    matches: ['lemonade'],
+                    pts: 9,
+                    guessed: false
+                }
+            ],
+            remainingAns: 5 
+        }
+    } else if (STORE.round === 2) {
+        STORE.QA = {
+            question: 'Name something with fangs',
+            answers: [
+                {
+                    display: 'Vampire/Dracula',
+                    matches: ['vampire', 'dracula'],
+                    pts: 39,
+                    guessed: false
+                },
+                {
+                    display: 'Snakes',
+                    matches: ['snake', 'cobra', 'viper', 'rattlesnake', 'anaconda', 'python'],
+                    pts: 22,
+                    guessed: false
+                },
+                {
+                    display: 'Bats',
+                    matches: ['bat'],
+                    pts: 11,
+                    guessed: false
+                },
+                {
+                    display: 'Wolves',
+                    matches: ['wolf', 'wolves'],
+                    pts: 9,
+                    guessed: false
+                },
+                {
+                    display: 'Tiger',
+                    matches: ['tiger'],
+                    pts: 5,
+                    guessed: false
+                }
+            ],
+            remainingAns: 5 
+        }
+    } else if (STORE.round === 3) {
+        STORE.QA = {
+            question: 'Name something expensive you could order in a restaurant',
+            answers: [
+                {
+                    display: 'Lobster',
+                    matches: ['lobster'],
+                    pts: 32,
+                    guessed: false
+                },
+                {
+                    display: 'Wine',
+                    matches: ['wine'],
+                    pts: 23,
+                    guessed: false
+                },
+                {
+                    display: 'Steak',
+                    matches: ['steak', 'filet'],
+                    pts: 19,
+                    guessed: false
+                },
+                {
+                    display: 'Caviar',
+                    matches: ['caviar'],
+                    pts: 13,
+                    guessed: false
+                },
+                {
+                    display: 'Foie Gras',
+                    matches: ['foie gras', 'pate', 'duck liver', 'goose liver'],
+                    pts: 3,
+                    guessed: false
+                }
+            ],
+            remainingAns: 5 
+        }
     }
 }
 
@@ -158,9 +234,14 @@ Model.resetGuessHistory = () => {
 
 // evaluate whether user guess is correct and process result
 Model.processGuess = (guess) => {
+    // clear prior messages
+    View.message('');
+    
     console.log(`User guessed: ${guess}`);
+    
     Controller.pauseListening();
     guess = guess.toLowerCase();
+
     // if user submits empty string, display error message
     if (guess === '') {
         View.message('Please enter an answer');
@@ -293,7 +374,7 @@ View.resetAnswerBoard = () => {
 
 // todo: create a user message on screen
 View.message = (message) => {
-    console.log(message);
+    $('.message').text(message);
 } 
 
 // set up game screen by showing and hiding elements
@@ -302,6 +383,7 @@ View.renderGameScreen = () => {
     $('.game-header').removeClass('game-header--hidden');
     $('.main').removeClass('main--hidden');
     $('.game-container').removeClass('game-container--hidden');
+    View.updateQuestion();
 }
 
 // update DOM elements from STORE at beginning of new round
@@ -311,6 +393,7 @@ View.renderNewRound = () => {
     View.resetGuesses();
     View.updateQuestion();
     View.resetAnswerBoard();
+    View.message('');
 }
 
 // generate final results screen with game data for each round
