@@ -67,15 +67,53 @@ Model.getNewQA = () => {
     }
 }
 
+// update game data at start of a new game
+Model.startNextGame = () => {
+    Model.resetRounds();
+    Model.resetRoundScore();
+    Model.resetGuesses();
+    Model.resetGuessHistory();
+    Model.resetRoundHistory();
+    Model.getNewQA();
+}
+
 // update game data at the end of each round
 Model.endRound = () => {
     Model.storeRoundScore();
+    Model.resetRoundScore();
     Model.storeRoundPossible();
     Model.resetGuesses();
     Model.resetGuessHistory();
+    Model.incRound();
     Model.getNewQA();
-    STORE.round += 1;
 } 
+
+Model.resetRoundHistory = () => {
+    STORE.roundHistory = [
+        {
+            score:0,
+            possible:0
+        },
+        {
+            score:0,
+            possible:0
+        },
+        {
+            score:0,
+            possible:0
+        }
+    ]
+}
+
+// reset round number to 1
+Model.resetRounds = () => {
+    STORE.round = 1;
+}
+
+// increment round number
+Model.incRound = () => {
+    STORE.round += 1;
+}
 
 // decrease remaining guesses in current round
 Model.decGuesses = () => {
@@ -87,10 +125,14 @@ Model.resetGuesses = () => {
     STORE.guesses = 3;
 }
 
-// store the current round score in roundHistory and zero roundScore
+// reset score of current round
+Model.resetRoundScore = () => {
+    STORE.roundScore = 0;
+}
+
+// store the current round score in roundHistory
 Model.storeRoundScore = () => {
     STORE.roundHistory[STORE.round - 1].score = STORE.roundScore;
-    STORE.roundScore = 0;
 }
 
 // calculate and store the total possible round score in roundHistory
@@ -109,6 +151,7 @@ Model.getTotPossible = () => {
     return STORE.roundHistory.reduce((accum, elem) => (accum + elem.possible), 0);
 }
 
+// reset user's guess history
 Model.resetGuessHistory = () => {
     STORE.guessHistory = [];
 }
@@ -260,11 +303,8 @@ View.renderNewRound = () => {
     View.resetAnswerBoard();
 }
 
-// show final results screen with game data for each round
-View.renderResults = () => {
-    $('.game-container').addClass('game-container--hidden');
-    $('.results-container').removeClass('results-container--hidden');
-    
+// generate final results screen with game data for each round
+View.generateResults = () => {
     // get and show data for each round
     for (let i = 0; i < 3; i += 1) {
         $(`.results__score-box:nth-child(${2*(i+1)})`)
@@ -284,14 +324,30 @@ View.toggleEndRound = () => {
     $('#next-btn').toggleClass('btn--hidden');
 }
 
+// show/hide Results screen
+View.toggleResultsScreen = () => {
+    $('.game-container').toggleClass('game-container--hidden');
+    $('.results-container').toggleClass('results-container--hidden');
+}
+
+Controller.handleNewGameBtn = () => {
+    $('#new-game-btn').click(() => {
+        Model.startNextGame();
+        View.toggleResultsScreen();
+        View.renderNewRound();
+        View.toggleEndRound();
+    });
+}
+
 Controller.handleNextBtn = () => {
-    $('#next-btn').click((evt) => {
+    $('#next-btn').click(() => {
         Model.endRound();
         if (STORE.round <= 3) {
             View.toggleEndRound();
             View.renderNewRound();
         } else {
-            View.renderResults();
+            View.generateResults();
+            View.toggleResultsScreen();
         }
     });
 }
@@ -319,8 +375,7 @@ function initialize() {
     Controller.handleStartBtn();
     Controller.handleShowMeBtn();
     Controller.handleNextBtn();
-    // $('#start-btn').click() //temp to skip front screen
-    // View.renderResults(); // temp to skip to results screen
+    Controller.handleNewGameBtn();
 }
 
 $(initialize);
