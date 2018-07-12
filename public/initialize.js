@@ -159,10 +159,12 @@ Model.resetGuessHistory = () => {
 // evaluate whether user guess is correct and process result
 Model.processGuess = (guess) => {
     console.log(`User guessed: ${guess}`);
-
+    Controller.pauseListening();
+    guess = guess.toLowerCase();
     // if user submits empty string, display error message
     if (guess === '') {
         View.message('Please enter an answer');
+        Controller.listenShowMe();
         return;
     }
     
@@ -177,6 +179,7 @@ Model.processGuess = (guess) => {
                 // check if answer has already been guessed
                 if (ansArr[i].guessed === true) {
                     View.message('That answer was already guessed, try again');
+                    Controller.listenShowMe();
                 } else {                   
                     // set answer guessed state to true
                     ansArr[i].guessed = true;
@@ -191,7 +194,10 @@ Model.processGuess = (guess) => {
                     // decrement remainingAns and check if no more to guess
                     STORE.QA.remainingAns -= 1;
                     if (STORE.QA.remainingAns === 0) {
-                        View.toggleEndRound()
+                        View.toggleEndRound();
+                        Controller.listenNext();
+                    } else {
+                        Controller.listenShowMe();
                     }
                 }
                 return;
@@ -203,6 +209,7 @@ Model.processGuess = (guess) => {
     for (let k = 0; k < STORE.guessHistory.length; k += 1) {
         if (guess.includes(STORE.guessHistory[k])) {
             View.message('You already tried that, try again');
+            Controller.listenShowMe();
             return;
         }
     }
@@ -217,6 +224,9 @@ Model.processGuess = (guess) => {
     Model.decGuesses();
     if (STORE.guesses === 0) {
         View.toggleEndRound()
+        Controller.listenNext();
+    } else {
+        Controller.listenShowMe();
     }
 }
 
@@ -336,6 +346,7 @@ Controller.handleNewGameBtn = () => {
         View.toggleResultsScreen();
         View.renderNewRound();
         View.toggleEndRound();
+        Controller.listenShowMe();
     });
 }
 
@@ -345,9 +356,11 @@ Controller.handleNextBtn = () => {
         if (STORE.round <= 3) {
             View.toggleEndRound();
             View.renderNewRound();
+            Controller.listenShowMe();
         } else {
             View.generateResults();
             View.toggleResultsScreen();
+            Controller.listenNewGame();
         }
     });
 }
@@ -356,7 +369,7 @@ Controller.handleShowMeBtn = () => {
     $('#showme-btn').click((evt) => {
         evt.preventDefault();
         // get guess from input and convert to lower case
-        let guess = $('#guess-input').val().toLowerCase();
+        let guess = $('#guess-input').val();
         // clear guess input
         $('#guess-input').val('');
         // check guess against possible answer matches
@@ -367,11 +380,13 @@ Controller.handleShowMeBtn = () => {
 Controller.handleStartBtn = () => {
     $('#start-btn').click((evt) => {
         Model.getNewQA();
-        View.renderGameScreen();        
+        View.renderGameScreen();
+        Controller.listenShowMe();        
     });
 }
 
 function initialize() {
+    Controller.listenFrontPage();
     Controller.handleStartBtn();
     Controller.handleShowMeBtn();
     Controller.handleNextBtn();

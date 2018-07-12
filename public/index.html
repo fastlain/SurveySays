@@ -7,8 +7,8 @@
     <title>Survey Says</title>
     <meta description='A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation.'>
     <link rel='stylesheet' src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-    <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel="stylesheet">
-    <link rel='stylesheet' href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel='stylesheet'>
+    <link rel='stylesheet' href='main.css'>
 </head>
 
 <body class='page-background'>
@@ -16,7 +16,7 @@
         <div class='front-header__title-container'>
             <h1 class='front-header__title'>Survey
                 <br>Says</h1>
-            <img class='front-header__speech-bubble' src="img/bubble.svg" alt='speech bubble'>
+            <img class='front-header__speech-bubble' src='img/bubble.svg' alt='speech bubble'>
         </div>
         <div class='front-header__btn-container'>
             <button id='start-btn' class='btn btn--front btn--quoted' type='button'>
@@ -30,7 +30,7 @@
     <header class='game-header game-header--hidden' role='banner'>
         <h1 class='game-header__title'>
             Survey
-            <img class='game-header__speech-bubble' src="img/bubble--noshadow.svg" alt='speech bubble'> Says
+            <img class='game-header__speech-bubble' src='img/bubble--noshadow.svg' alt='speech bubble'> Says
         </h1>
     </header>
 
@@ -80,7 +80,7 @@
                 <label class='lbl' for='guess-input'>Enter a guess:</label>
                 <div class='guess-form__flex-wrapper'>
                     <button id='showme-btn' class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
-                    <input id='guess-input' class='inpt guess-form__flex-inpt' type="text">
+                    <input id='guess-input' class='inpt guess-form__flex-inpt' type='text'>
                 </div>
             </form>
 
@@ -107,7 +107,9 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="initialize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+    <script src='initialize.js'></script>
+    <script src='speech.js'></script>
 </body>
 
 </html>
