@@ -4,6 +4,7 @@ const STORE = {
     round: 1,
     roundScore: 0,
     guesses: 3,
+    guessHistory: [],
     QA: {},
     roundHistory: [
         {
@@ -32,26 +33,37 @@ Model.getNewQA = () => {
         question: 'Name a part time job that kids do to make money',
         answers: [
             {
-                ans: 'Mow Lawns/Yard Work',
-                pts: 20
+                display: 'Mow Lawns/Yard Work',
+                matches: ['mow', 'lawn', 'grass', 'lawncare', 'yard', 'yardwork'],
+                pts: 20,
+                guessed: false
             },
             {
-                ans: 'Newspaper Route',
-                pts: 19
+                display: 'Newspaper Route',
+                matches: ['newspaper', 'paper', 'route'],
+                pts: 19,
+                guessed: false
             },
             {
-                ans: 'Food Services',
-                pts: 18
+                display: 'Food Services',
+                matches: ['restaurant', 'burgers', 'waiter', 'waitress', 'busboy', 'food'],
+                pts: 18,
+                guessed: false
             },
             {
-                ans: 'Babysitting',
-                pts: 17
+                display: 'Babysitting',
+                matches: ['babysit', 'childcare'],
+                pts: 17,
+                guessed: false
             },
             {
-                ans: 'Lemonade Stand',
-                pts: 9
+                display: 'Lemonade Stand',
+                matches: ['lemonade'],
+                pts: 9,
+                guessed: false
             }
-        ]
+        ],
+        remainingAns: 5 
     }
 }
 
@@ -61,6 +73,7 @@ Model.endRound = () => {
     Model.storeRoundScore();
     Model.storeRoundPossible();
     Model.resetGuesses();
+    Model.resetGuessHistory();
     Model.getNewQA();
 } 
 
@@ -96,14 +109,110 @@ Model.getTotPossible = () => {
     return STORE.roundHistory.reduce((accum, elem) => (accum + elem.possible), 0);
 }
 
+Model.resetGuessHistory = () => {
+    STORE.guessHistory = [];
+}
+
+// evaluate whether user guess is correct and process result
+Model.processGuess = (guess) => {
+    console.log(`User guessed: ${guess}`);
+
+    // if user submits empty string, display error message
+    if (guess === '') {
+        View.message('Please enter an answer');
+        return;
+    }
+    
+    const ansArr = STORE.QA.answers;
+
+    // loop through each answer's match options
+    for (let i = 0; i < ansArr.length; i += 1) {
+        for (let j = 0; j < ansArr[i].matches.length; j += 1) {
+            if (guess.includes(ansArr[i].matches[j])) {
+                console.log(`matched ${ansArr[i].display}`);
+                
+                // check if answer has already been guessed
+                if (ansArr[i].guessed === true) {
+                    View.message('That answer was already guessed, try again');
+                } else {                   
+                    // set answer guessed state to true
+                    ansArr[i].guessed = true;
+                    
+                    // add points to round score
+                    STORE.roundScore += ansArr[i].pts;
+                    
+                    // show correct answer and points on screen
+                    View.renderCorrect(i);
+                    View.updateRoundScore();
+                    
+                    // decrement remainingAns and check if no more to guess
+                    STORE.QA.remainingAns -= 1;
+                    if (STORE.QA.remainingAns === 0) {
+                        View.toggleEndRound()
+                    }
+                }
+                return;
+            }   
+        }
+    }
+
+    // check if incorrect guess has already been guessed
+    for (let k = 0; k < STORE.guessHistory.length; k += 1) {
+        if (guess.includes(STORE.guessHistory[k])) {
+            View.message('You already tried that, try again');
+            return;
+        }
+    }
+    
+    // add guess to guessHistory
+    STORE.guessHistory.push(guess);
+
+    // process incorrect guess
+    console.log('incorrect guess');
+    View.message(`Sorry, ${guess} is not correct`)
+    View.removeGuess();
+    Model.decGuesses();
+    if (STORE.guesses === 0) {
+        View.toggleEndRound()
+    }
+}
+
+// show correct answer and corresponding points from specified index
+View.renderCorrect = (i) => {  
+    const $correctElem = $(`.answers div:nth-child(${2*i+1})`);
+    $correctElem.text(STORE.QA.answers[i].display);
+    $correctElem.addClass('answers__text--guessed');
+    $correctElem.next().text(STORE.QA.answers[i].pts);
+}
+
 // check and render total game score
 View.updateTotScore = () => {
     $('#tot-score').text(Model.getTotScore());
 }
 
-// check and render remaining round guesses
-View.updateGuesses = () => {
-    $('#guesses').text(STORE.guesses);
+// render next unused guess to 'guessed' state
+View.removeGuess = () => {
+    // get position of next unused guess from number of available guesses
+    const toRemove = STORE.guesses;
+    $(`.guesses__icon:nth-child(${toRemove})`)
+        .addClass('guesses__icon--x')
+        .removeClass('guesses__icon--checked')
+        .text('\u2716');
+}
+
+// show all guesses in 'unused' state
+View.resetGuesses = () => {
+    console.log('resetting guesses');
+    
+    $('.guesses__icon')
+        .addClass('guesses__icon--checked')
+        .removeClass('guesses__icon--x')
+        .text('\u2714');
+}
+
+// check and render current round score
+View.updateRoundScore = () => {
+    $('.answers__sum').text(STORE.roundScore);
 }
 
 // check and render current game round
@@ -111,17 +220,31 @@ View.updateRound = () => {
     $('#round').text(STORE.round);
 }
 
+// check and render the question for the current round
 View.updateQuestion = () => {
     $('#question-text').text(STORE.QA.question);
 }
 
-View.updateAnswers = () => {
-
+// todo: create function(s) to update the answer grid after each round
+View.resetAnswerBoard = () => {
+    const numAnswers = STORE.QA.answers.length;
+    let answerBoard = '';
+    for (let i = 0; i < numAnswers; i += 1) {
+        answerBoard += 
+            `<div class="answers__text">${i+1}</div>
+            <div class="answers__points"></div>`;
+    }
+    answerBoard += '<div class="answers__sum">0</div>';
+    $('.answers').html(answerBoard);
 }
 
-// set up game screen by showing hiding elements and setting game variables
-View.renderGame = () => {
-    View.renderNewRound();
+// todo: create a user message on screen
+View.message = (message) => {
+    console.log(message);
+} 
+
+// set up game screen by showing and hiding elements
+View.renderGameScreen = () => {
     $('.front-header').addClass('front-header--hidden');
     $('.game-header').removeClass('game-header--hidden');
     $('.main').removeClass('main--hidden');
@@ -131,10 +254,10 @@ View.renderGame = () => {
 // update DOM elements from STORE at beginning of new round
 View.renderNewRound = () => {
     View.updateRound();
-    View.updateGuesses();
     View.updateTotScore();
+    View.resetGuesses();
     View.updateQuestion();
-    View.updateAnswers();
+    View.resetAnswerBoard();
 }
 
 View.renderResults = () => {
@@ -151,7 +274,7 @@ View.toggleEndRound = () => {
 Controller.handleNextBtn = () => {
     $('#next-btn').click((evt) => {
         Model.endRound();
-        if (STORE.round < 3) {
+        if (STORE.round <= 3) {
             View.toggleEndRound();
             View.renderNewRound();
         } else {
@@ -163,13 +286,19 @@ Controller.handleNextBtn = () => {
 Controller.handleShowMeBtn = () => {
     $('#showme-btn').click((evt) => {
         evt.preventDefault();
+        // get guess from input and convert to lower case
+        let guess = $('#guess-input').val().toLowerCase();
+        // clear guess input
+        $('#guess-input').val('');
+        // check guess against possible answer matches
+        Model.processGuess(guess);        
     });
 }
 
 Controller.handleStartBtn = () => {
     $('#start-btn').click((evt) => {
         Model.getNewQA();
-        View.renderGame();        
+        View.renderGameScreen();        
     });
 }
 

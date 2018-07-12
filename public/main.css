@@ -262,6 +262,8 @@ html {
 
 .answers__text--guessed {
     text-align: left;
+    background: var(--sec-color);
+    font-weight: bold;
 }
 
 .answers__points {
