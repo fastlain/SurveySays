@@ -16,6 +16,14 @@ Controller.listenFrontPage = () => {
     annyang.start();
 }
 
+Controller.listenLetsPlay = () => {
+    const letsPlayCommand = {
+        '(let\'s) play': simClickLetsPlay,
+    };
+    annyang.addCommands(letsPlayCommand);
+    annyang.start();
+}
+
 Controller.listenShowMe = () => {
     console.log('listening for show me');
     
@@ -59,6 +67,12 @@ function simClickNewGame() {
     annyang.pause();
     annyang.removeCommands();
     $('#new-game-btn').click();
+}
+
+function simClickLetsPlay() {
+    annyang.pause();
+    annyang.removeCommands();
+    $('#lets-play-btn').click()
 }
 
 // function simClickNext() {

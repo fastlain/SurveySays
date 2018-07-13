@@ -104,7 +104,7 @@ html {
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
-    z-index: 100;
+    z-index: 1;
     text-align: center;
     font-family: var(--display-font);
     font-size: 12vmin;
@@ -169,6 +169,55 @@ html {
     }
     
 } 
+
+/***** instructions-modal *****/
+
+.modal-background {
+    display: flex;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-background--hidden {
+    display: none;
+}
+
+/***** instructions *****/
+
+.instructions {
+    background-color: var(--main-bg-color);
+    width: 85%;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+}
+
+.instructions__heading {
+    text-align: center;
+    font-family: var(--heading-font);
+    margin: 5px auto;
+}
+
+.instructions__subheading {
+    margin: 5px auto;
+}
+
+.instructions__para {
+    margin: 10px auto;
+}
+
+@media (max-width: 640px), (max-height: 640px) {
+   .instructions__para {
+       font-size: 14px;
+   }
+}
 
 /***** main *****/
 
@@ -480,6 +529,10 @@ html {
 
 .btn--hidden {
     display: none;
+}
+
+.btn--margins {
+    margin: 15px auto;
 }
 
 .btn__inlnblck {

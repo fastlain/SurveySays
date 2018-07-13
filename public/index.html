@@ -34,6 +34,18 @@
         </h1>
     </header>
 
+    <div id='instructions-modal' class='modal-background modal-background--hidden'>
+        <section class='instructions' role='region'>
+            <h2 class='instructions__heading'>Instructions</h2>
+            <h3 class='instructions__subheading'>Gameplay</h3>
+            <p class='instructions__para'>In each of 3 rounds, guess the most popular answers to a survey question. Collect as many points as you can before running out of guesses.</p>
+            <h3 class='instructions__subheading'>Voice Control</h3>
+            <p id='browser-support' class='instructions__para'></p> 
+            <p class='instructions__para'>All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your answer. Buttons can be activated by saying the words in quotes. Try it below...</p>
+            <button id='lets-play-btn' class='btn btn--quoted btn--centered btn--margins' type='button'> Let's Play! </button>
+        </section>
+    </div>
+    
     <main class='main main--hidden' role='main'>
         <div class='game-container'>
             <header class='game-info'>

@@ -460,17 +460,26 @@ Controller.handleShowMeBtn = () => {
     });
 }
 
-Controller.handleStartBtn = () => {
-    $('#start-btn').click((evt) => {
+Controller.handleLetsPlayBtn = () => {
+    $('#lets-play-btn').click(() => {        
+        $('#instructions-modal').addClass('modal-background--hidden');
         Model.getNewQA();
         View.renderGameScreen();
-        Controller.listenShowMe();        
+        Controller.listenShowMe();   
+    });
+}
+
+Controller.handleStartBtn = () => {
+    $('#start-btn').click((evt) => {
+        $('#instructions-modal').removeClass('modal-background--hidden');
+        Controller.listenLetsPlay()
     });
 }
 
 function initialize() {
     Controller.listenFrontPage();
     Controller.handleStartBtn();
+    Controller.handleLetsPlayBtn();
     Controller.handleShowMeBtn();
     Controller.handleNextBtn();
     Controller.handleNewGameBtn();
