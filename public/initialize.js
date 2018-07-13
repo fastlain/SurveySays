@@ -269,7 +269,7 @@ Model.processGuess = (guess) => {
                     STORE.roundScore += ansArr[i].pts;
                     
                     // show correct answer and points on screen
-                    View.renderCorrect(i);
+                    View.revealAnswer(i, true);
                     View.updateRoundScore();
                     
                     // decrement remainingAns and check if no more to guess
@@ -304,19 +304,35 @@ Model.processGuess = (guess) => {
     View.removeGuess();
     Model.decGuesses();
     if (STORE.guesses === 0) {
-        View.toggleEndRound()
+        View.revealMissedAnswers();
+        View.toggleEndRound();
         SpeechController.listen(COMMANDS.next);
     } else {
         SpeechController.listen(COMMANDS.showMe);
     }
 }
 
+// show all the correct answers at the end of a round
+View.revealMissedAnswers = () => {
+    for (let i = 0; i < STORE.QA.answers.length; i += 1) {
+        if (STORE.QA.answers[i].guessed === false) {
+            View.revealAnswer(i, false);
+        }
+    }
+}
+
 // show correct answer and corresponding points from specified index
-View.renderCorrect = (i) => {  
+View.revealAnswer = (i, guessed) => {  
     const $correctElem = $(`.answers div:nth-child(${2*i+1})`);
     $correctElem.text(STORE.QA.answers[i].display);
-    $correctElem.addClass('answers__text--guessed');
     $correctElem.next().text(STORE.QA.answers[i].pts);
+
+    if (guessed) {
+        $correctElem.addClass('answers__text--guessed');
+    } else {
+        $correctElem.addClass('answers__text--revealed');
+        $correctElem.next().addClass('answers__points--revealed')
+    }
 }
 
 // check and render total game score
@@ -404,7 +420,6 @@ View.generateResults = () => {
             .text(`${STORE.roundHistory[i].score} / ${STORE.roundHistory[i].possible}`);
     }
     
-
     // get and show total score data
     const totScore = Model.getTotScore();
     const totPossible = Model.getTotPossible();

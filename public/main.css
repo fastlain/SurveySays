@@ -391,12 +391,19 @@ html {
     padding: 5px;
     border-radius: 5px;
     font-weight: bold;
+    color: var(--mid-text-color);
     /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
 }
 
 .answers__text--guessed {
     text-align: left;
+    color: var(--primary-text-color);
     background: var(--sec-color);
+}
+
+.answers__text--revealed {
+    text-align: left;
+    font-style: italic;
 }
 
 .answers__points {
@@ -405,7 +412,11 @@ html {
     padding: 5px;
     border-radius: 5px;
     /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
+}
 
+.answers__points--revealed {
+    color: var(--mid-text-color);
+    font-style: italic;
 }
 
 .answers__sum {
