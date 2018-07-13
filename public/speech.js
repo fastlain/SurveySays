@@ -1,90 +1,41 @@
 annyang.debug();
 
-Controller.pauseListening = () => {
+const SpeechController = {};
+
+SpeechController.simClick  = () => {
+    $(`#${SpeechController.clickTarget}`).click();
+}
+
+SpeechController.listen = (cmdName) => {
+    if (cmdName.clickTarget) {
+        SpeechController.clickTarget = cmdName.clickTarget;
+    }
+    annyang.addCommands(cmdName.command);
+    annyang.resume();
+}
+
+SpeechController.pauseListening = () => {
     annyang.pause()
 }
 
-Controller.clearSpeechCommands = () => {
-    annyang.removeCommands();
+const COMMANDS = {
+    startGame: {
+        command: {'start (game)': SpeechController.simClick },
+        clickTarget: 'start-btn'
+    },
+    letsPlay: {
+        command: {'(let\'s) play': SpeechController.simClick},
+        clickTarget: 'lets-play-btn'
+    },
+    showMe: {
+        command: {'show me *guess': Model.processGuess}
+    },
+    next: {
+        command: {'next': SpeechController.simClick},
+        clickTarget: 'next-btn'
+    },
+    newGame: {
+        command: {'new game': SpeechController.simClick},
+        clickTarget: 'new-game-btn'
+    }
 }
-
-Controller.listenFrontPage = () => {
-    const startGameCommand = {
-        'start (game)': simClickStart,
-    };
-    annyang.addCommands(startGameCommand);
-    annyang.start();
-}
-
-Controller.listenLetsPlay = () => {
-    const letsPlayCommand = {
-        '(let\'s) play': simClickLetsPlay,
-    };
-    annyang.addCommands(letsPlayCommand);
-    annyang.start();
-}
-
-Controller.listenShowMe = () => {
-    console.log('listening for show me');
-    
-    const showMeCommand = {
-        'show me *guess': Model.processGuess
-    };
-    annyang.addCommands(showMeCommand);
-    annyang.resume();
-}
-
-Controller.listenNext = () => {
-    console.log('listening for next)');
-    const nextCommand = {
-        'next': simClickNext
-    };
-    annyang.addCommands(nextCommand);
-    annyang.resume();
-}
-
-Controller.listenNewGame = () => {
-    const newGameCommand = {
-        'new game': simClickNewGame
-    };
-    annyang.addCommands(newGameCommand);
-    annyang.resume();
-}
-
-function simClickStart() {
-    annyang.pause();
-    annyang.removeCommands();
-    $('#start-btn').click();
-}
-
-function simClickNext() {
-    annyang.pause();
-    annyang.removeCommands();
-    $('#next-btn').click();
-}
-
-function simClickNewGame() {
-    annyang.pause();
-    annyang.removeCommands();
-    $('#new-game-btn').click();
-}
-
-function simClickLetsPlay() {
-    annyang.pause();
-    annyang.removeCommands();
-    $('#lets-play-btn').click()
-}
-
-// function simClickNext() {
-//     $('#next-btn').click();
-//     annyang.pause();
-//     annyang.removeCommands();
-// }
-
-// const startGameCommand = {
-//     'start (game)': simClickStart,
-//     'next': simClickNext
-// };
-
-// annyang.addCommands(startGameCommand);
-// annyang.start({autoRestart: true});
