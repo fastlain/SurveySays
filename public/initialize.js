@@ -1,6 +1,7 @@
 'use strict';
 
 const STORE = {
+    muted: false,
     round: 1,
     roundScore: 0,
     guesses: 3,
@@ -245,6 +246,7 @@ Model.processGuess = (guess) => {
     // if user submits empty string, display error message
     if (guess === '') {
         View.message('Please enter an answer');
+        View.playAudio('sounds/notice.wav');
         SpeechController.listen(COMMANDS.showMe);
         return;
     }
@@ -261,6 +263,7 @@ Model.processGuess = (guess) => {
                 if (ansArr[i].guessed === true) {
                     View.message('That answer was already guessed, try again');
                     SpeechController.listen(COMMANDS.showMe);
+                    View.playAudio('sounds/notice.wav');
                 } else {                   
                     // set answer guessed state to true
                     ansArr[i].guessed = true;
@@ -277,8 +280,10 @@ Model.processGuess = (guess) => {
                     if (STORE.QA.remainingAns === 0) {
                         View.toggleEndRound();
                         SpeechController.listen(COMMANDS.next);
+                        View.playAudio('sounds/allcorrect.wav');
                     } else {
                         SpeechController.listen(COMMANDS.showMe);
+                        View.playAudio('sounds/correctanswer.wav');
                     }
                 }
                 return;
@@ -290,6 +295,7 @@ Model.processGuess = (guess) => {
     for (let k = 0; k < STORE.guessHistory.length; k += 1) {
         if (guess.includes(STORE.guessHistory[k])) {
             View.message('You already tried that, try again');
+            View.playAudio('sounds/notice.wav');
             SpeechController.listen(COMMANDS.showMe);
             return;
         }
@@ -306,9 +312,18 @@ Model.processGuess = (guess) => {
     if (STORE.guesses === 0) {
         View.revealMissedAnswers();
         View.toggleEndRound();
+        View.playAudio('sounds/buzzer.mp3');
         SpeechController.listen(COMMANDS.next);
     } else {
+        View.playAudio('sounds/wronganswer.wav');
         SpeechController.listen(COMMANDS.showMe);
+    }
+}
+
+View.playAudio = (url) => {
+    if (!STORE.muted) {
+        const myAudio = new Audio(url);
+        myAudio.play();
     }
 }
 
@@ -491,7 +506,15 @@ Controller.handleStartBtn = () => {
     });
 }
 
+Controller.handleMuteBtn = () => {
+    $('#mute-container').click(() => {
+        $('.audio-ctrl__icon').toggleClass('audio-ctrl__icon--hidden');
+        STORE.muted = !STORE.muted;
+    });
+}
+
 function initialize() {
+    Controller.handleMuteBtn();
     SpeechController.listen(COMMANDS.startGame);
     Controller.handleStartBtn();
     Controller.handleLetsPlayBtn();

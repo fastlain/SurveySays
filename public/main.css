@@ -483,6 +483,25 @@ html {
     background: var(--main-bg-color);
 }
 
+/***** audio-ctrl *****/
+.audio-ctrl {
+    position: fixed;
+    bottom: 10px;
+    left: 90%;
+}
+
+.audio-ctrl__icon {
+    height: 1.5rem;
+    fill: white;
+}
+.audio-ctrl__icon:hover {
+    fill: rgba(0, 0, 0, 0.2);
+}
+
+.audio-ctrl__icon--hidden {
+    display:none;
+}
+
 /***** page-footer *****/
 
 .page-footer {
