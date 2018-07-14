@@ -2,6 +2,10 @@ annyang.debug();
 
 const SpeechController = {};
 
+SpeechController.start = () => {
+    annyang.start({autorestart: true})
+}
+
 SpeechController.simClick  = () => {
     $(`#${SpeechController.clickTarget}`).click();
 }

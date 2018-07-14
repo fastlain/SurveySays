@@ -492,7 +492,8 @@ Controller.handleStartBtn = () => {
 }
 
 function initialize() {
-	SpeechController.listen(COMMANDS.startGame);
+    SpeechController.start();
+    SpeechController.listen(COMMANDS.startGame);
 	Controller.handleStartBtn();
 	Controller.handleLetsPlayBtn();
 	Controller.handleShowMeBtn();
