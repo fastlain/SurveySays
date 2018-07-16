@@ -219,6 +219,10 @@ html {
    }
 }
 
+.instructions__para--mic-status {
+    color: var(--sec-color);
+}
+
 /***** main *****/
 
 .main {

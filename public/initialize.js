@@ -453,6 +453,29 @@ View.toggleResultsScreen = () => {
 	$('.results-container').toggleClass('results-container--hidden');
 }
 
+// check voice support and render message in instructions modal
+View.checkVoiceSupport = () => {
+    // check if browser supports Web Speech API (and thus, annyang)
+    if (annyang) {
+        $('#voice-support').text(`All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your answer. Buttons can be activated by saying the words in quotes. Try it below...`);
+        
+        // check if micophone is enabled
+        navigator.getUserMedia({audio:true}, 
+            // success callback: clear any prior message
+            function() {
+                $('#mic-status').text('');
+            }, 
+            // error callback: notify that microphone is turned off
+            function() {
+                $('#mic-status').text('Voice recognition is supported, but your microphone is disabled');
+            }
+        );
+    } else {
+        $('#voice-support').text(`Speech Recognition is not currently supported by your browser. You can play the game without voice control or try using Google Chrome.`);
+    }
+   
+}
+
 Controller.handleNewGameBtn = () => {
 	$('#new-game-btn').click(() => {
 		Model.startNextGame();
@@ -501,7 +524,8 @@ Controller.handleLetsPlayBtn = () => {
 
 Controller.handleStartBtn = () => {
 	$('#start-btn').click((evt) => {
-		$('#instructions-modal').removeClass('modal-background--hidden');
+        View.checkVoiceSupport();
+        $('#instructions-modal').removeClass('modal-background--hidden');
 		SpeechController.listen(COMMANDS.letsPlay);
 	});
 }

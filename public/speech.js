@@ -1,25 +1,35 @@
-annyang.debug();
-
 const SpeechController = {};
 
+if (annyang) {
+    annyang.debug();
+}
+
 SpeechController.start = () => {
-    annyang.start({autorestart: true})
+    if (annyang) {
+        annyang.start({autorestart: true});
+    }
 }
 
 SpeechController.simClick  = () => {
-    $(`#${SpeechController.clickTarget}`).click();
+    if (annyang) {
+        $(`#${SpeechController.clickTarget}`).click();
+    }
 }
 
 SpeechController.listen = (cmdName) => {
-    if (cmdName.clickTarget) {
-        SpeechController.clickTarget = cmdName.clickTarget;
+    if (annyang) {
+        if (cmdName.clickTarget) {
+            SpeechController.clickTarget = cmdName.clickTarget;
+        }
+        annyang.addCommands(cmdName.command);
+        annyang.resume();
     }
-    annyang.addCommands(cmdName.command);
-    annyang.resume();
 }
 
 SpeechController.pauseListening = () => {
-    annyang.pause()
+    if (annyang) {  
+        annyang.pause();
+    }
 }
 
 const COMMANDS = {
