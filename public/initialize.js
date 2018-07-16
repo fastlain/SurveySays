@@ -1,25 +1,26 @@
 'use strict';
 
 const STORE = {
-	round: 1,
-	roundScore: 0,
-	guesses: 3,
-	guessHistory: [],
-	QA: {},
-	roundHistory: [
-		{
-			score:0,
-			possible:0
-		},
-		{
-			score:0,
-			possible:0
-		},
-		{
-			score:0,
-			possible:0
-		}
-	]
+    muted: false,
+    round: 1,
+    roundScore: 0,
+    guesses: 3,
+    guessHistory: [],
+    QA: {},
+    roundHistory: [
+        {
+            score:0,
+            possible:0
+        },
+        {
+            score:0,
+            possible:0
+        },
+        {
+            score:0,
+            possible:0
+        }
+    ]
 }
 
 const Model = {};
@@ -234,82 +235,96 @@ Model.resetGuessHistory = () => {
 
 // evaluate whether user guess is correct and process result
 Model.processGuess = (guess) => {
-	// clear prior messages
-	View.message('');
-	
-	console.log(`User guessed: ${guess}`);
-	
-	SpeechController.pauseListening();
-	guess = guess.toLowerCase();
+    // clear prior messages
+    View.message('');
+    
+    console.log(`User guessed: ${guess}`);
+    
+    SpeechController.pauseListening();
+    guess = guess.toLowerCase();
 
-	// if user submits empty string, display error message
-	if (guess === '') {
-		View.message('Please enter an answer');
-		SpeechController.listen(COMMANDS.showMe);
-		return;
-	}
-	
-	const ansArr = STORE.QA.answers;
+    // if user submits empty string, display error message
+    if (guess === '') {
+        View.message('Please enter an answer');
+        View.playAudio('sounds/notice.wav');
+        SpeechController.listen(COMMANDS.showMe);
+        return;
+    }
+    
+    const ansArr = STORE.QA.answers;
 
-	// loop through each answer's match options
-	for (let i = 0; i < ansArr.length; i += 1) {
-		for (let j = 0; j < ansArr[i].matches.length; j += 1) {
-			if (guess.includes(ansArr[i].matches[j])) {
-				console.log(`matched ${ansArr[i].display}`);
-				
-				// check if answer has already been guessed
-				if (ansArr[i].guessed === true) {
-					View.message('That answer was already guessed, try again');
-					SpeechController.listen(COMMANDS.showMe);
-				} else {                   
-					// set answer guessed state to true
-					ansArr[i].guessed = true;
-					
-					// add points to round score
-					STORE.roundScore += ansArr[i].pts;
-					
-					// show correct answer and points on screen
-					View.revealAnswer(i, true);
-					View.updateRoundScore();
-					
-					// decrement remainingAns and check if no more to guess
-					STORE.QA.remainingAns -= 1;
-					if (STORE.QA.remainingAns === 0) {
-						View.toggleEndRound();
-						SpeechController.listen(COMMANDS.next);
-					} else {
-						SpeechController.listen(COMMANDS.showMe);
-					}
-				}
-				return;
-			}   
-		}
-	}
+    // loop through each answer's match options
+    for (let i = 0; i < ansArr.length; i += 1) {
+        for (let j = 0; j < ansArr[i].matches.length; j += 1) {
+            if (guess.includes(ansArr[i].matches[j])) {
+                console.log(`matched ${ansArr[i].display}`);
+                
+                // check if answer has already been guessed
+                if (ansArr[i].guessed === true) {
+                    View.message('That answer was already guessed, try again');
+                    SpeechController.listen(COMMANDS.showMe);
+                    View.playAudio('sounds/notice.wav');
+                } else {                   
+                    // set answer guessed state to true
+                    ansArr[i].guessed = true;
+                    
+                    // add points to round score
+                    STORE.roundScore += ansArr[i].pts;
+                    
+                    // show correct answer and points on screen
+                    View.revealAnswer(i, true);
+                    View.updateRoundScore();
+                    
+                    // decrement remainingAns and check if no more to guess
+                    STORE.QA.remainingAns -= 1;
+                    if (STORE.QA.remainingAns === 0) {
+                        View.toggleEndRound();
+                        SpeechController.listen(COMMANDS.next);
+                        View.playAudio('sounds/allcorrect.wav');
+                    } else {
+                        SpeechController.listen(COMMANDS.showMe);
+                        View.playAudio('sounds/correctanswer.wav');
+                    }
+                }
+                return;
+            }   
+        }
+    }
 
-	// check if incorrect guess has already been guessed
-	for (let k = 0; k < STORE.guessHistory.length; k += 1) {
-		if (guess.includes(STORE.guessHistory[k])) {
-			View.message('You already tried that, try again');
-			SpeechController.listen(COMMANDS.showMe);
-			return;
-		}
-	}
-	
-	// add guess to guessHistory
-	STORE.guessHistory.push(guess);
+    // check if incorrect guess has already been guessed
+    for (let k = 0; k < STORE.guessHistory.length; k += 1) {
+        if (guess.includes(STORE.guessHistory[k])) {
+            View.message('You already tried that, try again');
+            View.playAudio('sounds/notice.wav');
+            SpeechController.listen(COMMANDS.showMe);
+            return;
+        }
+    }
+    
+    // add guess to guessHistory
+    STORE.guessHistory.push(guess);
 
-	// process incorrect guess
-	console.log('incorrect guess');
-	View.message(`Sorry, ${guess} is not correct`)
-	View.removeGuess();
-	Model.decGuesses();
-	if (STORE.guesses === 0) {
-		View.revealMissedAnswers();
-		View.toggleEndRound();
-		SpeechController.listen(COMMANDS.next);
-	} else {
-		SpeechController.listen(COMMANDS.showMe);
-	}
+    // process incorrect guess
+    console.log('incorrect guess');
+    View.message(`Sorry, ${guess} is not correct`)
+    View.removeGuess();
+    Model.decGuesses();
+    if (STORE.guesses === 0) {
+        View.revealMissedAnswers();
+        View.toggleEndRound();
+        View.playAudio('sounds/buzzer.mp3');
+        SpeechController.listen(COMMANDS.next);
+    } else {
+        View.playAudio('sounds/wronganswer.wav');
+        SpeechController.listen(COMMANDS.showMe);
+    }
+}
+
+View.playAudio = (url) => {
+    if (!STORE.muted) {
+        const myAudio = new Audio(url);
+        myAudio.play();
+    }
 }
 
 // show all the correct answers at the end of a round
@@ -491,8 +506,16 @@ Controller.handleStartBtn = () => {
 	});
 }
 
+Controller.handleMuteBtn = () => {
+    $('#mute-container').click(() => {
+        $('.audio-ctrl__icon').toggleClass('audio-ctrl__icon--hidden');
+        STORE.muted = !STORE.muted;
+    });
+}
+
 function initialize() {
     SpeechController.start();
+    Controller.handleMuteBtn();
     SpeechController.listen(COMMANDS.startGame);
 	Controller.handleStartBtn();
 	Controller.handleLetsPlayBtn();
