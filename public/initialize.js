@@ -306,7 +306,7 @@ Model.processGuess = (guess) => {
 
     // process incorrect guess
     console.log('incorrect guess');
-    View.message(`Sorry, ${guess} is not correct`)
+    View.message(`Sorry, "${guess}" is not correct`)
     View.removeGuess();
     Model.decGuesses();
     if (STORE.guesses === 0) {
