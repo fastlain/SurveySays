@@ -34,7 +34,7 @@ const Controller = {};
 Model.getNewQAs = () => {
 	
 	$.getJSON('/questans', (data) => {
-		console.log(data);
+		//console.log(data);
 		STORE.QA = data;
 		View.renderGameScreen();
 		SpeechController.listen(COMMANDS.showMe); 
@@ -138,7 +138,9 @@ Model.resetGuessHistory = () => {
 // evaluate whether user guess is correct and process result
 Model.processGuess = (guess) => {
     // clear prior messages
-    View.message('');
+	View.message('');
+	// place cursor focus in guess input
+	Controller.focusGuessInput();
     
     console.log(`User guessed: ${guess}`);
     
@@ -317,6 +319,7 @@ View.renderGameScreen = () => {
 	$('.main').removeClass('main--hidden');
 	$('.game-container').removeClass('game-container--hidden');
 	View.updateQuestion();
+	Controller.focusGuessInput();
 }
 
 // update DOM elements from STORE at beginning of new round
@@ -327,6 +330,7 @@ View.renderNewRound = () => {
 	View.updateQuestion();
 	View.resetAnswerBoard();
 	View.message('');
+	Controller.focusGuessInput();
 }
 
 // generate final results screen with game data for each round
@@ -376,6 +380,11 @@ View.checkVoiceSupport = () => {
         $('#voice-support').text(`Speech Recognition is not currently supported by your browser. You can play the game without voice control or try using Google Chrome.`);
     }
    
+}
+
+// place cursor focus in guess input
+Controller.focusGuessInput = () => {	
+	$('#guess-input').focus();
 }
 
 Controller.handleNewGameBtn = () => {
