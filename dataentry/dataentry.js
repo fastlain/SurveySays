@@ -36,29 +36,36 @@ function handleCreateForm() {
 function handleDataEntrySubmit() {
     $('#data-entry-form').submit((evt) => {
         evt.preventDefault();
-        // disable form submission button
-        $('#submit-questans').attr('disabled','disabled');
-        const formData = {
-            question: $('#question-inpt').val(),
-            answers: []
-        };
-        const numAns = $('.answer').length;
-        for (let i = 0; i < numAns; i += 1) {
-            const ans = {
-                display: $(`#display-inpt${i+1}`).val(),
-                matches: $(`#matches-input${i+1}`).val().split(',').map((elem) => elem.trim()),
-                pts: $(`#points-input${i+1}`).val()
+        
+        // check if button is disabled (form has already been submitted)
+        const submitted = $('#submit-questans').attr('disabled');
+        if (submitted !== 'disabled') {
+            
+            // disable form submission button
+            $('#submit-questans').attr('disabled','disabled');
+            
+            const formData = {
+                question: $('#question-inpt').val(),
+                answers: []
             };
-            formData.answers.push(ans);
-        }
+            const numAns = $('.answer').length;
+            for (let i = 0; i < numAns; i += 1) {
+                const ans = {
+                    display: $(`#display-inpt${i+1}`).val(),
+                    matches: $(`#matches-input${i+1}`).val().split(',').map((elem) => elem.trim()),
+                    pts: $(`#points-input${i+1}`).val()
+                };
+                formData.answers.push(ans);
+            }
 
-        $.ajax({
-            method: 'POST',
-            dataType: 'json',
-            data: formData,
-            success: handleSuccess,
-            error: handleError
-        });
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                data: formData,
+                success: handleSuccess,
+                error: handleError
+            });
+        }
     });   
 }
 
