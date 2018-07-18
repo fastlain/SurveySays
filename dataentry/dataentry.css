@@ -4,7 +4,8 @@
 
 .data-entry__form {
     margin: 20px auto;
-    max-width: 450px;
+    width: 90%;
+    max-width: 800px;
 }
 
 .data-entry__wrapper {
@@ -14,7 +15,18 @@
 }
 
 .data-entry__input {
-    width: 300px;
+    width: 50%;
+    font-size: 1rem;
+    padding: 0 10px;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.data-entry__input--tall {
+    height: 4rem;
+}
+
+.data-entry__input--small {
+    width: 75px;
 }
 
 .data-entry__form--hidden {

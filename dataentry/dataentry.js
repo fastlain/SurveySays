@@ -6,7 +6,7 @@ function handleCreateForm() {
             `<h3>Survey Question:</h3>
             <div class='data-entry__wrapper'>
                 <label for='question-inpt'>Survey Question:</label>
-                <input id='question-inpt' class='data-entry__input' type='text' value='test'>
+                <textarea id='question-inpt' class='data-entry__input data-entry__input--tall' type='text'></textarea>
             </div>`
         );
         const numAns = $('#num-answers-inpt').val();
@@ -15,15 +15,15 @@ function handleCreateForm() {
                 <h3 class='answer'>Answer #${i+1}</h3>
                 <div class='data-entry__wrapper'>
                     <label for='display-inpt${i+1}'>Answer to display:</label>
-                    <input id='display-inpt${i+1}' class='data-entry__input' type='text' required value='test${i+1}'>
+                    <input id='display-inpt${i+1}' class='data-entry__input' type='text' required>
                 </div>
                 <div class='data-entry__wrapper'>
                     <label for='matches-inpt${i+1}'>Answer matches:</label>
-                    <input id='matches-input${i+1}' class='data-entry__input' type='text' placeholder='apple, banana' required value='test${i+1}, test${i+2}, test${i+3}'>
+                    <input id='matches-input${i+1}' class='data-entry__input' type='text' required>
                 </div>
                 <div class='data-entry__wrapper'>
                     <label for='points-input${i+1}'>Points: </label>
-                    <input id='points-input${i+1}' class='data-entry__input' type='number' required value='${25-i}'>
+                    <input id='points-input${i+1}' class='data-entry__input' type='number' required>
                 </div>
             `);
         }
