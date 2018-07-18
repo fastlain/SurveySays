@@ -1,8 +1,22 @@
-#data-entry-form {
-    display:none;
+.data-entry__heading {
+    text-align: center;
 }
 
-button {
-    display: block;
-    margin: 10px 0;
+.data-entry__form {
+    margin: 20px auto;
+    max-width: 450px;
+}
+
+.data-entry__wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.data-entry__input {
+    width: 300px;
+}
+
+.data-entry__form--hidden {
+    display:none;
 }

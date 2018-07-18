@@ -7,21 +7,30 @@
     <title>Data Entry</title>
     <meta description=''>
     <link rel='stylesheet' src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel='stylesheet'>
+    <link rel='stylesheet' href="../main.css">
     <link rel='stylesheet' href="dataentry.css">
 </head>
 
-<body>
-    <header role='banner'>
-        <h1>Data Entry Form for Survey Says</h1>
+<body class='page-background'>
+    
+    <header class='game-header' role='banner'>
+        <h1 class='game-header__title'>
+                Survey
+                <img class='game-header__speech-bubble' src='img/bubble--noshadow.svg' alt='speech bubble'> Says
+        </h1>
     </header>
     <main role='main'>
-        <form id='num-answers-form'>
+        <h2 class='data-entry__heading'>Data Entry</h2>
+        <form id='num-answers-form' class='data-entry__form'>
+            <div class='data-entry__wrapper'>
             <label for='num-answers-inpt'>How many answers will this question have?</label>
             <input id='num-answers-inpt' type='number' min="2" max="7">
-            <button id='create-form-btn' type='submit'>Create form</button>
+            </div>
+            <button id='create-form-btn' class='btn btn--centered btn--margins' type='submit'>Create form</button>
         </form>
 
-        <form id='data-entry-form' method='post' action='/dataentry'>
+        <form id='data-entry-form' class='data-entry__form data-entry__form--hidden' method='post' action='/dataentry'>
         </form>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
