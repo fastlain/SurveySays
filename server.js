@@ -4,18 +4,22 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
+const bodyParser = require('body-parser');
+const path = require('path');
+
 const {PORT, DATABASE_URL} = require('./config');
 const {QuestAns} = require('./models');
 
 app.use(express.static('public'));
+app.use(express.static('dataentry'));
 
-app.get('/questans/:count', (req,res) => {
+app.get('/questans', (req,res) => {
   //QuestAns.aggregate([{$sample: {size: 3}}]);
-  const count = (parseInt(req.params.count));
+  // const count = (parseInt(req.params.count));
   
   QuestAns
     .find()
-    .limit(count)
+    .limit(3)
     .then(questans => {
       res.json(questans);
     })
@@ -23,6 +27,25 @@ app.get('/questans/:count', (req,res) => {
       console.error(err);
       res.status(500).json({message: 'Internal server error'});
     });
+});
+
+app.get('/dataentry', (req,res) => {
+  res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));
+});
+
+app.post('/dataentry', bodyParser.urlencoded(), (req,res) => {
+  const newData = {
+    question: req.body.question,    
+    answers: req.body.answers,
+  };
+  
+  QuestAns
+    .create(newData)
+    .then(res.status(201).json({message: 'Question/Answers added to database successfully'}))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({message: 'Internal server error'});
+    });  
 });
 
 // declare `server` here, assign a value in runServer, and access it in closeServer

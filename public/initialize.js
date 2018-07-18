@@ -6,19 +6,22 @@ const STORE = {
     roundScore: 0,
     guesses: 3,
     guessHistory: [],
-    QA: {},
+    QA: [],
     roundHistory: [
         {
             score:0,
-            possible:0
+			possible:0,
+			QAId: 0
         },
         {
             score:0,
-            possible:0
+			possible:0,
+			QAId: 0
         },
         {
             score:0,
-            possible:0
+			possible:0,
+			QAId: 0
         }
     ]
 }
@@ -28,120 +31,14 @@ const View = {};
 const Controller = {};
 
 // get new question and answers/points from server
-Model.getNewQA = () => {
-	// temp: currently just provides dummy data
-	if (STORE.round === 1) {
-		STORE.QA = {
-			question: 'Name a part time job that kids do to make money',
-			answers: [
-				{
-					display: 'Mow Lawns/Yard Work',
-					matches: ['mow', 'lawn', 'grass', 'lawncare', 'yard', 'yardwork'],
-					pts: 20,
-					guessed: false
-				},
-				{
-					display: 'Newspaper Route',
-					matches: ['newspaper', 'paper', 'route'],
-					pts: 19,
-					guessed: false
-				},
-				{
-					display: 'Food Services',
-					matches: ['restaurant', 'burgers', 'waiter', 'waitress', 'busboy', 'food'],
-					pts: 18,
-					guessed: false
-				},
-				{
-					display: 'Babysitting',
-					matches: ['babysit', 'childcare'],
-					pts: 17,
-					guessed: false
-				},
-				{
-					display: 'Lemonade Stand',
-					matches: ['lemonade'],
-					pts: 9,
-					guessed: false
-				}
-			],
-			remainingAns: 5 
-		}
-	} else if (STORE.round === 2) {
-		STORE.QA = {
-			question: 'Name something with fangs',
-			answers: [
-				{
-					display: 'Vampire/Dracula',
-					matches: ['vampire', 'dracula'],
-					pts: 39,
-					guessed: false
-				},
-				{
-					display: 'Snakes',
-					matches: ['snake', 'cobra', 'viper', 'rattlesnake', 'anaconda', 'python'],
-					pts: 22,
-					guessed: false
-				},
-				{
-					display: 'Bats',
-					matches: ['bat'],
-					pts: 11,
-					guessed: false
-				},
-				{
-					display: 'Wolves',
-					matches: ['wolf', 'wolves'],
-					pts: 9,
-					guessed: false
-				},
-				{
-					display: 'Tiger',
-					matches: ['tiger'],
-					pts: 5,
-					guessed: false
-				}
-			],
-			remainingAns: 5 
-		}
-	} else if (STORE.round === 3) {
-		STORE.QA = {
-			question: 'Name something expensive you could order in a restaurant',
-			answers: [
-				{
-					display: 'Lobster',
-					matches: ['lobster'],
-					pts: 32,
-					guessed: false
-				},
-				{
-					display: 'Wine',
-					matches: ['wine'],
-					pts: 23,
-					guessed: false
-				},
-				{
-					display: 'Steak',
-					matches: ['steak', 'filet'],
-					pts: 19,
-					guessed: false
-				},
-				{
-					display: 'Caviar',
-					matches: ['caviar'],
-					pts: 13,
-					guessed: false
-				},
-				{
-					display: 'Foie Gras',
-					matches: ['foie gras', 'pate', 'duck liver', 'goose liver'],
-					pts: 3,
-					guessed: false
-				}
-			],
-			remainingAns: 5 
-		}
-	}
+Model.getNewQAs = () => {
+	
+	$.getJSON('/questans', (data) => {
+		console.log(data);
+		STORE.QA = data;
+		View.renderGameScreen();
+		SpeechController.listen(COMMANDS.showMe); 
+	})
 }
 
 // update game data at start of a new game
@@ -151,7 +48,7 @@ Model.startNextGame = () => {
 	Model.resetGuesses();
 	Model.resetGuessHistory();
 	Model.resetRoundHistory();
-	Model.getNewQA();
+	Model.getNewQAs();
 }
 
 // update game data at the end of each round
@@ -159,10 +56,10 @@ Model.endRound = () => {
 	Model.storeRoundScore();
 	Model.resetRoundScore();
 	Model.storeRoundPossible();
+	Model.storeRoundQAId();
 	Model.resetGuesses();
 	Model.resetGuessHistory();
 	Model.incRound();
-	Model.getNewQA();
 } 
 
 Model.resetRoundHistory = () => {
@@ -215,7 +112,12 @@ Model.storeRoundScore = () => {
 // calculate and store the total possible round score in roundHistory
 Model.storeRoundPossible = () => {
 	STORE.roundHistory[STORE.round - 1].possible = 
-		STORE.QA.answers.reduce((accum, elem) => (accum + elem.pts),0);
+		STORE.QA[STORE.round - 1].answers.reduce((accum, elem) => (accum + elem.pts),0);
+}
+
+// store the database id for the question/answers
+Model.storeRoundQAId = () => {
+	STORE.roundHistory[STORE.round - 1].QAId = STORE.QA[STORE.round - 1]._id;
 }
 
 // get the total score for all combined rounds
@@ -251,7 +153,7 @@ Model.processGuess = (guess) => {
         return;
     }
     
-    const ansArr = STORE.QA.answers;
+    const ansArr = STORE.QA[STORE.round - 1].answers;
 
     // loop through each answer's match options
     for (let i = 0; i < ansArr.length; i += 1) {
@@ -276,8 +178,8 @@ Model.processGuess = (guess) => {
                     View.updateRoundScore();
                     
                     // decrement remainingAns and check if no more to guess
-                    STORE.QA.remainingAns -= 1;
-                    if (STORE.QA.remainingAns === 0) {
+                    STORE.QA[STORE.round - 1].remainingAns -= 1;
+                    if (STORE.QA[STORE.round - 1].remainingAns === 0) {
                         View.toggleEndRound();
                         SpeechController.listen(COMMANDS.next);
                         View.playAudio('sounds/allcorrect.wav');
@@ -329,8 +231,8 @@ View.playAudio = (url) => {
 
 // show all the correct answers at the end of a round
 View.revealMissedAnswers = () => {
-	for (let i = 0; i < STORE.QA.answers.length; i += 1) {
-		if (STORE.QA.answers[i].guessed === false) {
+	for (let i = 0; i < STORE.QA[STORE.round - 1].answers.length; i += 1) {
+		if (STORE.QA[STORE.round - 1].answers[i].guessed === false) {
 			View.revealAnswer(i, false);
 		}
 	}
@@ -339,8 +241,8 @@ View.revealMissedAnswers = () => {
 // show correct answer and corresponding points from specified index
 View.revealAnswer = (i, guessed) => {  
 	const $correctElem = $(`.answers div:nth-child(${2*i+1})`);
-	$correctElem.text(STORE.QA.answers[i].display);
-	$correctElem.next().text(STORE.QA.answers[i].pts);
+	$correctElem.text(STORE.QA[STORE.round - 1].answers[i].display);
+	$correctElem.next().text(STORE.QA[STORE.round - 1].answers[i].pts);
 
 	if (guessed) {
 		$correctElem.addClass('answers__text--guessed');
@@ -387,12 +289,12 @@ View.updateRound = () => {
 
 // check and render the question for the current round
 View.updateQuestion = () => {
-	$('#question-text').text(STORE.QA.question);
+	$('#question-text').text(STORE.QA[STORE.round - 1].question);
 }
 
 // todo: create function(s) to update the answer grid after each round
 View.resetAnswerBoard = () => {
-	const numAnswers = STORE.QA.answers.length;
+	const numAnswers = STORE.QA[STORE.round - 1].answers.length;
 	let answerBoard = '';
 	for (let i = 0; i < numAnswers; i += 1) {
 		answerBoard += 
@@ -516,9 +418,7 @@ Controller.handleShowMeBtn = () => {
 Controller.handleLetsPlayBtn = () => {
 	$('#lets-play-btn').click(() => {        
 		$('#instructions-modal').addClass('modal-background--hidden');
-		Model.getNewQA();
-		View.renderGameScreen();
-		SpeechController.listen(COMMANDS.showMe);   
+		Model.getNewQAs();  
 	});
 }
 

@@ -1,0 +1,8 @@
+#data-entry-form {
+    display:none;
+}
+
+button {
+    display: block;
+    margin: 10px 0;
+}
