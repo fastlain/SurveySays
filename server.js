@@ -13,13 +13,9 @@ const {QuestAns} = require('./models');
 app.use(express.static('public'));
 app.use(express.static('dataentry'));
 
-app.get('/questans', (req,res) => {
-  //QuestAns.aggregate([{$sample: {size: 3}}]);
-  // const count = (parseInt(req.params.count));
-  
+app.get('/questans', (req,res) => {  
   QuestAns
-    .find()
-    .limit(3)
+    .aggregate([{$sample: {size:3}}])
     .then(questans => {
       res.json(questans);
     })
