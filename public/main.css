@@ -490,16 +490,18 @@ html {
 /***** audio-ctrl *****/
 .audio-ctrl {
     position: fixed;
-    bottom: 10px;
-    left: 90%;
+    bottom: 25px;
+    left: calc(100% - 50px);
+    font-size: 1.5rem;
+    background: none;
+    border: none;
 }
 
 .audio-ctrl__icon {
-    height: 1.5rem;
-    fill: white;
+    color: white;
 }
 .audio-ctrl__icon:hover {
-    fill: rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.2);
 }
 
 .audio-ctrl__icon--hidden {
@@ -511,7 +513,6 @@ html {
 .page-footer {
     height: 10vh;
     text-align: center;
-    padding-top: 3vh;
 }
 
 .page-footer_para {
