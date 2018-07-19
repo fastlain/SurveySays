@@ -56,9 +56,10 @@ function handleDataEntrySubmit() {
                     pts: $(`#points-input${i+1}`).val()
                 };
                 formData.answers.push(ans);
-            }
+            }            
 
             $.ajax({
+                url: '/questans',
                 method: 'POST',
                 dataType: 'json',
                 data: formData,

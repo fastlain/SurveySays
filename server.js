@@ -4,7 +4,6 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const bodyParser = require('body-parser');
 const path = require('path');
 
 const {PORT, DATABASE_URL} = require('./config');
@@ -25,11 +24,33 @@ app.get('/questans', (req,res) => {
     });
 });
 
-app.get('/dataentry', (req,res) => {
-  res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));
-});
+app.post('/questans', express.urlencoded({extended: true}), (req,res) => {
+  console.log(req.body);
+  
+  // check for required questans fields
+  const requiredFields = ['question', 'answers'];
+  for (let i = 0; i < requiredFields.length; i += 1) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing field: '${field}' in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
 
-app.post('/dataentry', bodyParser.urlencoded(), (req,res) => {
+  // check for required questans.answers fields
+  const requiredAnsFields = ['display', 'matches', 'pts'];
+  for (let j = 0; j < req.body.answers.length; j += 1) {  
+    for (let k = 0; k < requiredAnsFields; k += 1) {
+      const ansField = requiredAnsFields[k];
+      if(!(ansField in req.body.answers)) {
+        const message = `Missing field: '${ansField}' in answers[${j}]`;
+        console.error(message);
+        return res.status(400).send(message);
+      }
+    }
+  }
+  
   const newData = {
     question: req.body.question,    
     answers: req.body.answers,
@@ -42,6 +63,10 @@ app.post('/dataentry', bodyParser.urlencoded(), (req,res) => {
       console.error(err);
       res.status(500).json({message: 'Internal server error'});
     });  
+});
+
+app.get('/dataentry', (req,res) => {
+  res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));
 });
 
 // declare `server` here, assign a value in runServer, and access it in closeServer
