@@ -10,20 +10,20 @@ function handleCreateForm() {
             </div>`
         );
         const numAns = $('#num-answers-inpt').val();
-        for (let i = 0; i < numAns; i += 1) {
+        for (let i = 1; i <= numAns; i += 1) {
             $('#data-entry-form').append(`
-                <h3 class='answer'>Answer #${i+1}</h3>
+                <h3 class='answer'>Answer #${i}</h3>
                 <div class='data-entry__wrapper'>
-                    <label for='display-inpt${i+1}'>Answer to display:</label>
-                    <input id='display-inpt${i+1}' class='data-entry__input' type='text' required>
+                    <label for='display-inpt${i}'>Answer to display:</label>
+                    <input id='display-inpt${i}' class='data-entry__input' type='text' required>
                 </div>
                 <div class='data-entry__wrapper'>
-                    <label for='matches-inpt${i+1}'>Answer matches:</label>
-                    <input id='matches-input${i+1}' class='data-entry__input' type='text' required>
+                    <label for='matches-inpt${i}'>Answer matches:</label>
+                    <input id='matches-input${i}' class='data-entry__input' type='text' required>
                 </div>
                 <div class='data-entry__wrapper'>
-                    <label for='points-input${i+1}'>Points: </label>
-                    <input id='points-input${i+1}' class='data-entry__input' type='number' required>
+                    <label for='points-input${i}'>Points: </label>
+                    <input id='points-input${i}' class='data-entry__input' type='number' required>
                 </div>
             `);
         }
