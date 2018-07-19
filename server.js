@@ -15,9 +15,7 @@ app.use(express.static('dataentry'));
 app.get('/questans', (req,res) => {  
   QuestAns
     .aggregate([{$sample: {size:3}}])
-    .then(questans => {
-      console.log(questans);
-      
+    .then(questans => {    
       res.json(questans);
     })
     .catch(err => {
@@ -27,7 +25,6 @@ app.get('/questans', (req,res) => {
 });
 
 app.post('/questans', express.json(), (req,res) => {
-  console.log(req.body);
   
   // check for required questans fields
   const requiredFields = ['question', 'answers'];
@@ -60,7 +57,7 @@ app.post('/questans', express.json(), (req,res) => {
   
   QuestAns
     .create(newData)
-    .then(res.status(201).json({message: 'Question/Answers added to database successfully'}))
+    .then(newEntry => res.status(201).json(newEntry))
     .catch(err => {
       console.error(err);
       res.status(500).json({message: 'Internal server error'});
