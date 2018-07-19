@@ -61,8 +61,9 @@ function handleDataEntrySubmit() {
             $.ajax({
                 url: '/questans',
                 method: 'POST',
+                contentType: 'application/json',
                 dataType: 'json',
-                data: formData,
+                data: JSON.stringify(formData),
                 success: handleSuccess,
                 error: handleError
             });

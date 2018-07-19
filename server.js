@@ -16,6 +16,8 @@ app.get('/questans', (req,res) => {
   QuestAns
     .aggregate([{$sample: {size:3}}])
     .then(questans => {
+      console.log(questans);
+      
       res.json(questans);
     })
     .catch(err => {
@@ -24,7 +26,7 @@ app.get('/questans', (req,res) => {
     });
 });
 
-app.post('/questans', express.urlencoded({extended: true}), (req,res) => {
+app.post('/questans', express.json(), (req,res) => {
   console.log(req.body);
   
   // check for required questans fields
