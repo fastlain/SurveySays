@@ -1,25 +1,46 @@
+'use strict';
+
+require('dotenv').config()
 const express = require('express');
 const app = express();
+const passport = require('passport');
+const path = require('path');
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const path = require('path');
-
 const {PORT, DATABASE_URL} = require('./config');
-const {QuestAns} = require('./questans/models');
 
 // routers
-const questAnsRouter = require('./questans/questAnsRouter');
-const usersRouter = require('./users/usersRouter');
+const questAnsRouter = require('./questans/router');
+const usersRouter = require('./users/router');
+const authRouter = require('./auth/router');
 app.use('/questans', questAnsRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
+
+
+// passport strategies
+const {localStrategy, jwtStrategy} = require('./auth/strategies');
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 // expose public assets on static server
 app.use(express.static('public'));
 app.use(express.static('dataentry'));
 
 
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+// temp: example of protected endpoint
+// A protected endpoint which needs a valid JWT to access it
+app.get('/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'rosebud'
+  });
+});
+
+// temp, might be able to remove this?
 app.get('/dataentry', (req,res) => {
   res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));
 });
