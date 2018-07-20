@@ -121,14 +121,39 @@ router.post('/', express.json(), (req, res) => {
 
 });
 
-router.post('/logQ', express.json(), (req,res) => {
-    User.findOne({username: req.body.username})
+// router.get('/logQ', express.json(), (req,res) => {
+//     User.findOne({username: req.body.username})
+//         .then(user => {
+//             user.questionLog.push(req.body.questId);
+//             user.save();
+//         })
+//         .then(user => {
+//             return res.status(204).send();
+//         })
+//         .catch(err => {
+//             console.error(err);
+//             res.status(500).json({message: 'Internal server error'});
+//         });      
+// });
+
+// function checkAdmin(req,res,next) {
+//     if (req.user.admin === true) {
+//         next();
+//     } else {
+//         res.status(401).json(message: "not authorized"))
+//     }
+// }
+
+// update user's question history
+router.put('/logQ', express.json(), (req,res) => {
+    User.findOne({_id: req.body.id})
         .then(user => {
             user.questionLog.push(req.body.questId);
             user.save();
+            return user;
         })
         .then(user => {
-            return res.status(204).send();
+            return res.status(200).json(user.serialize());
         })
         .catch(err => {
             console.error(err);
