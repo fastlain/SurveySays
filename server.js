@@ -7,62 +7,18 @@ mongoose.Promise = global.Promise;
 const path = require('path');
 
 const {PORT, DATABASE_URL} = require('./config');
-const {QuestAns} = require('./models');
+const {QuestAns} = require('./questans/models');
 
+// routers
+const questAnsRouter = require('./questans/questAnsRouter');
+const usersRouter = require('./users/usersRouter');
+app.use('/questans', questAnsRouter);
+app.use('/users', usersRouter);
+
+// expose public assets on static server
 app.use(express.static('public'));
 app.use(express.static('dataentry'));
 
-app.get('/questans', (req,res) => {  
-  QuestAns
-    .aggregate([{$sample: {size:3}}])
-    .then(questans => {    
-      res.json(questans);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({message: 'Internal server error'});
-    });
-});
-
-app.post('/questans', express.json(), (req,res) => {
-  
-  // check for required questans fields
-  const requiredFields = ['question', 'answers'];
-  for (let i = 0; i < requiredFields.length; i += 1) {
-    const field = requiredFields[i];
-    if (!(field in req.body)) {
-      const message = `Missing field: '${field}' in request body`;
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
-
-  // check for required questans.answers fields
-  const requiredAnsFields = ['display', 'matches', 'pts'];
-  for (let j = 0; j < req.body.answers.length; j += 1) {  
-    for (let k = 0; k < requiredAnsFields; k += 1) {
-      const ansField = requiredAnsFields[k];
-      if(!(ansField in req.body.answers)) {
-        const message = `Missing field: '${ansField}' in answers[${j}]`;
-        console.error(message);
-        return res.status(400).send(message);
-      }
-    }
-  }
-  
-  const newData = {
-    question: req.body.question,    
-    answers: req.body.answers,
-  };
-  
-  QuestAns
-    .create(newData)
-    .then(newEntry => res.status(201).json(newEntry))
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({message: 'Internal server error'});
-    });  
-});
 
 app.get('/dataentry', (req,res) => {
   res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));

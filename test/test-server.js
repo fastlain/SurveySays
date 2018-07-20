@@ -12,7 +12,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 // import local data
-const {QuestAns} = require('../models');
+const {QuestAns} = require('../questans/models');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
