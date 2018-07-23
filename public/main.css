@@ -143,7 +143,7 @@ html {
 
 .btn--clear:hover, .btn--clear:focus {
     background: none;
-    color: rgba(0, 0, 0, 0.2);
+    color: #ccc;
 }
 
 .btn--biggertxt {
@@ -294,7 +294,7 @@ html {
 }
 
 
-/***** instructions-modal *****/
+/***** modal *****/
 
 .modal-background {
     display: flex;
@@ -346,6 +346,44 @@ html {
 .instructions__para--mic-status {
     color: var(--sec-color);
 }
+
+/***** login *****/
+
+.login {
+    background-color: var(--main-bg-color);
+    width: 300px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+}
+
+.login__heading {
+    text-align: center;
+    font-family: var(--heading-font);
+    margin: 5px auto;
+}
+
+.login__inpt {
+    margin: 10px auto;
+    display: block;
+}
+
+.login__inpt--hidden {
+    display: none;
+}
+
+.login-lbl--hidden {
+    display: none;
+}
+
+.login__msg {
+    margin: 10px auto;
+    text-align: center;
+    font-style: italic;
+    color: var(--sec-color);
+}
+
 
 /***** main *****/
 
@@ -418,6 +456,7 @@ html {
 .guess-form__flex-inpt {
     flex: 5 1 auto;
     width: 100px;
+    margin-left: 15px;
 }
 
 /***** lbl *****/
@@ -432,7 +471,6 @@ html {
 .inpt {
     border: none;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
-    margin-left: 15px;
     padding-left: 10px;
     font-size: inherit;
     padding: 0.5em 0.75em;
@@ -625,7 +663,7 @@ html {
     color: white;
 }
 .audio-ctrl__icon:hover {
-    color: rgba(0, 0, 0, 0.2);
+    color: #ccc;
 }
 
 .audio-ctrl__icon--hidden {

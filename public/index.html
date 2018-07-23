@@ -58,6 +58,24 @@
             <button id='lets-play-btn' class='btn btn--quoted btn--centered btn--margins' type='button'> Let's Play! </button>
         </section>
     </div>
+
+    <div id='login-modal' class='modal-background modal-background--hidden'>
+            <form id='login-form' class='login'>
+                <h2 id='login-heading' class='login__heading'>Log In</h2>
+                <label for='username-inpt'>Username:</label>
+                <input id='username-inpt' class='inpt login__inpt' type='text'>
+                <label for='password-inpt'>Password: 
+                    <span class='sublabel'>(10 character minimum)</span>
+                </label>
+                <input id='password-inpt' class='inpt login__inpt' type='password'>
+                <label class='login-lbl login-lbl--hidden' for='re-password-inpt'>Re-enter Password:</label>
+                <input id='re-password-inpt' class='inpt login__inpt login__inpt--hidden' type='password'>
+                <p id='login-msg' class='login__msg'>This is a test message</p>
+                <button id='login-btn' class='btn btn--centered' type='button'>Log In</button>
+                <button id='create-user-btn' class='btn btn--centered btn--hidden' type='button'>Create User</button>
+                <button id='swap-login-create' class='btn btn--clear btn--centered' type='button'>Create a new user account</button>
+            </form>
+        </div>
     
     <main class='main main--hidden' role='main'>
         <div class='game-container'>
@@ -101,7 +119,7 @@
                 <div class='answers__sum'>0</div>
             </section>
 
-            <form class='guess-form' id='guess-form'>
+            <form id='guess-form' class='guess-form'>
                 <label class='lbl' for='guess-input'>Enter a guess:</label>
                 <div class='guess-form__flex-wrapper'>
                     <button id='showme-btn' class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
