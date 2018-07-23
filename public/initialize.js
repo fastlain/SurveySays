@@ -23,7 +23,8 @@ const STORE = {
 			possible:0,
 			QAId: 0
         }
-    ]
+	],
+	user: null
 }
 
 const Model = {};
@@ -446,6 +447,21 @@ Controller.handleMuteBtn = () => {
     });
 }
 
+Controller.handleDropDownBtn = () => {
+	// toggle drop down on click
+	$('#dropdown-btn').click(() => {
+		$('#dropdown-content').toggleClass('dropdown__content--hidden');
+	});
+
+	// hide on click outside
+	$(document).on('click', (evt) => {
+		if (!$(evt.target).closest('#dropdown-container').length) {
+			$('#dropdown-content').addClass('dropdown__content--hidden');
+		}
+	});
+	
+}
+
 function initialize() {
     SpeechController.start();
     Controller.handleMuteBtn();
@@ -455,6 +471,7 @@ function initialize() {
 	Controller.handleShowMeBtn();
 	Controller.handleNextBtn();
 	Controller.handleNewGameBtn();
+	Controller.handleDropDownBtn();
 }
 
 $(initialize);

@@ -80,6 +80,80 @@ html {
     height: 100vh;
 }
 
+/***** btn *****/
+
+.btn {
+    background: var(--sec-color);
+    font-family: var(--body-font);
+    color: var(--primary-text-color);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+    font-size: inherit;
+    font-weight: bold;
+    padding: 0.5em 0.75em;
+    display: inline-block;
+}
+
+.btn:hover,
+.btn:focus {
+    background-color: var(--sec-color-dark10);
+}
+
+.btn--front {
+    display: block;
+    margin: 0 20px 0 auto;
+    font-size: 5vmin;
+}
+
+@media (min-width: 600px) and (min-height: 600px) {
+    .btn--front {
+        font-size: 30px;
+    }
+} 
+
+.btn--quoted:before {
+    content: '\201c';
+    vertical-align: top;
+}
+
+.btn--quoted:after {
+    content: '\201d';
+    vertical-align: top;
+}
+
+.btn--centered {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn--hidden {
+    display: none;
+}
+
+.btn--margins {
+    margin: 15px auto;
+}
+
+.btn--clear {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.btn--clear:hover, .btn--clear:focus {
+    background: none;
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.btn--biggertxt {
+    font-size: 1.5rem;
+}
+
+.btn__inlnblck {
+    display: inline-block;
+}
+
 /***** front-header *****/
 
 .front-header {
@@ -167,8 +241,58 @@ html {
     .game-header__title {
         font-size: 20px;
     }
-    
 } 
+
+/***** dropdown *****/
+.dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.dropdown__content {
+    display: block;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    background-color: var(--main-bg-color);
+}
+
+.dropdown__content--hidden {
+    display: none;
+}
+
+.dropdown__item {
+    list-style: none;
+}
+
+.dropdown__item--hidden {
+    display: none;
+}
+
+.dropdown__item--notice {
+    font-style: italic;
+}
+
+@media (min-width: 600px) {
+    .dropdown__btn {
+        display: none;
+    }
+
+    .dropdown__content {
+        background: none;
+        display: block;
+    }
+    
+    .dropdown__item {
+        display: inline-block;
+    }
+
+}
+
 
 /***** instructions-modal *****/
 
@@ -532,63 +656,4 @@ html {
 .page-footer__icon--linkedin {
     /* color: #0077b5; */
     color: var(--primary-text-color);
-}
-
-/***** btn *****/
-
-.btn {
-    background: var(--sec-color);
-    font-family: var(--body-font);
-    color: var(--primary-text-color);
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
-    font-size: inherit;
-    font-weight: bold;
-    padding: 0.5em 0.75em;
-    display: inline-block;
-}
-
-.btn:hover,
-.btn:focus {
-    background-color: var(--sec-color-dark10);
-}
-
-.btn--front {
-    display: block;
-    margin: 0 20px 0 auto;
-    font-size: 5vmin;
-}
-
-@media (min-width: 600px) and (min-height: 600px) {
-    .btn--front {
-        font-size: 30px;
-    }
-} 
-
-.btn--quoted:before {
-    content: '\201c';
-    vertical-align: top;
-}
-
-.btn--quoted:after {
-    content: '\201d';
-    vertical-align: top;
-}
-
-.btn--centered {
-    display: block;
-    margin: 0 auto;
-}
-
-.btn--hidden {
-    display: none;
-}
-
-.btn--margins {
-    margin: 15px auto;
-}
-
-.btn__inlnblck {
-    display: inline-block;
 }

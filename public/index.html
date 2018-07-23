@@ -35,6 +35,18 @@
         </h1>
     </header>
 
+    <nav id='dropdown-container' class='dropdown' role='navigation'>
+        <button id='dropdown-btn' class='dropdown__btn btn btn--clear btn--biggertxt' type='button' aria-label='Dropdown Menu'>
+            <i class="fas fa-bars" aria-hidden></i>
+        </button>
+        <ul id='dropdown-content' class='dropdown__content dropdown__content--hidden'>
+            <li id='user-notice' class='dropdown__item dropdown__item--hidden dropdown__item--notice'></li>
+            <li id='login-logout' class='dropdown__item'>
+                <button type='button' class='btn btn--clear'>Log&nbsp;In</button>
+            </li>
+        </ul>
+    </nav>
+
     <div id='instructions-modal' class='modal-background modal-background--hidden'>
         <section class='instructions' role='region'>
             <h2 class='instructions__heading'>Instructions</h2>
