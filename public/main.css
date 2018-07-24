@@ -150,6 +150,10 @@ html {
     font-size: 1.5rem;
 }
 
+.btn--underline {
+    text-decoration: underline;
+}
+
 .btn__inlnblck {
     display: inline-block;
 }
@@ -298,6 +302,8 @@ html {
 
 .modal-background {
     display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     z-index: 2;
     left: 0;
@@ -317,7 +323,7 @@ html {
     background-color: var(--main-bg-color);
     width: 85%;
     max-width: 600px;
-    margin: auto;
+    margin: 0;
     border-radius: 10px;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
     padding: 10px;
@@ -352,10 +358,11 @@ html {
 .login {
     background-color: var(--main-bg-color);
     width: 300px;
-    margin: auto;
+    margin: 0;
     border-radius: 10px;
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
     padding: 10px;
+    position: relative;
 }
 
 .login__heading {
@@ -373,7 +380,7 @@ html {
     display: none;
 }
 
-.login-lbl--hidden {
+.login__lbl--hidden {
     display: none;
 }
 
@@ -382,6 +389,16 @@ html {
     text-align: center;
     font-style: italic;
     color: var(--sec-color);
+}
+
+.login__msg--hidden {
+    display: none;
+}
+
+.login__close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 

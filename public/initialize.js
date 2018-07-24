@@ -458,8 +458,74 @@ Controller.handleDropDownBtn = () => {
 		if (!$(evt.target).closest('#dropdown-container').length) {
 			$('#dropdown-content').addClass('dropdown__content--hidden');
 		}
+	});	
+}
+
+Controller.handleNavLoginBtn = () => {
+	$('#nav-login').click(() => {
+		$('#dropdown-content').addClass('dropdown__content--hidden');
+		$('#login-modal').removeClass('modal-background--hidden');
+
+		// // hide on click outside
+		// $(document).on('click', (evt) => {
+		// 	console.log(evt.target);
+		// 	console.log($(evt.target));
+		// });
+	});	
+}
+
+// Close login/create acct modal by clicking "x", pressing 'escape', or click outside modal
+Controller.handleCloseLoginModal = () => {
+	$('#close-login-btn').click(() => {
+		$('#login-modal').addClass('modal-background--hidden');
 	});
+
+	$('#login-modal').click((evt) => {	
+		if ($(evt.target).is($('#login-modal'))) {
+			$('#login-modal').addClass('modal-background--hidden');
+		}
+	});
+
+	$(document).keydown(function(evt) { 	
+		if (evt.keyCode === 27) { 			
+			$('#login-modal').addClass('modal-background--hidden');
+		}
+	});
+}
+
+// reconfigure modal to accept login information vs new account information
+Controller.handleSwapLoginCreateBtn = () => {
+
+	$('#swap-login-create').click((evt) => {
+		// check data attribute for current state of modal
+		const modalState = $('#login-modal').data('login-create');
+		
+		if (modalState === 'login') {
+			// swap state to create
+			$('#login-modal').data('login-create', 'create');
+			// change heading to create user
+			$('#login-heading').text('Create New User');
+			// change text of swap-login-create
+			$('#swap-login-create').text('Already have an account?');
+		} else {
+			// swap state to login
+			$('#login-modal').data('login-create', 'login');
+			// change heading to login
+			$('#login-heading').text('Log In');
+			// change text of swap-login-create
+			$('#swap-login-create').text('Create a new user account');
+		}
+
+		// toggle visibility of password re-entry lable/input and login/create buttons
+		$('#re-password-lbl').toggleClass('login__lbl--hidden');
+		$('#re-password-inpt').toggleClass('login__inpt--hidden');
+		$('#create-user-btn').toggleClass('btn--hidden');
+		$('#login-btn').toggleClass('btn--hidden');
+
+
+
 	
+	});
 }
 
 function initialize() {
@@ -472,6 +538,9 @@ function initialize() {
 	Controller.handleNextBtn();
 	Controller.handleNewGameBtn();
 	Controller.handleDropDownBtn();
+	Controller.handleNavLoginBtn();
+	Controller.handleCloseLoginModal();
+	Controller.handleSwapLoginCreateBtn();
 }
 
 $(initialize);

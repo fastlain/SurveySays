@@ -8,7 +8,7 @@
     <meta description='A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation.'>
     <link rel='stylesheet' src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
     <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel='stylesheet'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel='stylesheet' href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity='sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ' crossorigin='anonymous'>
     <link rel='stylesheet' href='main.css'>
 </head>
 
@@ -37,12 +37,12 @@
 
     <nav id='dropdown-container' class='dropdown' role='navigation'>
         <button id='dropdown-btn' class='dropdown__btn btn btn--clear btn--biggertxt' type='button' aria-label='Dropdown Menu'>
-            <i class="fas fa-bars" aria-hidden></i>
+            <i class='fas fa-bars' aria-hidden></i>
         </button>
         <ul id='dropdown-content' class='dropdown__content dropdown__content--hidden'>
             <li id='user-notice' class='dropdown__item dropdown__item--hidden dropdown__item--notice'></li>
-            <li id='login-logout' class='dropdown__item'>
-                <button type='button' class='btn btn--clear'>Log&nbsp;In</button>
+            <li class='dropdown__item'>
+                <button id='nav-login' class='btn btn--clear' type='button'>Log&nbsp;In</button>
             </li>
         </ul>
     </nav>
@@ -59,23 +59,27 @@
         </section>
     </div>
 
-    <div id='login-modal' class='modal-background modal-background--hidden'>
-            <form id='login-form' class='login'>
-                <h2 id='login-heading' class='login__heading'>Log In</h2>
-                <label for='username-inpt'>Username:</label>
-                <input id='username-inpt' class='inpt login__inpt' type='text'>
-                <label for='password-inpt'>Password: 
-                    <span class='sublabel'>(10 character minimum)</span>
-                </label>
-                <input id='password-inpt' class='inpt login__inpt' type='password'>
-                <label class='login-lbl login-lbl--hidden' for='re-password-inpt'>Re-enter Password:</label>
-                <input id='re-password-inpt' class='inpt login__inpt login__inpt--hidden' type='password'>
-                <p id='login-msg' class='login__msg'>This is a test message</p>
-                <button id='login-btn' class='btn btn--centered' type='button'>Log In</button>
-                <button id='create-user-btn' class='btn btn--centered btn--hidden' type='button'>Create User</button>
-                <button id='swap-login-create' class='btn btn--clear btn--centered' type='button'>Create a new user account</button>
-            </form>
-        </div>
+    <div id='login-modal' class='modal-background modal-background--hidden' data-login-create='login'>
+        <form id='login-form' class='login'>
+            <h2 id='login-heading' class='login__heading'>Log In</h2>
+            <label for='username-inpt'>Username:</label>
+            <input id='username-inpt' class='inpt login__inpt' type='text'>
+            <label for='password-inpt'>Password: 
+                <span class='sublabel'>(10 character minimum)</span>
+            </label>
+            <input id='password-inpt' class='inpt login__inpt' type='password'>
+            <label id='re-password-lbl' class='login__lbl login__lbl--hidden' for='re-password-inpt'>Re-enter Password:</label>
+            <input id='re-password-inpt' class='inpt login__inpt login__inpt--hidden' type='password'>
+            <p id='login-msg' class='login__msg login__msg--hidden'>This is a test message</p>
+            <button id='login-btn' class='btn btn--centered' type='button'>Log In</button>
+            <button id='create-user-btn' class='btn btn--centered btn--hidden' type='button'>Create User</button>
+            <button id='swap-login-create' class='btn btn--clear btn--centered btn--underline' type='button'>Create a new user account
+            </button>
+            <button id='close-login-btn' class='login__close-btn btn btn--clear' type='button' aria-label='close window'>
+                    <i class='fas fa-times' aria-hidden='true' title='close window'></i>
+            </button>
+        </form>
+    </div>
     
     <main class='main main--hidden' role='main'>
         <div class='game-container'>
@@ -149,15 +153,15 @@
     </main>
 
     <button id='mute-container' class='audio-ctrl' type='button' aria-label='Toggle sound'>
-        <i class="audio-ctrl__icon fas fa-volume-up" aria-hidden='true' title='Sound On'></i>
-        <i class="audio-ctrl__icon audio-ctrl__icon--hidden fas fa-volume-off" aria-hidden='true' title='Sound Muted'></i>
+        <i class='audio-ctrl__icon fas fa-volume-up' aria-hidden='true' title='Sound On'></i>
+        <i class='audio-ctrl__icon audio-ctrl__icon--hidden fas fa-volume-off' aria-hidden='true' title='Sound Muted'></i>
     </button>
 
     <footer class='page-footer' role='contentinfo'>
         <p class='page-footer_para'>Created by Michael Allain</p>
         <p class='page-footer_para'>        
-            <a href="https://github.com/fastlain/SurveySays" target="_blank" aria-label='GitHub for SurveySays'><i class="page-footer__icon page-footer__icon--black fab fa-github" aria-hidden="true" title='GitHub for SurveySays'></i></a>
-            <a href="https://www.linkedin.com/in/allainm/" target="_blank" aria-label='LinkedIn for Michael Allain'><i class="page-footer__icon page-footer__icon--linkedin fab fa-linkedin" aria-hidden="true" title='LinkedIn for Michael Allain'></i></a>
+            <a href="https://github.com/fastlain/SurveySays" target='_blank' aria-label='GitHub for SurveySays'><i class='page-footer__icon page-footer__icon--black fab fa-github' aria-hidden='true' title='GitHub for SurveySays'></i></a>
+            <a href="https://www.linkedin.com/in/allainm/" target='_blank' aria-label='LinkedIn for Michael Allain'><i class='page-footer__icon page-footer__icon--linkedin fab fa-linkedin' aria-hidden='true' title='LinkedIn for Michael Allain'></i></a>
         </p>
     </footer>
 
