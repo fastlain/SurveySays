@@ -379,8 +379,11 @@ View.checkVoiceSupport = () => {
         );
     } else {
         $('#voice-support').text(`Speech Recognition is not currently supported by your browser. You can play the game without voice control or try using Google Chrome.`);
-    }
-   
+    }  
+}
+
+View.loginMessage = (message) => {
+	$('#login-msg').text(message).removeClass('login__msg--hidden');
 }
 
 // place cursor focus in guess input
@@ -521,10 +524,6 @@ Controller.handleSwapLoginCreateBtn = () => {
 		$('#re-password-inpt').toggleClass('login__inpt--hidden');
 		$('#create-user-btn').toggleClass('btn--hidden');
 		$('#login-btn').toggleClass('btn--hidden');
-
-
-
-	
 	});
 }
 
