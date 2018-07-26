@@ -161,7 +161,7 @@ html {
 /***** front-header *****/
 
 .front-header {
-    height: 90vh;
+    height: 85vh;
     width: 100%;
 }
 
@@ -294,9 +294,13 @@ html {
     .dropdown__item {
         display: inline-block;
     }
-
 }
 
+@media (min-width: 800px) {
+    .dropdown__content {
+        left: calc(50vw - 400px);
+    }
+}
 
 /***** modal *****/
 
@@ -405,7 +409,7 @@ html {
 /***** main *****/
 
 .main {
-    height: 80vh;
+    height: 75vh;
 }
 
 .main--hidden {
@@ -669,7 +673,7 @@ html {
 /***** audio-ctrl *****/
 .audio-ctrl {
     position: fixed;
-    bottom: 25px;
+    bottom: 15px;
     left: calc(100% - 50px);
     font-size: 1.5rem;
     background: none;
@@ -687,20 +691,28 @@ html {
     display:none;
 }
 
+@media (min-width: 800px) {
+    .audio-ctrl {
+        left: calc(50% + 350px)
+    }
+}
+
 /***** page-footer *****/
 
 .page-footer {
-    height: 10vh;
+    height: 15vh;
     text-align: center;
 }
 
 .page-footer_para {
-    margin: 5px auto;
+    font-size: 4vh;
+    margin: 0 auto;
+    padding: 1vh 0;
 }
 
 .page-footer__icon {
-    font-size: 1.5rem;
-    padding: 0 5px;
+    font-size: 4vh;
+    padding: 0 1vh;
 }
 
 .page-footer__icon--black {
