@@ -2,19 +2,26 @@
 
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const {QuestAns} = require('./models');
 
 router.get('/', (req,res) => {  
-    QuestAns
-      .aggregate([{$sample: {size:3}}])
-      .then(questans => {    
-        res.json(questans);
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(500).json({message: 'Internal server error'});
-      });
+  const questHist = req.query.questHist;
+  // convert questHist strings to Mongo ObjectIds
+  const questHistObjectIds = questHist.map(id => ObjectId(id));  
+
+  QuestAns
+    //get questions NOT in history and choose 1 at random
+    .aggregate([{$match: {_id: {$nin: questHistObjectIds}}}, {$sample: {size: 1}} ])
+    .then(questans => {    
+      res.json(questans[0]);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({message: 'Internal server error'});
+    });
 });
   
 router.post('/', express.json(), (req,res) => {
