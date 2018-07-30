@@ -76,30 +76,23 @@ describe('SurveySays API', function() {
         });
 
         describe('GET /questans', function() {
-            it('should return 3 questans objects with correct fields', function() {
-                let res;
+            it('should return a questans object with correct fields', function() {
                 return chai.request(app)
                     .get('/questans')
-                    .then(function(_res) {
-                        res = _res;
+                    .then(function(res) {
                         expect(res).to.have.status(200);
                         expect(res).to.be.json;
-                        expect(res.body).to.be.an('array');
-                        expect(res.body).to.have.lengthOf(3);
-                        
-                        res.body.forEach(function(questans) {
-                            expect(questans).to.be.an('object');
-                            expect(questans).to.include.keys('_id', 'question', 'answers','remainingAns');
-                            expect(questans.question).to.be.a('string');
-                            expect(questans.remainingAns).to.be.a('number');
-                            questans.answers.forEach(function(ans){
-                                expect(ans).to.be.an('object');
-                                expect(ans).to.include.keys('matches','display','pts','guessed');
-                                expect(ans.matches).to.have.lengthOf.at.least(1);
-                                expect(ans.display).to.be.a('string');
-                                expect(ans.pts).to.be.a('number');
-                                expect(ans.guessed).to.be.a('boolean');
-                            });
+                        expect(res.body).to.be.an('object');
+                        expect(res.body).to.include.keys('_id', 'question', 'answers','remainingAns');
+                        expect(res.body.question).to.be.a('string');
+                        expect(res.body.remainingAns).to.be.a('number');
+                        res.body.answers.forEach(function(ans){
+                            expect(ans).to.be.an('object');
+                            expect(ans).to.include.keys('matches','display','pts','guessed');
+                            expect(ans.matches).to.have.lengthOf.at.least(1);
+                            expect(ans.display).to.be.a('string');
+                            expect(ans.pts).to.be.a('number');
+                            expect(ans.guessed).to.be.a('boolean');
                         });
                     });
             });  

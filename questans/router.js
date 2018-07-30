@@ -8,9 +8,14 @@ const ObjectId = mongoose.Types.ObjectId;
 const {QuestAns} = require('./models');
 
 router.get('/', (req,res) => {  
-  const questHist = req.query.questHist;
-  // convert questHist strings to Mongo ObjectIds
-  const questHistObjectIds = questHist.map(id => ObjectId(id));  
+  let questHistObjectIds = [];
+
+  // if request contains question history, convert question ids to ObjectIds
+  if (req.query.questHist) {
+    const questHist = req.query.questHist;
+    // convert questHist strings to Mongo ObjectIds
+    questHistObjectIds = questHist.map(id => ObjectId(id));  
+  } 
 
   QuestAns
     //get questions NOT in history and choose 1 at random
