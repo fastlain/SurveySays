@@ -24,6 +24,7 @@ const STORE = {
 			QAId: 0
         }
 	],
+	//temp: remove once user functionality is set-up
 	user: {
 		questHist: ['5b4e6c5855feb05824dd7e6d','5b4e6c5855feb05824dd7e6e','5b4e6c5855feb05824dd7e6f']
 	}
@@ -243,6 +244,49 @@ Model.processGuess = (guess) => {
         View.playAudio('sounds/wronganswer.wav');
         SpeechController.listen(COMMANDS.showMe);
     }
+}
+
+// Create a new user
+Model.createNewUser = (username, password) => {
+	const userData = {username, password};
+	
+	$.ajax({
+		url: '/users',
+		method: 'POST',
+		contentType: 'application/json',
+		dataType: 'json',
+		data: JSON.stringify(userData),
+		success: handleSuccess,
+		error: handleError
+	});
+
+	function handleSuccess(data) {
+		// console.log(data);
+		$('#login-modal').addClass('modal-background--hidden');
+		View.popUp(`Logged in as ${data.username}`);
+	}
+
+	function handleError(err) {
+		// console.log(err.responseJSON);
+		const errField = err.responseJSON.location;
+		const errMessage = err.responseJSON.message;
+		
+		// Capitalize error field name
+		const errFieldCap = errField.charAt(0).toUpperCase() + errField.slice(1);
+		
+		View.loginMessage(`${errFieldCap} ${errMessage}`);
+	}
+}
+
+// display and then remove pop-up message
+View.popUp = (message) => {
+	const popUp = `<div class='pop-up' hidden>${message}</div>`;
+	$('body').prepend(popUp);
+	$('.pop-up').slideDown(300).delay(3000).slideUp(300);
+	// remove pop-up from DOM
+	setTimeout(function() {
+		$('.pop-up').remove();
+	  }, 4000);
 }
 
 View.playAudio = (url) => {
@@ -489,16 +533,10 @@ Controller.handleNavLoginBtn = () => {
 	$('#nav-login').click(() => {
 		$('#dropdown-content').addClass('dropdown__content--hidden');
 		$('#login-modal').removeClass('modal-background--hidden');
-
-		// // hide on click outside
-		// $(document).on('click', (evt) => {
-		// 	console.log(evt.target);
-		// 	console.log($(evt.target));
-		// });
 	});	
 }
 
-// Close login/create acct modal by clicking "x", pressing 'escape', or click outside modal
+// Close login modal by clicking "x", pressing 'escape', or click outside modal
 Controller.handleCloseLoginModal = () => {
 	$('#close-login-btn').click(() => {
 		$('#login-modal').addClass('modal-background--hidden');
@@ -548,6 +586,29 @@ Controller.handleSwapLoginCreateBtn = () => {
 	});
 }
 
+Controller.handleCreateUserBtn = () => {
+	$('#create-user-btn').click(() => {		
+		const username = $('#username-inpt').val();
+		const password = $('#password-inpt').val();
+		const rePassword = $('#re-password-inpt').val();
+		
+		// check if entered password match
+		if (password !== rePassword) {
+			View.loginMessage('Entered passwords do not match');
+			return;
+		} 
+
+		Model.createNewUser(username, password);
+	});
+}
+
+// Controller.handleLoginBtn = () => {
+// 	$('#login-btn').click(() => {
+// 		const username = $('#username-inpt').val();
+// 		const password = $('#password-inpt').val();
+// 	});
+// }
+
 function initialize() {
     SpeechController.start();
     Controller.handleMuteBtn();
@@ -561,6 +622,7 @@ function initialize() {
 	Controller.handleNavLoginBtn();
 	Controller.handleCloseLoginModal();
 	Controller.handleSwapLoginCreateBtn();
+	Controller.handleCreateUserBtn();
 }
 
 $(initialize);

@@ -727,3 +727,26 @@ html {
     /* color: #0077b5; */
     color: var(--primary-text-color);
 }
+
+/***** pop-up *****/
+.pop-up {
+    position: absolute;
+    top: 15px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+    max-width: 300px;
+    min-width: 200px;
+    width: 50%;
+    background-color: var(--main-bg-color);
+    opacity: 0.9;
+    font-size: 1rem;
+    color: var(--primary-text-color);
+    font-family: var(--body-font);
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    z-index: 100;
+    margin: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}

@@ -7,6 +7,8 @@ const {User} = require('./models');
 
 // create a new user
 router.post('/', express.json(), (req, res) => {
+    console.log(req.body);
+    
     // check for required fields
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
@@ -15,7 +17,7 @@ router.post('/', express.json(), (req, res) => {
         return res.status(422).json({
             code: 422,
             reason: 'ValidationError',
-            message: 'Missing field',
+            message: 'field missing',
             location: missingField
         });
     }
@@ -45,7 +47,7 @@ router.post('/', express.json(), (req, res) => {
       return res.status(422).json({
         code: 422,
         reason: 'ValidationError',
-        message: 'Cannot start or end with whitespace',
+        message: 'cannot start or end with whitespace',
         location: nonTrimmedField
       });
     }
@@ -57,8 +59,7 @@ router.post('/', express.json(), (req, res) => {
         },
         password: {
           min: 10,
-          // bcrypt truncates after 72 characters, so let's not give the illusion
-          // of security by storing extra (unused) info
+          // bcrypt truncates after 72 characters
           max: 72
         }
     };
@@ -75,8 +76,8 @@ router.post('/', express.json(), (req, res) => {
             code: 422,
             reason: 'ValidationError',
             message: tooSmallField
-            ? `Must be at least ${sizedFields[tooSmallField].min} characters long`
-            : `Must be at most ${sizedFields[tooLargeField].max} characters long`,
+            ? `must be at least ${sizedFields[tooSmallField].min} characters long`
+            : `must be at most ${sizedFields[tooLargeField].max} characters long`,
             location: tooSmallField || tooLargeField
         });
     }
@@ -84,14 +85,14 @@ router.post('/', express.json(), (req, res) => {
     // Check if username already exists
     let {username, password} = req.body;
     return User.find({username})
-        .count()
+        .countDocuments()
         .then(count => {
             if (count > 0) {
                 // There is an existing user with the same username
                 return Promise.reject({
                     code: 422,
                     reason: 'ValidationError',
-                    message: 'Username already taken',
+                    message: 'already taken',
                     location: 'username'
                 });
             }
