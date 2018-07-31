@@ -271,6 +271,7 @@ html {
 
 .dropdown__item {
     list-style: none;
+    width: 90px;
 }
 
 .dropdown__item--hidden {
@@ -279,6 +280,8 @@ html {
 
 .dropdown__item--notice {
     font-style: italic;
+    padding: 0.5em 0.75em;
+    border-bottom: solid var(--primary-text-color) 2px;
 }
 
 @media (min-width: 600px) {
@@ -289,10 +292,15 @@ html {
     .dropdown__content {
         background: none;
         display: block;
+        width: 300px;
     }
     
     .dropdown__item {
         display: inline-block;
+    }
+
+    .dropdown__item--notice {
+        border: none;
     }
 }
 

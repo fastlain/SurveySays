@@ -262,8 +262,9 @@ Model.createNewUser = (username, password) => {
 
 	function handleSuccess(data) {
 		// console.log(data);
-		$('#login-modal').addClass('modal-background--hidden');
-		View.popUp(`Logged in as ${data.username}`);
+		STORE.user = data;
+		Model.getJWT(username, password);
+		View.renderLoggedIn();
 	}
 
 	function handleError(err) {
@@ -276,6 +277,75 @@ Model.createNewUser = (username, password) => {
 		
 		View.loginMessage(`${errFieldCap} ${errMessage}`);
 	}
+}
+
+// request a JWT from the server
+Model.getJWT = (username, password) => {
+	const userData = {username, password};
+
+	$.ajax({
+		url: '/auth/login',
+		method: 'POST',
+		contentType: 'application/json',
+		dataType: 'json',
+		data: JSON.stringify(userData),
+		success: handleSuccess,
+		error: handleError
+	});
+
+	function handleSuccess(data) {
+		console.log(data);
+		localStorage.setItem('TOKEN', data.authToken);
+	}
+
+	function handleError(err) {
+		console.log(err);
+	}
+}
+
+// refresh the user's JWT
+Model.refreshJWT = () => {
+	const currentToken = localStorage.getItem('TOKEN')
+	
+	$.ajax({
+		url: '/auth/refresh',
+		method: 'POST',
+		contentType: 'application/json',
+		dataType: 'json',
+		headers: {
+			Authorization: 'Bearer ' + currentToken
+		},
+		success: handleSuccess,
+		error: handleError
+	});
+
+	function handleSuccess(data) {
+		// console.log(data);
+		localStorage.setItem('TOKEN', data.authToken);
+	}
+
+	function handleError(err) {
+		console.log(err);
+	}
+}
+
+View.renderLoggedIn = () => {
+	// hide log-in modal
+	$('#login-modal').addClass('modal-background--hidden');
+
+	// clear login-fields and message
+	$('#username-inpt').val('');
+	$('#password-inpt').val('');
+	$('#re-password-inpt').val('');
+	View.loginMessage('');
+
+	const username = STORE.user.username;
+	// update dropdown/login menu
+	$('#user-notice').text(username).removeClass('dropdown__item--hidden');
+	$('#nav-login-logout').html('Log&nbsp;Out');
+
+	// notify user of success
+	View.popUp(`Logged in as ${username}`);
 }
 
 // display and then remove pop-up message
@@ -530,7 +600,7 @@ Controller.handleDropDownBtn = () => {
 }
 
 Controller.handleNavLoginBtn = () => {
-	$('#nav-login').click(() => {
+	$('#nav-login-logout').click(() => {
 		$('#dropdown-content').addClass('dropdown__content--hidden');
 		$('#login-modal').removeClass('modal-background--hidden');
 	});	
@@ -606,6 +676,8 @@ Controller.handleCreateUserBtn = () => {
 // 	$('#login-btn').click(() => {
 // 		const username = $('#username-inpt').val();
 // 		const password = $('#password-inpt').val();
+
+// 		Model.login(username, password);
 // 	});
 // }
 
@@ -623,6 +695,7 @@ function initialize() {
 	Controller.handleCloseLoginModal();
 	Controller.handleSwapLoginCreateBtn();
 	Controller.handleCreateUserBtn();
+	Controller.handleLoginBtn();
 }
 
 $(initialize);
