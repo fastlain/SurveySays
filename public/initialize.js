@@ -24,10 +24,7 @@ const STORE = {
 			QAId: 0
         }
 	],
-	//temp: remove once user functionality is set-up
-	user: {
-		questHist: ['5b4e6c5855feb05824dd7e6d','5b4e6c5855feb05824dd7e6e','5b4e6c5855feb05824dd7e6f']
-	}
+	user: null
 }
 
 const Model = {};
@@ -294,7 +291,6 @@ Model.getJWT = (username, password) => {
 	});
 
 	function handleSuccess(data) {
-		console.log(data);
 		localStorage.setItem('TOKEN', data.authToken);
 	}
 
@@ -320,13 +316,20 @@ Model.refreshJWT = () => {
 	});
 
 	function handleSuccess(data) {
-		// console.log(data);
 		localStorage.setItem('TOKEN', data.authToken);
 	}
 
 	function handleError(err) {
 		console.log(err);
 	}
+}
+
+// log user out
+Model.logOut = () => {
+	// remove user from store
+	STORE.user = null;
+	// delete JWT
+	localStorage.removeItem('TOKEN');
 }
 
 View.renderLoggedIn = () => {
@@ -346,6 +349,15 @@ View.renderLoggedIn = () => {
 
 	// notify user of success
 	View.popUp(`Logged in as ${username}`);
+}
+
+View.renderLoggedOut = () => {
+	// update dropdown/login menu
+	$('#user-notice').text('').addClass('dropdown__item--hidden');
+	$('#nav-login-logout').html('Log&nbsp;In');
+
+	// notify user of success
+	View.popUp(`Logged out`);
 }
 
 // display and then remove pop-up message
@@ -599,10 +611,18 @@ Controller.handleDropDownBtn = () => {
 	});	
 }
 
-Controller.handleNavLoginBtn = () => {
+Controller.handleNavLoginLogoutBtn = () => {
 	$('#nav-login-logout').click(() => {
-		$('#dropdown-content').addClass('dropdown__content--hidden');
-		$('#login-modal').removeClass('modal-background--hidden');
+		// check if user is currently logged in or out
+		if (STORE.user === null) {
+			// show login modal
+			$('#dropdown-content').addClass('dropdown__content--hidden');
+			$('#login-modal').removeClass('modal-background--hidden');
+		} else {
+			// logout
+			Model.logOut();
+			View.renderLoggedOut();
+		}
 	});	
 }
 
@@ -691,11 +711,12 @@ function initialize() {
 	Controller.handleNextBtn();
 	Controller.handleNewGameBtn();
 	Controller.handleDropDownBtn();
-	Controller.handleNavLoginBtn();
+	Controller.handleNavLoginLogoutBtn();
 	Controller.handleCloseLoginModal();
 	Controller.handleSwapLoginCreateBtn();
 	Controller.handleCreateUserBtn();
-	Controller.handleLoginBtn();
+	//Controller.handleLoginBtn();
+
 }
 
 $(initialize);
