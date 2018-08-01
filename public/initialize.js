@@ -259,9 +259,7 @@ Model.createNewUser = (username, password) => {
 
 	function handleSuccess(data) {
 		// console.log(data);
-		STORE.user = data;
-		Model.getJWT(username, password);
-		View.renderLoggedIn();
+		Model.logIn(username, password);
 	}
 
 	function handleError(err) {
@@ -276,8 +274,8 @@ Model.createNewUser = (username, password) => {
 	}
 }
 
-// request a JWT from the server
-Model.getJWT = (username, password) => {
+// request user data and a JWT from the server
+Model.logIn = (username, password) => {
 	const userData = {username, password};
 
 	$.ajax({
@@ -291,11 +289,16 @@ Model.getJWT = (username, password) => {
 	});
 
 	function handleSuccess(data) {
+		console.log(data);
+		
+		STORE.user = data.user;
 		localStorage.setItem('TOKEN', data.authToken);
+		View.renderLoggedIn();
 	}
 
 	function handleError(err) {
-		console.log(err);
+		// console.log(err);
+		View.loginMessage('Invalid username or password');
 	}
 }
 
@@ -692,14 +695,17 @@ Controller.handleCreateUserBtn = () => {
 	});
 }
 
-// Controller.handleLoginBtn = () => {
-// 	$('#login-btn').click(() => {
-// 		const username = $('#username-inpt').val();
-// 		const password = $('#password-inpt').val();
+Controller.handleLoginBtn = () => {
+	$('#login-btn').click(() => {
+		// clear any existing login messages
+		View.loginMessage('');
 
-// 		Model.login(username, password);
-// 	});
-// }
+		const username = $('#username-inpt').val();
+		const password = $('#password-inpt').val();
+
+		Model.logIn(username, password);
+	});
+}
 
 function initialize() {
     SpeechController.start();
@@ -715,8 +721,7 @@ function initialize() {
 	Controller.handleCloseLoginModal();
 	Controller.handleSwapLoginCreateBtn();
 	Controller.handleCreateUserBtn();
-	//Controller.handleLoginBtn();
-
+	Controller.handleLoginBtn();
 }
 
 $(initialize);
