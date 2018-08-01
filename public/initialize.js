@@ -279,7 +279,7 @@ Model.logIn = (username, password) => {
 	const userData = {username, password};
 
 	$.ajax({
-		url: '/auth/login',
+		url: '/auth/loginlocal',
 		method: 'POST',
 		contentType: 'application/json',
 		dataType: 'json',
@@ -302,9 +302,31 @@ Model.logIn = (username, password) => {
 	}
 }
 
+// login with existing JWT in localStorage
+Model.logInJWT = () => {
+	const currentToken = localStorage.getItem('TOKEN');
+	
+	$.ajax({
+		url: '/auth/loginjwt',
+		method: 'POST',
+		contentType: 'application/json',
+		dataType: 'json',
+		headers: {
+			Authorization: 'Bearer ' + currentToken
+		},
+		success: handleSuccess
+	});
+
+	function handleSuccess(data) {		
+		STORE.user = data.user;
+		localStorage.setItem('TOKEN', data.authToken);
+		View.renderLoggedIn();
+	}
+}
+
 // refresh the user's JWT
 Model.refreshJWT = () => {
-	const currentToken = localStorage.getItem('TOKEN')
+	const currentToken = localStorage.getItem('TOKEN');
 	
 	$.ajax({
 		url: '/auth/refresh',
@@ -722,6 +744,11 @@ function initialize() {
 	Controller.handleSwapLoginCreateBtn();
 	Controller.handleCreateUserBtn();
 	Controller.handleLoginBtn();
+
+	// if localStorage contains a JWT, automatically log user in
+	if (localStorage.getItem('TOKEN')) {
+		Model.logInJWT();
+	}
 }
 
 $(initialize);

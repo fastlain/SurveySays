@@ -21,7 +21,7 @@ router.use(express.json());
 const localAuth = passport.authenticate('local', {session: false});
 
 // The user provides a username and password to login
-router.post('/login', localAuth, (req, res) => {
+router.post('/loginlocal', localAuth, (req, res) => {
     const authToken = createAuthToken(req.user.serialize());
     res.json({
         user: req.user.serialize(),
@@ -31,10 +31,13 @@ router.post('/login', localAuth, (req, res) => {
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-// The user exchanges a valid JWT for a new one with a later expiration
-router.post('/refresh', jwtAuth, (req, res) => {    
+// The user provides a valid JWT to login (and receive a new JWT)
+router.post('/loginjwt', jwtAuth, (req, res) => {    
     const authToken = createAuthToken(req.user);
-    res.json({authToken});
+    res.json({
+        user: req.user,
+        authToken
+    });
 });
 
 module.exports = router;
