@@ -141,7 +141,7 @@ router.post('/', express.json(), (req, res) => {
 //     if (req.user.admin === true) {
 //         next();
 //     } else {
-//         res.status(401).json(message: "not authorized"))
+//         res.status(401).json({message: 'not authorized'});
 //     }
 // }
 

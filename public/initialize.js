@@ -33,7 +33,10 @@ const Controller = {};
 
 // get new question and answers/points from server
 Model.getNewQA = () => {
-	const questHist = STORE.user.questHist;
+	const questHist = [];
+	if (STORE.user) {
+		questHist = STORE.user.questHist;
+	}
 
 	$.ajax({
 		method: 'GET',
