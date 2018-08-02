@@ -294,7 +294,6 @@ html {
 
 .dropdown__item {
     list-style: none;
-    width: 90px;
 }
 
 .dropdown__item--hidden {
