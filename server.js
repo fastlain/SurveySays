@@ -29,17 +29,6 @@ passport.use(jwtStrategy);
 app.use(express.static('public'));
 app.use(express.static('dataentry'));
 
-
-const jwtAuth = passport.authenticate('jwt', { session: false });
-
-// temp: example of protected endpoint
-// A protected endpoint which needs a valid JWT to access it
-app.get('/protected', jwtAuth, (req, res) => {
-  return res.json({
-    data: 'rosebud'
-  });
-});
-
 // temp, might be able to remove this?
 app.get('/dataentry', (req,res) => {
   res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));
