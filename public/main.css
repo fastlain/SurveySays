@@ -29,9 +29,12 @@ html {
 
 :root {
     --main-bg-color: #6B7A8F; /* Blueberry */
+    --main-bg-color-t70: rgb(107,122,143,0.7); /* 70% opacity */
+    --main-bg-color-t90: rgb(107,122,143,0.9); /* 90% opacity */
     --sec-color: #F7882F; /* Apricot */
     --sec-color-dark10: #DE6F16; 
     --ter-color: #F7C331; /* Citrus */
+    --ter-color-dark10: #DEAA18;
     --qrt-color: #DCC7AA; /* Apple Core */
 
     --primary-text-color: #FFFFFF; /* White */
@@ -152,6 +155,25 @@ html {
 
 .btn--underline {
     text-decoration: underline;
+}
+
+.btn--ter-color {
+    background-color: var(--ter-color);
+}
+
+.btn--ter-color:hover,
+.btn--ter-color:focus {
+    background-color: var(--ter-color-dark10);
+}
+
+.btn--inline {
+    padding: 5px;
+    display: inline;
+    margin: 3px 0;
+}
+
+.btn--ital {
+    font-style: italic;
 }
 
 .btn__inlnblck {
@@ -647,7 +669,7 @@ html {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    margin: 35px auto;
+    margin: 0 20px 25px;
     /* border: solid white 2px; */
     /* border-radius: 10px; */
     grid-gap: 10px;
@@ -656,6 +678,7 @@ html {
 .results__heading {
     grid-column: 1 / 2;
     padding: 5px;
+    margin: 5px 0;
     border-radius: 5px;
     /* background: var(--qrt-color); */
     justify-self: flex-end;
@@ -663,22 +686,44 @@ html {
     font-family: var(--heading-font);
 }
 
-
 .results__score-box {
     grid-column: 2 / 3;
     background: var(--ter-color);
     padding: 10px;
     border-radius: 5px;
     align-self: center;
-    justify-self: flex-start;
+    /* justify-self: flex-start; */
     font-size: 1.25rem;
     font-weight: bold;
     text-align: center;
-    max-width: 90%;
+    max-width: 200px;
 }
 
 .results__score-box--total {
     background: var(--main-bg-color);
+}
+
+/***** login-promo *****/
+
+.login-promo {
+    width: 90%;
+    margin: 25px auto 0;
+    padding: 3px 10px;
+    max-width: 500px;
+    background-color: var(--main-bg-color-t70);
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.login-promo__para {
+    font-style: italic;
+    padding: 5px;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.login-promo--hidden {
+    display: none;
 }
 
 /***** audio-ctrl *****/
@@ -747,8 +792,7 @@ html {
     max-width: 300px;
     min-width: 200px;
     width: 50%;
-    background-color: var(--main-bg-color);
-    opacity: 0.9;
+    background-color: var(--main-bg-color-t90);
     font-size: 1rem;
     color: var(--primary-text-color);
     font-family: var(--body-font);

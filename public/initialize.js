@@ -411,6 +411,9 @@ View.renderLoggedIn = () => {
 	$('#user-notice').text(username).removeClass('dropdown__item--hidden');
 	$('#nav-login-logout').html('Log&nbsp;Out');
 
+	// hide login-promo in results
+	$('#login-promo').addClass('login-promo--hidden');
+
 	// notify user of success
 	View.popUp(`Logged in as ${username}`);
 }
@@ -420,6 +423,9 @@ View.renderLoggedOut = () => {
 	$('#user-notice').text('').addClass('dropdown__item--hidden');
 	$('#nav-login-logout').html('Log&nbsp;In');
 
+	// show login-promo in results
+	$('#login-promo').removeClass('login-promo--hidden');
+
 	// notify user of success
 	View.popUp(`Logged out`);
 }
@@ -428,7 +434,7 @@ View.renderLoggedOut = () => {
 View.popUp = (message) => {
 	const popUp = `<div class='pop-up' hidden>${message}</div>`;
 	$('body').prepend(popUp);
-	$('.pop-up').slideDown(300).delay(3000).slideUp(300);
+	$('.pop-up').slideDown(300).delay(2000).slideUp(300);
 	// remove pop-up from DOM
 	setTimeout(function() {
 		$('.pop-up').remove();
@@ -678,10 +684,12 @@ Controller.handleDropDownBtn = () => {
 
 Controller.handleNavLoginLogoutBtn = () => {
 	$('#nav-login-logout').click(() => {
+		// close the dropdown menu
+		$('#dropdown-content').addClass('dropdown__content--hidden');
+		
 		// check if user is currently logged in or out
 		if (STORE.user === null) {
 			// show login modal
-			$('#dropdown-content').addClass('dropdown__content--hidden');
 			$('#login-modal').removeClass('modal-background--hidden');
 		} else {
 			// logout
@@ -769,6 +777,13 @@ Controller.handleLoginBtn = () => {
 	});
 }
 
+Controller.handlePromoLoginBtn = () => {
+	$('#login-promo-btn').click(() => {
+		$('#login-modal').removeClass('modal-background--hidden');
+	});
+}
+
+
 function initialize() {
     SpeechController.start();
     Controller.handleMuteBtn();
@@ -784,6 +799,7 @@ function initialize() {
 	Controller.handleSwapLoginCreateBtn();
 	Controller.handleCreateUserBtn();
 	Controller.handleLoginBtn();
+	Controller.handlePromoLoginBtn();
 
 	// if localStorage contains a JWT, refresh it and log user in
 	if (localStorage.getItem('TOKEN')) {
