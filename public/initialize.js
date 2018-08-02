@@ -22,6 +22,7 @@ const STORE = {
         }
 	],
 	sessionQuestLog: [],
+	sessionGameScores: [],
 	user: null
 }
 
@@ -36,7 +37,7 @@ Model.getNewQA = () => {
 	// get question history for user (if logged in) or for current session
 	let questHist = [];
 	if (STORE.user) {
-		questHist = STORE.user.questHist;
+		questHist = STORE.user.questionLog;
 	} else {
 		questHist = STORE.sessionQuestLog;
 	}
@@ -85,7 +86,10 @@ Model.endRound = () => {
 	Model.resetGuesses();
 	Model.resetGuessHistory();
 	Model.incRound();
-	Model.saveUserData();
+	
+	if (STORE.user) {
+		Model.saveUserData();
+	}
 } 
 
 Model.resetRoundHistory = () => {
@@ -300,7 +304,14 @@ Model.logIn = (username, password) => {
 
 		// if a session question history already exists, it is added to the user's log
 		if (STORE.sessionQuestLog !== null) {
-			STORE.user.questHist = [...STORE.user.questHist, ... STORE.sessionQuestLog];
+			STORE.user.questionLog = [...STORE.user.questionLog, ... STORE.sessionQuestLog];
+			Model.saveUserData();
+		}
+
+		// if a session score history already exists, it is added to the user's log
+		if (STORE.sessionGameScores !== null) {
+			STORE.user.scores = [...STORE.user.scores, ... STORE.sessionGameScores];
+			Model.saveUserData();
 		}	
 
 		View.renderLoggedIn();
@@ -336,15 +347,20 @@ Model.loginJWT = () => {
 	}
 }
 
-Model.saveUserScore = () => {
+Model.storeGameScore = () => {
 	const totScore = Model.getTotScore();
 	const totPossible = Model.getTotPossible();
+	// calculate and store game score (as percent)
+	const gameScore = totScore/totPossible*100;
 	
-	// calculate and store user score (as percent)
-	STORE.user.scores.push(totScore/totPossible*100);
+	// save score to session history
+	STORE.sessionGameScores.push(gameScore);
 
-	// save user data (with new score) to database
-	Model.saveUserData();
+	// if user is logged in, add game score to user's scores and save to server
+	if (STORE.user) {
+		STORE.user.scores.push(gameScore);
+		Model.saveUserData();
+	}
 }
 
 // update user data to server and refresh JWT
@@ -374,6 +390,8 @@ Model.saveUserData = () => {
 Model.logOut = () => {
 	// remove user from store
 	STORE.user = null;
+	// clear session score history
+	STORE.sessionGameScores = [];
 	// delete JWT
 	localStorage.removeItem('TOKEN');
 }
@@ -602,10 +620,7 @@ Controller.handleNextBtn = () => {
 			View.renderNewRound();
 			SpeechController.listen(COMMANDS.showMe);
 		} else {
-			// if user is logged in, save their total score
-			if (STORE.user) {
-				Model.saveUserScore();
-			}
+			Model.storeGameScore();
 			View.generateResults();
 			View.toggleResultsScreen();
 			SpeechController.listen(COMMANDS.newGame);
