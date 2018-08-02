@@ -96,6 +96,7 @@ html {
     font-weight: bold;
     padding: 0.5em 0.75em;
     display: inline-block;
+    cursor: pointer;
 }
 
 .btn:hover,
@@ -183,7 +184,7 @@ html {
 /***** front-header *****/
 
 .front-header {
-    height: 85vh;
+    height: 90vh;
     width: 100%;
 }
 
@@ -304,6 +305,7 @@ html {
     font-style: italic;
     padding: 0.5em 0.75em;
     border-bottom: solid var(--primary-text-color) 2px;
+    color: var(--ter-color);
 }
 
 @media (min-width: 600px) {
@@ -323,6 +325,8 @@ html {
 
     .dropdown__item--notice {
         border: none;
+        color: var(--mid-text-color);
+        font-weight: bold;
     }
 }
 
@@ -442,7 +446,7 @@ html {
 /***** main *****/
 
 .main {
-    height: 75vh;
+    height: 80vh;
 }
 
 .main--hidden {
@@ -495,6 +499,10 @@ html {
 
 .guess-form--hidden {
     display: none;
+}
+
+.guess-form__lbl {
+    margin-top: -10px;
 }
 
 .guess-form__flex-wrapper {
@@ -726,6 +734,78 @@ html {
     display: none;
 }
 
+/***** scoreboard *****/
+
+.scoreboard {
+    width: 90%;
+    margin: 25px auto 0;
+    padding: 3px 10px;
+    max-width: 500px;
+    background-color: var(--main-bg-color-t70);
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.scoreboard--hidden{
+    display: none;
+}
+
+.scoreboard__caret {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 2rem;
+}
+
+.scoreboard__heading {
+    text-align: center;
+    font-family: var(--heading-font);
+    margin: 5px auto;
+}
+
+.scoreboard__username {
+    text-align: center;
+    font-style: italic;
+    margin: 5px auto;
+    color: var(--ter-color);
+}
+
+.scoreboard__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    margin: 0 20px 25px;
+    grid-gap: 2px;
+    font-weight: bold;
+}
+
+.scoreboard__grid--hidden {
+    display: none;
+}
+
+.scoreboard__num {
+    grid-column: 1 / 2;
+    padding: 5px;
+    margin-right: 15px;
+    justify-self: flex-end;
+    /* margin: 5px 0; */
+    /* font-size: 1.25rem; */
+    /* font-family: var(--heading-font); */
+}
+
+.scoreboard__score {
+    grid-column: 2 / 3;
+    padding: 5px;
+    margin-left: 15px;
+    justify-self: flex-start;
+    /* font-size: 1.25rem; */
+    /* font-weight: bold; */
+    /* text-align: center; */
+    /* max-width: 200px; */
+}
+
 /***** audio-ctrl *****/
 .audio-ctrl {
     position: fixed;
@@ -734,6 +814,7 @@ html {
     font-size: 1.5rem;
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 .audio-ctrl__icon {
@@ -759,7 +840,7 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 15vh;
+    height: 10vh;
     text-align: center;
 }
 

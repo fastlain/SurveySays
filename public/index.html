@@ -124,7 +124,7 @@
             </section>
 
             <form id='guess-form' class='guess-form'>
-                <label class='lbl' for='guess-input'>Enter a guess:</label>
+                <label class='guess-form__lbl lbl' for='guess-input'>Enter a guess:</label>
                 <div class='guess-form__flex-wrapper'>
                     <button id='showme-btn' class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
                     <input id='guess-input' class='inpt guess-form__flex-inpt' type='text'>
@@ -155,6 +155,12 @@
                     </button>
                     to save your scores and never see the same question twice!
                 </p>
+            </div>
+            <div id='user-scoreboard' class='scoreboard scoreboard--hidden' role='button' aria-label='toggle scoreboard' aria-pressed='false'>
+                <i id='scoreboard__caret' class='scoreboard__caret fas fa-caret-left' aria-hidden></i>
+                <h2 class='scoreboard__heading'>High Scores</h2>
+                <h3 id='scoreboard-username' class='scoreboard__username'></h3>
+                <div id='user-scoreboard-grid' class='scoreboard__grid scoreboard__grid--hidden'></div>
             </div>
         </div>
     </main>

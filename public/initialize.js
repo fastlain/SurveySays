@@ -414,6 +414,14 @@ View.renderLoggedIn = () => {
 	// hide login-promo in results
 	$('#login-promo').addClass('login-promo--hidden');
 
+	// show user scoreboard in results
+	$('#user-scoreboard').removeClass('scoreboard--hidden');
+
+	// if user is already at the results screen (STORE.round === 4), generate a scoreboard
+	if (STORE.round === 4) {
+		View.generateUserScoreBoard();
+	}
+			
 	// notify user of success
 	View.popUp(`Logged in as ${username}`);
 }
@@ -425,6 +433,9 @@ View.renderLoggedOut = () => {
 
 	// show login-promo in results
 	$('#login-promo').removeClass('login-promo--hidden');
+
+	// hide user scoreboard in results
+	$('#user-scoreboard').addClass('scoreboard--hidden');
 
 	// notify user of success
 	View.popUp(`Logged out`);
@@ -562,6 +573,11 @@ View.generateResults = () => {
 	const totScore = Model.getTotScore();
 	const totPossible = Model.getTotPossible();
 	$('#total-score').text(`${totScore} / ${totPossible} (${Math.round(totScore/totPossible*100)}%)`);
+
+	// if user is logged in, generate their scoreboard
+	if (STORE.user) {
+		View.generateUserScoreBoard();
+	}
 } 
 
 // show/hide "Show Me..." and "Next" buttons
@@ -600,6 +616,27 @@ View.checkVoiceSupport = () => {
 
 View.loginMessage = (message) => {
 	$('#login-msg').text(message).removeClass('login__msg--hidden');
+}
+
+View.generateUserScoreBoard = () => {
+	let scoreboardHTML = '';
+	let userScores = STORE.user.scores;
+	userScores.sort((a,b) => b-a);
+
+	let max = userScores.length;
+	// show only up to top 10 scores
+	if (max > 10) {
+		max = 10;
+	}
+
+	for (let i = 0; i < max; i += 1) {
+		scoreboardHTML += `
+			<div class='scoreboard__num'>${i+1}.</div>
+			<div class='scoreboard__score'>${userScores[i].toFixed(2)}%</div>
+		`;
+	}
+	$('#scoreboard-username').text(STORE.user.username);
+	$('#user-scoreboard-grid').html(scoreboardHTML);
 }
 
 // place cursor focus in guess input
@@ -783,6 +820,15 @@ Controller.handlePromoLoginBtn = () => {
 	});
 }
 
+Controller.handleResultsScoreboardToggle = () => {
+	//todo: add event handler for keypress (since this isn't a native button)
+	$('#user-scoreboard').click(() => {
+		$('#user-scoreboard-grid').toggleClass('scoreboard__grid--hidden');
+		$('#scoreboard__caret').toggleClass('fa-caret-left');
+		$('#scoreboard__caret').toggleClass('fa-caret-down');
+		$('.results').toggle();
+	});
+}
 
 function initialize() {
     SpeechController.start();
@@ -800,6 +846,7 @@ function initialize() {
 	Controller.handleCreateUserBtn();
 	Controller.handleLoginBtn();
 	Controller.handlePromoLoginBtn();
+	Controller.handleResultsScoreboardToggle();
 
 	// if localStorage contains a JWT, refresh it and log user in
 	if (localStorage.getItem('TOKEN')) {
