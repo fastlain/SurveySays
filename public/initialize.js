@@ -33,7 +33,7 @@ const Controller = {};
 
 // get new question and answers/points from server
 Model.getNewQA = () => {
-	const questHist = [];
+	let questHist = [];
 	if (STORE.user) {
 		questHist = STORE.user.questHist;
 	}
@@ -43,25 +43,23 @@ Model.getNewQA = () => {
 		dataType: 'json',
 		url: '/questans',
 		data: {questHist},
-		success: (res) => {
-			console.log(res);
-			STORE.QA = res;
-			View.renderGameScreen();
-			SpeechController.listen(COMMANDS.showMe); 
-		}
+		success: handleSuccess
 	});
-}
 
-// get new question and answers/points from server
-// Model.getNewQAs = () => {
-	
-// 	$.getJSON('/questans', (data) => {
-// 		//console.log(data);
-// 		STORE.QA = data;
-// 		View.renderGameScreen();
-// 		SpeechController.listen(COMMANDS.showMe); 
-// 	});
-// }
+	function handleSuccess(res) {
+		// add new question to the data store
+		STORE.QA = res;
+		
+		// if user is logged in, add question to user's questionLog and save to server
+		if (STORE.user) {
+			STORE.user.questionLog.push(STORE.QA._id);
+			Model.saveUserData();
+		}
+
+		View.renderGameScreen();
+		SpeechController.listen(COMMANDS.showMe); 
+	}
+}
 
 // update game data at start of a new game
 Model.startNextGame = () => {
@@ -82,6 +80,7 @@ Model.endRound = () => {
 	Model.resetGuesses();
 	Model.resetGuessHistory();
 	Model.incRound();
+	Model.saveUserData();
 } 
 
 Model.resetRoundHistory = () => {
@@ -231,7 +230,6 @@ Model.processGuess = (guess) => {
     STORE.guessHistory.push(guess);
 
     // process incorrect guess
-    console.log('incorrect guess');
     View.message(`Sorry, "${guess}" is not correct`)
     View.removeGuess();
     Model.decGuesses();
@@ -305,8 +303,8 @@ Model.logIn = (username, password) => {
 	}
 }
 
-// login with existing JWT in localStorage
-Model.logInJWT = () => {
+// refresh JWT and login if not already
+Model.loginJWT = () => {
 	const currentToken = localStorage.getItem('TOKEN');
 	
 	$.ajax({
@@ -315,40 +313,51 @@ Model.logInJWT = () => {
 		contentType: 'application/json',
 		dataType: 'json',
 		headers: {
-			Authorization: 'Bearer ' + currentToken
+			Authorization: `Bearer ${currentToken}`
 		},
 		success: handleSuccess
 	});
 
 	function handleSuccess(data) {		
-		STORE.user = data.user;
+		// update new JWT
 		localStorage.setItem('TOKEN', data.authToken);
+		// set user data in STORE to user data pulled from server
+		STORE.user = data.user;
 		View.renderLoggedIn();
 	}
 }
 
-// refresh the user's JWT
-Model.refreshJWT = () => {
+Model.saveUserScore = () => {
+	const totScore = Model.getTotScore();
+	const totPossible = Model.getTotPossible();
+	
+	// calculate and store user score (as percent)
+	STORE.user.scores.push(totScore/totPossible*100);
+
+	// save user data (with new score) to database
+	Model.saveUserData();
+}
+
+// update user data to server and refresh JWT
+Model.saveUserData = () => {
+	const userId = STORE.user.id;
 	const currentToken = localStorage.getItem('TOKEN');
 	
 	$.ajax({
-		url: '/auth/refresh',
-		method: 'POST',
+		url: `/users/${userId}`,
+		method: 'PUT',
 		contentType: 'application/json',
 		dataType: 'json',
+		data: JSON.stringify(STORE.user),
 		headers: {
-			Authorization: 'Bearer ' + currentToken
+			Authorization: `Bearer ${currentToken}`
 		},
-		success: handleSuccess,
-		error: handleError
+		success: handleSuccess
 	});
 
-	function handleSuccess(data) {
+	function handleSuccess(data) {				
+		// update new JWT
 		localStorage.setItem('TOKEN', data.authToken);
-	}
-
-	function handleError(err) {
-		console.log(err);
 	}
 }
 
@@ -584,6 +593,10 @@ Controller.handleNextBtn = () => {
 			View.renderNewRound();
 			SpeechController.listen(COMMANDS.showMe);
 		} else {
+			// if user is logged in, save their total score
+			if (STORE.user) {
+				Model.saveUserScore();
+			}
 			View.generateResults();
 			View.toggleResultsScreen();
 			SpeechController.listen(COMMANDS.newGame);
@@ -748,9 +761,9 @@ function initialize() {
 	Controller.handleCreateUserBtn();
 	Controller.handleLoginBtn();
 
-	// if localStorage contains a JWT, automatically log user in
+	// if localStorage contains a JWT, refresh it and log user in
 	if (localStorage.getItem('TOKEN')) {
-		Model.logInJWT();
+		Model.loginJWT();
 	}
 }
 
