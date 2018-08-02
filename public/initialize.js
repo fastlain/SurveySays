@@ -10,20 +10,18 @@ const STORE = {
     roundHistory: [
         {
             score:0,
-			possible:0,
-			QAId: 0
+			possible:0
         },
         {
             score:0,
-			possible:0,
-			QAId: 0
+			possible:0
         },
         {
             score:0,
-			possible:0,
-			QAId: 0
+			possible:0
         }
 	],
+	sessionQuestLog: [],
 	user: null
 }
 
@@ -31,11 +29,16 @@ const Model = {};
 const View = {};
 const Controller = {};
 
-// get new question and answers/points from server
+// get new question/answers from server
+// question log is sent along to prevent seeing duplicates
 Model.getNewQA = () => {
+	
+	// get question history for user (if logged in) or for current session
 	let questHist = [];
 	if (STORE.user) {
 		questHist = STORE.user.questHist;
+	} else {
+		questHist = STORE.sessionQuestLog;
 	}
 
 	$.ajax({
@@ -50,6 +53,9 @@ Model.getNewQA = () => {
 		// add new question to the data store
 		STORE.QA = res;
 		
+		// add question id to session log in data store
+		Model.storeQuestionId();
+
 		// if user is logged in, add question to user's questionLog and save to server
 		if (STORE.user) {
 			STORE.user.questionLog.push(STORE.QA._id);
@@ -76,7 +82,6 @@ Model.endRound = () => {
 	Model.storeRoundScore();
 	Model.resetRoundScore();
 	Model.storeRoundPossible();
-	Model.storeRoundQAId();
 	Model.resetGuesses();
 	Model.resetGuessHistory();
 	Model.incRound();
@@ -137,8 +142,8 @@ Model.storeRoundPossible = () => {
 }
 
 // store the database id for the question/answers
-Model.storeRoundQAId = () => {
-	STORE.roundHistory[STORE.round - 1].QAId = STORE.QA._id;
+Model.storeQuestionId = () => {
+	STORE.sessionQuestLog.push(STORE.QA._id);
 }
 
 // get the total score for all combined rounds
@@ -289,16 +294,20 @@ Model.logIn = (username, password) => {
 		error: handleError
 	});
 
-	function handleSuccess(data) {
-		console.log(data);
-		
+	function handleSuccess(data) {	
 		STORE.user = data.user;
 		localStorage.setItem('TOKEN', data.authToken);
+
+		// if a session question history already exists, it is added to the user's log
+		if (STORE.sessionQuestLog !== null) {
+			STORE.user.questHist = [...STORE.user.questHist, ... STORE.sessionQuestLog];
+		}	
+
 		View.renderLoggedIn();
 	}
 
 	function handleError(err) {
-		// console.log(err);
+		console.log(err);
 		View.loginMessage('Invalid username or password');
 	}
 }
