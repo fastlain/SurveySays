@@ -5,10 +5,23 @@ const router = express.Router();
 
 const {User} = require('./models');
 
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+
+const config = require('../config');
+
+const createAuthToken = function (user) {
+    return jwt.sign({user}, config.JWT_SECRET, {
+        subject: user.username,
+        expiresIn: config.JWT_EXPIRY,
+        algorithm: 'HS256'
+    });
+};
+
+router.use(express.json());
+
 // create a new user
-router.post('/', express.json(), (req, res) => {
-    console.log(req.body);
-    
+router.post('/', (req, res) => {   
     // check for required fields
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
@@ -122,21 +135,7 @@ router.post('/', express.json(), (req, res) => {
 
 });
 
-// router.get('/logQ', express.json(), (req,res) => {
-//     User.findOne({username: req.body.username})
-//         .then(user => {
-//             user.questionLog.push(req.body.questId);
-//             user.save();
-//         })
-//         .then(user => {
-//             return res.status(204).send();
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(500).json({message: 'Internal server error'});
-//         });      
-// });
-
+// temp
 // function checkAdmin(req,res,next) {
 //     if (req.user.admin === true) {
 //         next();
@@ -145,16 +144,44 @@ router.post('/', express.json(), (req, res) => {
 //     }
 // }
 
-// update user's question history
-router.put('/logQ', express.json(), (req,res) => {
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
+// update a user's data (excluding password)
+router.put('/:id', jwtAuth, (req,res) => {
+    // check for required fields
+    const requiredFields = ['id', 'username', 'questionLog', 'scores'];
+    const missingField = requiredFields.find(field => !(field in req.body));
+
+    if (missingField) {
+        return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: 'field missing',
+            location: missingField
+        });
+    }
+
+    // check if params.id is the same as the body.id
+    if (req.params.id !== req.body.id) {
+        const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
+        console.error(message);
+        return res.status(400).send(message);
+    }
+    
     User.findOne({_id: req.body.id})
         .then(user => {
-            user.questionLog.push(req.body.questId);
+            console.log(user);
+            user.username = req.body.username;
+            user.scores = req.body.scores;
+            user.questionLog = req.body.questionLog;
             user.save();
+            console.log(user);
             return user;
         })
         .then(user => {
-            return res.status(200).json(user.serialize());
+            // create and return a new JWT that reflects the updated user data
+            const authToken = createAuthToken(user.serialize());
+            return res.status(200).json({authToken});
         })
         .catch(err => {
             console.error(err);
