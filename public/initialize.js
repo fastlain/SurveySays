@@ -522,7 +522,6 @@ View.updateQuestion = () => {
 	$('#question-text').text(STORE.QA.question);
 }
 
-// todo: create function(s) to update the answer grid after each round
 View.resetAnswerBoard = () => {
 	const numAnswers = STORE.QA.answers.length;
 	let answerBoard = '';
@@ -535,7 +534,7 @@ View.resetAnswerBoard = () => {
 	$('.answers').html(answerBoard);
 }
 
-// todo: create a user message on screen
+// show user a message on the game screen
 View.message = (message) => {
 	$('.message').text(message);
 } 
