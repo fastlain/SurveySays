@@ -6,7 +6,7 @@ if (annyang) {
 
 SpeechController.start = () => {
     if (annyang) {
-        annyang.start({autorestart: true});
+        annyang.start();
     }
 }
 
