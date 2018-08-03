@@ -181,6 +181,24 @@ html {
     display: inline-block;
 }
 
+/***** lbl *****/
+
+.lbl {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/***** inpt *****/
+
+.inpt {
+    border: none;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+    padding-left: 10px;
+    font-size: inherit;
+    padding: 0.5em 0.75em;
+    color: var(--dark-text-color);
+}
+
 /***** front-header *****/
 
 .front-header {
@@ -441,6 +459,13 @@ html {
     right: 0;
 }
 
+@media (max-height: 400px) {
+    .login__inpt {
+        margin: 5px auto;
+        padding: .25em .75em;
+    }
+}
+
 
 /***** main *****/
 
@@ -518,24 +543,6 @@ html {
     flex: 5 1 auto;
     width: 100px;
     margin-left: 15px;
-}
-
-/***** lbl *****/
-
-.lbl {
-    display: block;
-    margin-bottom: 5px;
-}
-
-/***** inpt *****/
-
-.inpt {
-    border: none;
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
-    padding-left: 10px;
-    font-size: inherit;
-    padding: 0.5em 0.75em;
-    color: var(--dark-text-color);
 }
 
 /***** guesses *****/
