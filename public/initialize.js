@@ -491,20 +491,25 @@ View.updateTotScore = () => {
 View.removeGuess = () => {
 	// get position of next unused guess from number of available guesses
 	const toRemove = STORE.guesses;
+
 	$(`.guesses__icon:nth-child(${toRemove})`)
-		.addClass('guesses__icon--x')
 		.removeClass('guesses__icon--checked')
-		.text('\u2716');
+		.addClass('guesses__icon--x')
+		.attr('aria-label', 'guess used')
+		.children()
+		.removeClass('fa-check')	
+		.addClass('fa-times')
 }
 
 // show all guesses in 'unused' state
-View.resetGuesses = () => {
-	console.log('resetting guesses');
-	
+View.resetGuesses = () => {	
 	$('.guesses__icon')
 		.addClass('guesses__icon--checked')
 		.removeClass('guesses__icon--x')
-		.text('\u2714');
+		.attr('aria-label', 'guess remaining')
+		.children()
+		.removeClass('fa-times')	
+		.addClass('fa-check')
 }
 
 // check and render current round score
