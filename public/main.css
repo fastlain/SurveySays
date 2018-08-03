@@ -177,6 +177,14 @@ html {
     font-style: italic;
 }
 
+@media (max-height: 500px) {
+    .btn--shrink {
+        height: 20px;
+        padding: 0 5px;
+    }
+}
+
+
 .btn__inlnblck {
     display: inline-block;
 }
@@ -226,7 +234,7 @@ html {
     z-index: 1;
     text-align: center;
     font-family: var(--display-font);
-    font-size: 12vmin;
+    font-size: 10vmin;
 }
 
 @media (min-width: 600px) and (min-height: 600px) {
@@ -483,6 +491,12 @@ html {
     display: none;
 }
 
+@media (max-height: 500px) {
+    .game-container {
+        font-size: 14px;
+    }
+}
+
 /***** game-info *****/
 
 .game-info {
@@ -543,6 +557,21 @@ html {
     flex: 5 1 auto;
     width: 100px;
     margin-left: 15px;
+    font-family: var(--body-font);
+}
+
+@media (max-height: 500px) {
+    .guess-form {
+        max-width: 400px;
+    }
+    .guess-form__lbl {
+        margin-top: 0px;
+    }
+
+    .guess-form__flex-inpt {
+        font-size: 14px;
+        height: 20px;
+    }
 }
 
 /***** guesses *****/
@@ -588,6 +617,15 @@ html {
     background-color: var(--sec-color-dark10);
 }
 
+@media (max-height: 500px) {
+    .guesses__icon {
+        height: 1.5rem;
+        width: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 0.75rem;
+    }
+}
+
 /***** question *****/
 
 .question {
@@ -603,6 +641,12 @@ html {
     margin: 0;
 }
 
+@media (max-height: 500px) {
+    .question {
+        padding-top: 0;
+    }
+}
+
 /***** answers *****/
 
 .answers {    
@@ -612,8 +656,6 @@ html {
     margin: 0 auto;
     width: 90%;
     max-width: 600px;
-    /* border: solid white 2px; */
-    /* border-radius: 10px; */
     padding: 0;
     grid-gap: 10px;
     text-align: center;
@@ -626,7 +668,6 @@ html {
     border-radius: 5px;
     font-weight: bold;
     color: var(--mid-text-color);
-    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
 }
 
 .answers__text--guessed {
@@ -645,7 +686,6 @@ html {
     background: var(--ter-color);
     padding: 5px;
     border-radius: 5px;
-    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
 }
 
 .answers__points--revealed {
@@ -661,6 +701,25 @@ html {
     /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
 }
 
+@media (max-height: 500px) {
+    .answers {
+        grid-gap: 5px;
+        grid-template-columns: 4fr 1fr 4fr 1fr;
+        margin-bottom: 5px;
+    }
+    .answers__text {
+        grid-column: unset;
+    }
+
+    .answers__points {
+        grid-column: unset;
+    }
+
+    .answers__sum {
+        grid-column: 4 / 5;
+    }
+}
+
 /***** message *****/
 
 .message {
@@ -671,10 +730,22 @@ html {
     margin: 10px auto;
 }
 
+@media (max-height: 500px) {
+    .message {
+        margin: 3px auto;
+    }
+}
+
 /***** results-container *****/
 
 .results-container--hidden {
     display: none;
+}
+
+@media (max-height: 550px) {
+    .results-container {
+        padding-top: 5px;
+    }
 }
 
 /***** results *****/
@@ -684,8 +755,6 @@ html {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     margin: 0 20px 25px;
-    /* border: solid white 2px; */
-    /* border-radius: 10px; */
     grid-gap: 10px;
 }
 
@@ -694,7 +763,6 @@ html {
     padding: 5px;
     margin: 5px 0;
     border-radius: 5px;
-    /* background: var(--qrt-color); */
     justify-self: flex-end;
     font-size: 1.25rem;
     font-family: var(--heading-font);
@@ -715,6 +783,22 @@ html {
 
 .results__score-box--total {
     background: var(--main-bg-color);
+}
+
+@media (max-height: 550px) {
+    .results {
+        grid-gap: 5px;
+        margin-bottom: 10px;
+    }
+    .results__heading { 
+        font-size: 14px;
+        padding: 0px;
+    }
+    .results__score-box {
+        font-size: 14px;
+        padding: 5px;
+        max-width: 150px;
+    }
 }
 
 /***** login-promo *****/
@@ -740,6 +824,15 @@ html {
     display: none;
 }
 
+@media (max-height: 550px) {
+    .login-promo {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    .login-promo__para {
+        padding: 0;
+    }
+}
 /***** scoreboard *****/
 
 .scoreboard {
@@ -812,6 +905,33 @@ html {
     /* max-width: 200px; */
 }
 
+@media (max-height: 600px) {
+    .scoreboard {
+        margin-top: 10px;
+        max-width: 400px;
+    }
+    .scoreboard__heading {
+        font-size: 1rem;
+        margin: 0;
+    }
+    .scoreboard__username {
+        font-size: 1rem;
+        margin: 0;
+    }
+    .scoreboard__grid {
+        margin-bottom: 5px;
+        grid-template-columns: 1fr 2fr 1fr 2fr;
+    }
+    .scoreboard__num {
+        grid-column: unset;
+        margin-right: 0;
+    }
+    .scoreboard__score {
+        grid-column: unset;
+        margin-left: 0;
+    }
+}
+
 /***** audio-ctrl *****/
 .audio-ctrl {
     position: fixed;
@@ -869,6 +989,16 @@ html {
 .page-footer__icon--linkedin {
     /* color: #0077b5; */
     color: var(--primary-text-color);
+}
+
+@media (max-height: 500px) {
+    .page-footer {
+        font-size: 12px;
+    }
+
+    .page-footer__icon {
+        font-size: 14px;
+    }
 }
 
 /***** pop-up *****/

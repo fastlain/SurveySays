@@ -101,7 +101,6 @@
             </section>
 
             <section class='guesses' role='region'>
-                    <!-- <h3 class='guesses__header'>Guesses:</h3> -->
                     <div class='guesses__flex-wrapper'>
                         <div class='guesses__icon guesses__icon--checked'>&#10004</div>
                         <div class='guesses__icon guesses__icon--checked'>&#10004</div>
@@ -126,12 +125,12 @@
             <form id='guess-form' class='guess-form'>
                 <label class='guess-form__lbl lbl' for='guess-input'>Enter a guess:</label>
                 <div class='guess-form__flex-wrapper'>
-                    <button id='showme-btn' class='btn btn--quoted guess-form__flex-btn' type='submit'> Show Me... </button>
+                    <button id='showme-btn' class='btn btn--quoted btn--shrink guess-form__flex-btn' type='submit'> Show Me... </button>
                     <input id='guess-input' class='inpt guess-form__flex-inpt' type='text'>
                 </div>
             </form>
 
-            <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered' type='button'> Next </button>
+            <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered btn--shrink' type='button'> Next </button>
 
             <p class='message' role='region'></p>
 
@@ -148,7 +147,7 @@
                 <h2 class='results__heading'>Total: </h2>
                 <div class='results__score-box results__score-box--total'><span id='total-score'></span></div>
             </div>
-            <button id='new-game-btn' class='btn btn--quoted btn--centered' type='button'> New Game </button>
+            <button id='new-game-btn' class='btn btn--quoted btn--centered btn--shrink' type='button'> New Game </button>
             <div id='login-promo' class='login-promo'>
                 <p class='login-promo__para'>
                     <button id='login-promo-btn' class='btn btn--centered btn--margins btn--ter-color btn--inline btn--ital' type='button'> Log In 
