@@ -16,19 +16,18 @@ SpeechController.simClick  = () => {
     }
 }
 
-SpeechController.listen = (cmdName) => {
+SpeechController.addCommand = (cmdName) => {
     if (annyang) {
         if (cmdName.clickTarget) {
             SpeechController.clickTarget = cmdName.clickTarget;
         }
         annyang.addCommands(cmdName.command);
-        annyang.resume();
     }
 }
 
-SpeechController.pauseListening = () => {
-    if (annyang) {  
-        annyang.pause();
+SpeechController.removeCommand = (cmdName) => {
+    if (annyang) {
+        annyang.removeCommands(cmdName.command);
     }
 }
 

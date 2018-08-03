@@ -64,7 +64,7 @@ Model.getNewQA = () => {
 		}
 
 		View.renderGameScreen();
-		SpeechController.listen(COMMANDS.showMe); 
+		SpeechController.addCommand(COMMANDS.showMe); 
 	}
 }
 
@@ -174,14 +174,15 @@ Model.processGuess = (guess) => {
     
     console.log(`User guessed: ${guess}`);
     
-    SpeechController.pauseListening();
+	//SpeechController.pauseListening();
+	SpeechController.removeCommand('show me *guess');
     guess = guess.toLowerCase();
 
     // if user submits empty string, display error message
     if (guess === '') {
         View.message('Please enter an answer');
         View.playAudio('sounds/notice.wav');
-        SpeechController.listen(COMMANDS.showMe);
+        SpeechController.addCommand(COMMANDS.showMe);
         return;
     }
     
@@ -196,8 +197,8 @@ Model.processGuess = (guess) => {
                 // check if answer has already been guessed
                 if (ansArr[i].guessed === true) {
                     View.message('That answer was already guessed, try again');
-                    SpeechController.listen(COMMANDS.showMe);
-                    View.playAudio('sounds/notice.wav');
+					View.playAudio('sounds/notice.wav');
+					SpeechController.addCommand(COMMANDS.showMe);
                 } else {                   
                     // set answer guessed state to true
                     ansArr[i].guessed = true;
@@ -213,10 +214,10 @@ Model.processGuess = (guess) => {
                     STORE.QA.remainingAns -= 1;
                     if (STORE.QA.remainingAns === 0) {
                         View.toggleEndRound();
-                        SpeechController.listen(COMMANDS.next);
+                        SpeechController.addCommand(COMMANDS.next);
                         View.playAudio('sounds/allcorrect.wav');
                     } else {
-                        SpeechController.listen(COMMANDS.showMe);
+                        SpeechController.addCommand(COMMANDS.showMe);
                         View.playAudio('sounds/correctanswer.wav');
                     }
                 }
@@ -230,7 +231,7 @@ Model.processGuess = (guess) => {
         if (guess.includes(STORE.guessHistory[k])) {
             View.message('You already tried that, try again');
             View.playAudio('sounds/notice.wav');
-            SpeechController.listen(COMMANDS.showMe);
+            SpeechController.addCommand(COMMANDS.showMe);
             return;
         }
     }
@@ -246,10 +247,10 @@ Model.processGuess = (guess) => {
         View.revealMissedAnswers();
         View.toggleEndRound();
         View.playAudio('sounds/buzzer.mp3');
-        SpeechController.listen(COMMANDS.next);
+        SpeechController.addCommand(COMMANDS.next);
     } else {
         View.playAudio('sounds/wronganswer.wav');
-        SpeechController.listen(COMMANDS.showMe);
+        SpeechController.addCommand(COMMANDS.showMe);
     }
 }
 
@@ -650,27 +651,29 @@ Controller.focusGuessInput = () => {
 
 Controller.handleNewGameBtn = () => {
 	$('#new-game-btn').click(() => {
+		SpeechController.removeCommand('new game');
 		Model.startNextGame();
 		View.toggleResultsScreen();
 		View.renderNewRound();
 		View.toggleEndRound();
-		SpeechController.listen(COMMANDS.showMe);
+		SpeechController.addCommand(COMMANDS.showMe);
 	});
 }
 
 Controller.handleNextBtn = () => {
 	$('#next-btn').click(() => {
+		SpeechController.removeCommand('next');
 		Model.endRound();
 		if (STORE.round <= 3) {
 			Model.getNewQA();
 			View.toggleEndRound();
 			View.renderNewRound();
-			SpeechController.listen(COMMANDS.showMe);
+			SpeechController.addCommand(COMMANDS.showMe);
 		} else {
 			Model.storeGameScore();
 			View.generateResults();
 			View.toggleResultsScreen();
-			SpeechController.listen(COMMANDS.newGame);
+			SpeechController.addCommand(COMMANDS.newGame);
 		}
 	});
 }
@@ -690,15 +693,17 @@ Controller.handleShowMeBtn = () => {
 Controller.handleLetsPlayBtn = () => {
 	$('#lets-play-btn').click(() => {        
 		$('#instructions-modal').addClass('modal-background--hidden');
+		SpeechController.removeCommand('(let\'s) play');
 		Model.getNewQA();  
 	});
 }
 
 Controller.handleStartBtn = () => {
 	$('#start-btn').click((evt) => {
-        View.checkVoiceSupport();
+		SpeechController.removeCommand('start (game)');
+		View.checkVoiceSupport();
         $('#instructions-modal').removeClass('modal-background--hidden');
-		SpeechController.listen(COMMANDS.letsPlay);
+		SpeechController.addCommand(COMMANDS.letsPlay);
 	});
 }
 
@@ -837,7 +842,7 @@ Controller.handleResultsScoreboardToggle = () => {
 function initialize() {
     SpeechController.start();
     Controller.handleMuteBtn();
-    SpeechController.listen(COMMANDS.startGame);
+    SpeechController.addCommand(COMMANDS.startGame);
 	Controller.handleStartBtn();
 	Controller.handleLetsPlayBtn();
 	Controller.handleShowMeBtn();
