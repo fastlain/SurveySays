@@ -329,9 +329,9 @@ html {
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
     .dropdown__content {
-        right: calc(50vw - 400px);
+        right: calc(50vw - 500px);
     }
 }
 
@@ -827,9 +827,9 @@ html {
     display:none;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
     .audio-ctrl {
-        left: calc(50% + 350px)
+        left: calc(50% + 450px)
     }
 }
 
