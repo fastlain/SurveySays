@@ -3,13 +3,14 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 const UserSchema = mongoose.Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     questionLog: [{type: mongoose.Schema.Types.ObjectId, ref: 'QuestAns'}],
-    scores: [Number]
+    scores: [Number],
+    admin: {type: Boolean, required: true, default: false}
 });
 
 UserSchema.methods.serialize = function() {
@@ -17,7 +18,8 @@ UserSchema.methods.serialize = function() {
         id: this._id, 
         username: this.username,
         questionLog: this.questionLog,
-        scores: this.scores
+        scores: this.scores,
+        admin: this.admin
     }
 }
 

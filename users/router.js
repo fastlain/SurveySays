@@ -135,18 +135,9 @@ router.post('/', (req, res) => {
 
 });
 
-// temp
-// function checkAdmin(req,res,next) {
-//     if (req.user.admin === true) {
-//         next();
-//     } else {
-//         res.status(401).json({message: 'not authorized'});
-//     }
-// }
-
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-// update a user's data (excluding password)
+// update a user's data (excluding password and admin status)
 router.put('/:id', jwtAuth, (req,res) => {
     // check for required fields
     const requiredFields = ['id', 'username', 'questionLog', 'scores'];
@@ -170,12 +161,10 @@ router.put('/:id', jwtAuth, (req,res) => {
     
     User.findOne({_id: req.body.id})
         .then(user => {
-            console.log(user);
             user.username = req.body.username;
             user.scores = req.body.scores;
             user.questionLog = req.body.questionLog;
             user.save();
-            console.log(user);
             return user;
         })
         .then(user => {
