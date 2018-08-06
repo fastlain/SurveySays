@@ -450,7 +450,7 @@ View.popUp = (message) => {
 	// remove pop-up from DOM
 	setTimeout(function() {
 		$('.pop-up').remove();
-	  }, 4000);
+	  }, 2600);
 }
 
 View.playAudio = (url) => {
