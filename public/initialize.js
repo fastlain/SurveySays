@@ -181,7 +181,7 @@ Model.processGuess = (guess) => {
     // if user submits empty string, display error message
     if (guess === '') {
         View.message('Please enter an answer');
-        View.playAudio('sounds/notice.wav');
+        View.playAudio('sounds/notice.ogg');
         SpeechController.addCommand(COMMANDS.showMe);
         return;
     }
@@ -197,7 +197,7 @@ Model.processGuess = (guess) => {
                 // check if answer has already been guessed
                 if (ansArr[i].guessed === true) {
                     View.message('That answer was already guessed, try again');
-					View.playAudio('sounds/notice.wav');
+					View.playAudio('sounds/notice.ogg');
 					SpeechController.addCommand(COMMANDS.showMe);
                 } else {                   
                     // set answer guessed state to true
@@ -215,10 +215,10 @@ Model.processGuess = (guess) => {
                     if (STORE.QA.remainingAns === 0) {
                         View.toggleEndRound();
                         SpeechController.addCommand(COMMANDS.next);
-                        View.playAudio('sounds/allcorrect.wav');
+                        View.playAudio('sounds/allcorrect.ogg');
                     } else {
                         SpeechController.addCommand(COMMANDS.showMe);
-                        View.playAudio('sounds/correctanswer.wav');
+                        View.playAudio('sounds/correctanswer.ogg');
                     }
                 }
                 return;
@@ -230,7 +230,7 @@ Model.processGuess = (guess) => {
     for (let k = 0; k < STORE.guessHistory.length; k += 1) {
         if (guess.includes(STORE.guessHistory[k])) {
             View.message('You already tried that, try again');
-            View.playAudio('sounds/notice.wav');
+            View.playAudio('sounds/notice.ogg');
             SpeechController.addCommand(COMMANDS.showMe);
             return;
         }
@@ -246,10 +246,10 @@ Model.processGuess = (guess) => {
     if (STORE.guesses === 0) {
         View.revealMissedAnswers();
         View.toggleEndRound();
-        View.playAudio('sounds/buzzer.mp3');
+        View.playAudio('sounds/buzzer.ogg');
         SpeechController.addCommand(COMMANDS.next);
     } else {
-        View.playAudio('sounds/wronganswer.wav');
+        View.playAudio('sounds/wronganswer.ogg');
         SpeechController.addCommand(COMMANDS.showMe);
     }
 }
@@ -666,6 +666,7 @@ Controller.focusGuessInput = () => {
 
 Controller.handleNewGameBtn = () => {
 	$('#new-game-btn').click(() => {
+		View.playAudio('sounds/startsound.ogg');
 		SpeechController.removeCommand('new game');
 		Model.startNextGame();
 		View.toggleResultsScreen();
@@ -680,11 +681,13 @@ Controller.handleNextBtn = () => {
 		SpeechController.removeCommand('next');
 		Model.endRound();
 		if (STORE.round <= 3) {
+			View.playAudio('sounds/startsound.ogg');
 			Model.getNewQA();
 			View.toggleEndRound();
 			View.renderNewRound();
 			SpeechController.addCommand(COMMANDS.showMe);
 		} else {
+			View.playAudio('sounds/endgame.ogg');
 			Model.storeGameScore();
 			View.generateResults();
 			View.toggleResultsScreen();
@@ -707,6 +710,7 @@ Controller.handleShowMeBtn = () => {
 
 Controller.handleLetsPlayBtn = () => {
 	$('#lets-play-btn').click(() => {        
+		View.playAudio('sounds/startsound.ogg');
 		$('#instructions-modal').addClass('modal-background--hidden');
 		SpeechController.removeCommand('(let\'s) play');
 		Model.getNewQA();  
