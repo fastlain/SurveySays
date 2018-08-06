@@ -8,6 +8,10 @@
     max-width: 800px;
 }
 
+.data-entry__form--hidden {
+    display: none;
+}
+
 .data-entry__wrapper {
     display: flex;
     justify-content: space-between;
@@ -31,4 +35,8 @@
 
 .data-entry__form--hidden {
     display:none;
+}
+
+.page-background--data-entry {
+    background-size: auto;
 }

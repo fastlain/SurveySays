@@ -5,14 +5,15 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Data Entry</title>
-    <meta description=''>
+    <meta description='Create new questions for Survey Says'>
     <link rel='stylesheet' src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
     <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel='stylesheet'>
+    <link rel='stylesheet' href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity='sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ' crossorigin='anonymous'>
     <link rel='stylesheet' href="../main.css">
     <link rel='stylesheet' href="dataentry.css">
 </head>
 
-<body class='page-background'>
+<body class='page-background page-background--data-entry'>
     
     <header class='game-header' role='banner'>
         <h1 class='game-header__title'>
@@ -21,8 +22,38 @@
         </h1>
     </header>
     <main role='main'>
+        <nav id='dropdown-container' class='dropdown' role='navigation'>
+                <button id='dropdown-btn' class='dropdown__btn btn btn--clear btn--biggertxt' type='button' aria-label='Dropdown Menu'>
+                    <i class='fas fa-bars' aria-hidden></i>
+                </button>
+                <ul id='dropdown-content' class='dropdown__content dropdown__content--hidden'>
+                    <li id='user-notice' class='dropdown__item dropdown__item--hidden dropdown__item--notice'></li>
+                    <li class='dropdown__item'>
+                        <button id='nav-login-logout' class='btn btn--clear' type='button'>Log&nbsp;In</button>
+                    </li>
+                </ul>
+        </nav>
+
+        <div id='login-modal' class='modal-background modal-background--hidden' data-login-create='login'>
+            <form id='login-form' class='login'>
+                <h2 id='login-heading' class='login__heading'>Log In</h2>
+                <label for='username-inpt'>Username:</label>
+                <input id='username-inpt' class='inpt login__inpt' type='text'>
+                <label for='password-inpt'>Password: 
+                    <span class='sublabel'>(10 character minimum)</span>
+                </label>
+                <input id='password-inpt' class='inpt login__inpt' type='password'>
+                <p id='login-msg' class='login__msg login__msg--hidden'>This is a test message</p>
+                <button id='login-btn' class='btn btn--centered' type='button'>Log In</button>
+                <button id='close-login-btn' class='login__close-btn btn btn--clear' type='button' aria-label='close window'>
+                        <i class='fas fa-times' aria-hidden='true' title='close window'></i>
+                </button>
+            </form>
+        </div>
+
         <h2 class='data-entry__heading'>Data Entry</h2>
-        <form id='num-answers-form' class='data-entry__form'>
+        <button id='data-entry-login-btn' class='btn btn--centered btn--margins' type='button'>Log In</button>
+        <form id='num-answers-form' class='data-entry__form data-entry__form--hidden'>
             <div class='data-entry__wrapper'>
             <label for='num-answers-inpt'>How many answers will this question have?</label>
             <input id='num-answers-inpt' class='data-entry__input data-entry__input--small' type='number' min="2" max="7">
