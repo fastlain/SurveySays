@@ -397,6 +397,21 @@ Model.logOut = () => {
 	localStorage.removeItem('TOKEN');
 }
 
+Model.checkVoiceSupport = () => {
+	const ua = navigator.userAgent;
+
+	// first, test if user is on a mobile platform
+		// Web Speech is technically supported by Chrome Mobile, but bugs prevent it from being usable as of app development
+	// then check if annyang is successfully running
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
+		STORE.voiceSupport = false;
+	} else if (annyang) {
+		STORE.voiceSupport = true;
+	} else {
+		STORE.voiceSupport = false;
+	}
+}
+
 View.renderLoggedIn = () => {
 	// hide log-in modal
 	$('#login-modal').addClass('modal-background--hidden');
@@ -598,25 +613,25 @@ View.toggleResultsScreen = () => {
 }
 
 // check voice support and render message in instructions modal
-View.checkVoiceSupport = () => {
-    // check if browser supports Web Speech API (and thus, annyang)
-    if (annyang) {
-        $('#voice-support').text(`All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your answer. Buttons can be activated by saying the words in quotes. Try it below...`);
-        
-        // check if micophone is enabled
-        navigator.getUserMedia({audio:true}, 
-            // success callback: clear any prior message
-            function() {
-                $('#mic-status').text('');
-            }, 
-            // error callback: notify that microphone is turned off
-            function() {
-                $('#mic-status').text('Voice recognition is supported, but your microphone is disabled');
-            }
-        );
-    } else {
-        $('#voice-support').text(`Speech Recognition is not currently supported by your browser. You can play the game without voice control or try using Google Chrome.`);
-    }  
+View.displayVoiceSupport = () => {
+
+    if (STORE.voiceSupport) {
+		$('#voice-support').text(
+			`All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your answer. Buttons can be activated by saying the words in quotes. Try it below...`);
+		
+		// check if micophone is enabled
+		navigator.getUserMedia({audio:true}, 
+			// success callback: clear any prior message
+			function() {
+				$('#mic-status').text('');
+			}, 
+			// error callback: notify that microphone is turned off
+			function() {
+				$('#mic-status').text('Voice recognition is supported, but your microphone is disabled');
+			});
+	} else {
+		$('#voice-support').text(`Sorry, Speech Recognition is experimental and currently only supported on Google Chrome for Desktop.`);
+	}
 }
 
 View.loginMessage = (message) => {
@@ -701,7 +716,7 @@ Controller.handleLetsPlayBtn = () => {
 Controller.handleStartBtn = () => {
 	$('#start-btn').click((evt) => {
 		SpeechController.removeCommand('start (game)');
-		View.checkVoiceSupport();
+		View.displayVoiceSupport();
         $('#instructions-modal').removeClass('modal-background--hidden');
 		SpeechController.addCommand(COMMANDS.letsPlay);
 	});
@@ -840,7 +855,8 @@ Controller.handleResultsScoreboardToggle = () => {
 }
 
 function initialize() {
-    SpeechController.start();
+	Model.checkVoiceSupport();
+	SpeechController.start();
     Controller.handleMuteBtn();
     SpeechController.addCommand(COMMANDS.startGame);
 	Controller.handleStartBtn();

@@ -1,23 +1,23 @@
 const SpeechController = {};
 
-if (annyang) {
+if (STORE.voiceSupport) {
     annyang.debug();
 }
 
 SpeechController.start = () => {
-    if (annyang) {
+    if (STORE.voiceSupport) {
         annyang.start();
     }
 }
 
 SpeechController.simClick  = () => {
-    if (annyang) {
+    if (STORE.voiceSupport) {
         $(`#${SpeechController.clickTarget}`).click();
     }
 }
 
 SpeechController.addCommand = (cmdName) => {
-    if (annyang) {
+    if (STORE.voiceSupport) {
         if (cmdName.clickTarget) {
             SpeechController.clickTarget = cmdName.clickTarget;
         }
@@ -26,7 +26,7 @@ SpeechController.addCommand = (cmdName) => {
 }
 
 SpeechController.removeCommand = (cmdName) => {
-    if (annyang) {
+    if (STORE.voiceSupport) {
         annyang.removeCommands(cmdName.command);
     }
 }
