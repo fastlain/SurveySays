@@ -11,7 +11,7 @@ const {QuestAns} = require('./models');
 
 router.get('/', (req,res) => {  
 	let questHistObjectIds = [];
-
+	
 	// if request contains question history, convert question ids to ObjectIds
 	if (req.query.questHist) {
 		const questHist = req.query.questHist;
@@ -39,7 +39,7 @@ router.post('/', jwtAuth, (req,res) => {
 
 	// check is user is an admin
 	if (req.user.admin !== true) {
-		res.status(401).json({message: 'not authorized'});
+		return res.status(401).json({message: 'not authorized'});
 	}	
 
 	// check for required questans fields
