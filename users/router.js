@@ -137,7 +137,7 @@ router.post('/', (req, res) => {
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-// update a user's data (excluding password and admin status)
+// update a user's data (excluding username password and admin status)
 router.put('/:id', jwtAuth, (req,res) => {
     // check for required fields
     const requiredFields = ['id', 'username', 'questionLog', 'scores'];
@@ -161,7 +161,6 @@ router.put('/:id', jwtAuth, (req,res) => {
     
     User.findOne({_id: req.body.id})
         .then(user => {
-            user.username = req.body.username;
             user.scores = req.body.scores;
             user.questionLog = req.body.questionLog;
             user.save();
@@ -176,6 +175,37 @@ router.put('/:id', jwtAuth, (req,res) => {
             console.error(err);
             res.status(500).json({message: 'Internal server error'});
         });      
+});
+
+router.delete('/:id', jwtAuth, (req,res) => {
+    // check for required field
+    const requiredFields = ['id'];
+    const missingField = requiredFields.find(field => !(field in req.body));
+
+    if (missingField) {
+        return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: 'field missing',
+            location: missingField
+        });
+    }
+    
+    // check if params.id is the same as the body.id
+    if (req.params.id !== req.body.id) {
+        const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
+        console.error(message);
+        return res.status(400).json({message});
+    }
+
+    return User.deleteOne({_id: req.params.id})
+        .then(() => {
+            res.status(204).end();
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({message: 'internal server error'});
+        });
 });
 
 module.exports = router;
