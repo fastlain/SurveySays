@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const passport = require('passport');
@@ -29,10 +29,6 @@ passport.use(jwtStrategy);
 app.use(express.static('public'));
 app.use(express.static('dataentry'));
 
-// temp, might be able to remove this?
-app.get('/dataentry', (req,res) => {
-  res.sendFile(path.join(__dirname, '/dataentry/dataentry.html'));
-});
 
 // declare `server` here, assign a value in runServer, and access it in closeServer
 let server;
