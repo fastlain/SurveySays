@@ -86,7 +86,7 @@ html {
 /***** btn *****/
 
 .btn {
-    background: var(--sec-color);
+    background-color: var(--sec-color);
     font-family: var(--body-font);
     color: var(--primary-text-color);
     border: none;
@@ -97,11 +97,14 @@ html {
     padding: 0.5em 0.75em;
     display: inline-block;
     cursor: pointer;
+    transition: background-color 300ms, box-shadow 300ms;
+
 }
 
 .btn:hover,
 .btn:focus {
     background-color: var(--sec-color-dark10);
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.4);
 }
 
 .btn--front {
@@ -143,11 +146,14 @@ html {
     background: none;
     border: none;
     box-shadow: none;
+    transition-property: color;
+    transition-duration: 300ms;
 }
 
 .btn--clear:hover, .btn--clear:focus {
     background: none;
     color: #ccc;
+    box-shadow: none;
 }
 
 .btn--biggertxt {
@@ -160,11 +166,13 @@ html {
 
 .btn--ter-color {
     background-color: var(--ter-color);
+    transition: background-color 300ms, box-shadow 300ms;
 }
 
 .btn--ter-color:hover,
 .btn--ter-color:focus {
     background-color: var(--ter-color-dark10);
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.4);
 }
 
 .btn--inline {
@@ -959,6 +967,8 @@ html {
 
 .audio-ctrl__icon {
     color: white;
+    transition-property: color;
+    transition-duration: 300ms;
 }
 .audio-ctrl__icon:hover {
     color: #ccc;
