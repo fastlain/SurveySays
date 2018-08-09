@@ -658,8 +658,10 @@ View.generateUserScoreBoard = () => {
 
 	for (let i = 0; i < max; i += 1) {
 		scoreboardHTML += `
-			<div class='scoreboard__num'>${i+1}.</div>
-			<div class='scoreboard__score'>${userScores[i].toFixed(2)}%</div>
+			<div class='scoreboard__wrapper'>
+				<div class='scoreboard__num'>${i+1}.</div>
+				<div class='scoreboard__score'>${userScores[i].toFixed(2)}%</div>
+			</div>
 		`;
 	}
 	$('#scoreboard-username').text(STORE.user.username);
@@ -858,7 +860,7 @@ Controller.handlePromoLoginBtn = () => {
 Controller.handleResultsScoreboardToggle = () => {
 	//todo: add event handler for keypress (since this isn't a native button)
 	$('#user-scoreboard').click(() => {
-		$('#user-scoreboard-grid').toggleClass('scoreboard__grid--hidden');
+		$('#user-scoreboard-grid').toggleClass('scoreboard__flex--hidden');
 		$('#scoreboard__caret').toggleClass('fa-caret-left');
 		$('#scoreboard__caret').toggleClass('fa-caret-down');
 		$('.results').toggle();
