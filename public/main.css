@@ -718,11 +718,26 @@ html {
     text-align: left;
     color: var(--primary-text-color);
     background: var(--sec-color);
+    animation-name: flip;
+    animation-duration: 400ms;
+    animation-timing-function: ease-out;
+}
+
+@keyframes flip {
+    from {
+        transform: scaleY(-1);
+    }
+    to {
+        transform: scaleY(1);
+    }
 }
 
 .answers__text--revealed {
     text-align: left;
     font-style: italic;
+    animation-name: flip;
+    animation-duration: 400ms;
+    animation-timing-function: ease-out;
 }
 
 .answers__points {

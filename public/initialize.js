@@ -488,15 +488,16 @@ View.revealMissedAnswers = () => {
 // show correct answer and corresponding points from specified index
 View.revealAnswer = (i, guessed) => {  
 	const $correctElem = $(`.answers div:nth-child(${i+1}) .answers__text`);
-	$correctElem.hide().text(STORE.QA.answers[i].display).slideDown(300);
-	$correctElem.next().text(STORE.QA.answers[i].pts);
-
+	
 	if (guessed) {
 		$correctElem.addClass('answers__text--guessed');
 	} else {
 		$correctElem.addClass('answers__text--revealed');
 		$correctElem.next().addClass('answers__points--revealed')
 	}
+
+	$correctElem.text(STORE.QA.answers[i].display);
+	$correctElem.next().text(STORE.QA.answers[i].pts);
 }
 
 // check and render total game score
@@ -564,7 +565,7 @@ View.resetAnswerBoard = () => {
 				</div>`;
 			}
 			$(answer).appendTo('.answers');
-		}, 200*i);
+		}, 175*i);
 
 	}
 	// answerBoard =
