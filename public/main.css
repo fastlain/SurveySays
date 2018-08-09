@@ -622,6 +622,20 @@ html {
 
 .guesses__icon--x {
     background-color: var(--sec-color-dark10);
+    animation-name: popout;
+    animation-duration: 300ms;
+}
+
+@keyframes popout {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(1.5, 1.5);
+    }
+    100% {
+        transform: scale(1,1)
+    }
 }
 
 @media (max-height: 500px) {
