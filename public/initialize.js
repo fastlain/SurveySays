@@ -415,7 +415,10 @@ Model.checkVoiceSupport = () => {
 
 View.renderLoggedIn = () => {
 	// hide log-in modal
-	$('#login-modal').addClass('modal-background--hidden');
+	$('#login-modal').addClass('modal-background--fadeout');
+	setTimeout(() => {
+		$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
+	}, 350);
 
 	// clear login-fields and message
 	$('#username-inpt').val('');
@@ -736,7 +739,10 @@ Controller.handleShowMeBtn = () => {
 Controller.handleLetsPlayBtn = () => {
 	$('#lets-play-btn').click(() => {        
 		View.playAudio('sounds/startsound.ogg');
-		$('#instructions-modal').addClass('modal-background--hidden');
+		$('#instructions-modal').addClass('modal-background--fadeout');
+		setTimeout(() => {
+			$('#instructions-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
+		}, 350);
 		SpeechController.removeCommand('(let\'s) play');
 		View.renderGameScreen();
 		Model.getNewQA();  
@@ -793,18 +799,28 @@ Controller.handleNavLoginLogoutBtn = () => {
 // Close login modal by clicking "x", pressing 'escape', or click outside modal
 Controller.handleCloseLoginModal = () => {
 	$('#close-login-btn').click(() => {
-		$('#login-modal').addClass('modal-background--hidden');
+		$('#login-modal').addClass('modal-background--fadeout');
+		setTimeout(() => {
+			$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
+		}, 350);
+
 	});
 
 	$('#login-modal').click((evt) => {	
 		if ($(evt.target).is($('#login-modal'))) {
-			$('#login-modal').addClass('modal-background--hidden');
+			$('#login-modal').addClass('modal-background--fadeout');
+			setTimeout(() => {
+				$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
+			}, 350);
 		}
 	});
 
 	$(document).keydown(function(evt) { 	
 		if (evt.keyCode === 27) { 			
-			$('#login-modal').addClass('modal-background--hidden');
+			$('#login-modal').addClass('modal-background--fadeout');
+			setTimeout(() => {
+				$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
+			}, 350);
 		}
 	});
 }
