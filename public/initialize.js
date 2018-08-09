@@ -486,7 +486,7 @@ View.revealMissedAnswers = () => {
 
 // show correct answer and corresponding points from specified index
 View.revealAnswer = (i, guessed) => {  
-	const $correctElem = $(`.answers div:nth-child(${2*i+1})`);
+	const $correctElem = $(`.answers div:nth-child(${i+1}) .answers__text`);
 	$correctElem.text(STORE.QA.answers[i].display);
 	$correctElem.next().text(STORE.QA.answers[i].pts);
 
@@ -548,10 +548,16 @@ View.resetAnswerBoard = () => {
 	let answerBoard = '';
 	for (let i = 0; i < numAnswers; i += 1) {
 		answerBoard += 
-			`<div class="answers__text">${i+1}</div>
-			<div class="answers__points"></div>`;
+			`<div class='answers__wrapper'>
+				<div class='answers__text'>${i+1}</div>
+				<div class='answers__points'></div>
+			</div>`;
 	}
-	answerBoard += '<div class="answers__sum">0</div>';
+	answerBoard +=
+		 `<div class='answers__wrapper answers__wrapper--sum'>
+			<div class='answers__blank'></div>
+		 	<div class='answers__sum'>0</div>
+		</div>`;
 	$('.answers').html(answerBoard);
 }
 
@@ -567,6 +573,7 @@ View.renderGameScreen = () => {
 	$('.main').removeClass('main--hidden');
 	$('.game-container').removeClass('game-container--hidden');
 	View.updateQuestion();
+	View.resetAnswerBoard();
 	Controller.focusGuessInput();
 }
 
@@ -600,7 +607,7 @@ View.generateResults = () => {
 	}
 } 
 
-// show/hide "Show Me..." and "Next" buttons
+// show/hide 'Show Me...' and 'Next' buttons
 View.toggleEndRound = () => {
 	$('#guess-form').toggleClass('guess-form--hidden');
 	$('#next-btn').toggleClass('btn--hidden');

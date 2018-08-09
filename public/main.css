@@ -650,21 +650,32 @@ html {
 /***** answers *****/
 
 .answers {    
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: auto;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
     margin: 0 auto;
     width: 90%;
     max-width: 600px;
     padding: 0;
-    grid-gap: 10px;
     text-align: center;
 }
 
+.answers__wrapper {
+    display: flex;
+    margin: 3px 0;
+}
+
+.answers__wrapper--sum {
+    justify-content: flex-end;
+}
+
 .answers__text {
-    grid-column: 1 / 2;
     background: var(--qrt-color);
     padding: 5px;
+    margin: 0 3px;
+    /* flex-grow: 5;
+    flex-basis: 0; */
+    width: 90%;
     border-radius: 5px;
     font-weight: bold;
     color: var(--mid-text-color);
@@ -682,9 +693,14 @@ html {
 }
 
 .answers__points {
-    grid-column: 2 / 3;
     background: var(--ter-color);
     padding: 5px;
+    margin: 0 3px;
+    max-width: 100px;
+    min-width: 30px;
+    width: 10%;
+    /* flex-grow: 1;
+    flex-basis: 0; */
     border-radius: 5px;
 }
 
@@ -693,32 +709,39 @@ html {
     font-style: italic;
 }
 
+.answers__blank {
+    margin: 0 3px;
+    width: 90%;
+    /* flex-grow: 5;
+    flex-basis: 0; */
+}
+
 .answers__sum {
-    grid-column: 2 / 3;
     background: var(--main-bg-color);
     padding: 5px;
+    margin: 0 3px;
+    max-width: 100px;
+    min-width: 30px;
+    width: 10%;
+    /* flex-grow: 1; */
     border-radius: 5px;
-    /* box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4); */
 }
 
-@media (max-height: 500px) {
+@media (max-height: 450px) {
     .answers {
-        grid-gap: 5px;
-        grid-template-columns: 4fr 1fr 4fr 1fr;
-        margin-bottom: 5px;
-    }
-    .answers__text {
-        grid-column: unset;
-    }
-
-    .answers__points {
-        grid-column: unset;
-    }
-
-    .answers__sum {
-        grid-column: 4 / 5;
+        height: 32vh;
     }
 }
+
+@media (max-height: 450px) and (max-width: 400px) {
+    .answers__wrapper {
+        max-width: 140px;
+    }
+    .answers__points {
+        min-width: 25px;
+    }
+}
+
 
 /***** message *****/
 
