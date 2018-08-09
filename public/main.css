@@ -708,6 +708,20 @@ html {
     text-align: center;
 }
 
+.answers--slideright {
+    animation-name: slideright;
+    animation-duration: 600ms;
+}
+
+@keyframes slideright {
+    from {
+        transform: translateX(0px);
+    }
+    to {
+        transform: translateX(2000px);
+    }
+}
+
 .answers__wrapper {
     display: flex;
     margin: 3px 0;

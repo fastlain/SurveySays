@@ -63,7 +63,6 @@ Model.getNewQA = () => {
 			Model.saveUserData();
 		}
 
-		// View.renderGameScreen();
 		View.renderNewRound();
 		SpeechController.addCommand(COMMANDS.showMe); 
 	}
@@ -549,8 +548,9 @@ View.updateQuestion = () => {
 }
 
 View.resetAnswerBoard = () => {
+	
 	const numAnswers = STORE.QA.answers.length;
-	$('.answers').html('');
+	$('.answers').removeClass('answers--slideright').html('');
 	let answer = '';
 	for (let i = 0; i <= numAnswers; i += 1) {
 		setTimeout(() => {
@@ -570,14 +570,7 @@ View.resetAnswerBoard = () => {
 			$(answer).appendTo('.answers');
 		}, 175*i);
 
-	}
-	// answerBoard =
-	// 	 `<div class='answers__wrapper answers__wrapper--sum'>
-	// 		<div class='answers__blank'></div>
-	// 	 	<div class='answers__sum'>0</div>
-	// 	</div>`;
-	// $('.answers').append(answerBoard);
-	
+	}	
 }
 
 // show user a message on the game screen
@@ -591,9 +584,6 @@ View.renderGameScreen = () => {
 	$('.game-header').removeClass('game-header--hidden');
 	$('.main').removeClass('main--hidden');
 	$('.game-container').removeClass('game-container--hidden');
-	// View.updateQuestion();
-	// View.resetAnswerBoard();
-	// Controller.focusGuessInput();
 }
 
 // update DOM elements from STORE at beginning of new round
@@ -605,6 +595,7 @@ View.renderNewRound = () => {
 	View.resetAnswerBoard();
 	View.message('');
 	Controller.focusGuessInput();
+
 }
 
 // generate final results screen with game data for each round
@@ -707,20 +698,23 @@ Controller.handleNewGameBtn = () => {
 Controller.handleNextBtn = () => {
 	$('#next-btn').click(() => {
 		SpeechController.removeCommand('next');
-		Model.endRound();
-		if (STORE.round <= 3) {
-			View.playAudio('sounds/startsound.ogg');
-			Model.getNewQA();
-			View.toggleEndRound();
-			// View.renderNewRound();
-			SpeechController.addCommand(COMMANDS.showMe);
-		} else {
-			View.playAudio('sounds/endgame.ogg');
-			Model.storeGameScore();
-			View.generateResults();
-			View.toggleResultsScreen();
-			SpeechController.addCommand(COMMANDS.newGame);
-		}
+		$('.answers').addClass('answers--slideright');
+		setTimeout(() => {
+			Model.endRound();
+			if (STORE.round <= 3) {
+				View.playAudio('sounds/startsound.ogg');
+				Model.getNewQA();
+				View.toggleEndRound();
+				// View.renderNewRound();
+				SpeechController.addCommand(COMMANDS.showMe);
+			} else {
+				View.playAudio('sounds/endgame.ogg');
+				Model.storeGameScore();
+				View.generateResults();
+				View.toggleResultsScreen();
+				SpeechController.addCommand(COMMANDS.newGame);
+			}
+		}, 300);
 	});
 }
 
