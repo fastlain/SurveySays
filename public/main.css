@@ -1014,6 +1014,8 @@ html {
     color: white;
     transition-property: color;
     transition-duration: 300ms;
+    animation-name: popout;
+    animation-duration: 300ms;
 }
 .audio-ctrl__icon:hover {
     color: #ccc;
