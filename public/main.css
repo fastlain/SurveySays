@@ -670,6 +670,18 @@ html {
 .answers__wrapper {
     display: flex;
     margin: 3px 0;
+    animation-duration: 300ms;
+    animation-name: slideFromRight;
+    animation-timing-function: ease-out;
+}
+
+@keyframes slideFromRight {
+    from {
+        margin-right: 100%;
+    }
+    to {
+        margin-right: 0%;
+    }
 }
 
 .answers__wrapper--sum {

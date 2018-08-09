@@ -63,7 +63,8 @@ Model.getNewQA = () => {
 			Model.saveUserData();
 		}
 
-		View.renderGameScreen();
+		// View.renderGameScreen();
+		View.renderNewRound();
 		SpeechController.addCommand(COMMANDS.showMe); 
 	}
 }
@@ -487,7 +488,7 @@ View.revealMissedAnswers = () => {
 // show correct answer and corresponding points from specified index
 View.revealAnswer = (i, guessed) => {  
 	const $correctElem = $(`.answers div:nth-child(${i+1}) .answers__text`);
-	$correctElem.text(STORE.QA.answers[i].display);
+	$correctElem.hide().text(STORE.QA.answers[i].display).slideDown(300);
 	$correctElem.next().text(STORE.QA.answers[i].pts);
 
 	if (guessed) {
@@ -545,20 +546,34 @@ View.updateQuestion = () => {
 
 View.resetAnswerBoard = () => {
 	const numAnswers = STORE.QA.answers.length;
-	let answerBoard = '';
-	for (let i = 0; i < numAnswers; i += 1) {
-		answerBoard += 
-			`<div class='answers__wrapper'>
-				<div class='answers__text'>${i+1}</div>
-				<div class='answers__points'></div>
-			</div>`;
+	$('.answers').html('');
+	let answer = '';
+	for (let i = 0; i <= numAnswers; i += 1) {
+		setTimeout(() => {
+			if (i === numAnswers) {
+				answer = 
+				`<div class='answers__wrapper answers__wrapper--sum'>
+					<div class='answers__blank'></div>
+				 	<div class='answers__sum'>0</div>
+				</div>`;
+			} else {
+				answer = 
+				`<div class='answers__wrapper'>
+					<div class='answers__text'>${i+1}</div>
+					<div class='answers__points'></div>
+				</div>`;
+			}
+			$(answer).appendTo('.answers');
+		}, 200*i);
+
 	}
-	answerBoard +=
-		 `<div class='answers__wrapper answers__wrapper--sum'>
-			<div class='answers__blank'></div>
-		 	<div class='answers__sum'>0</div>
-		</div>`;
-	$('.answers').html(answerBoard);
+	// answerBoard =
+	// 	 `<div class='answers__wrapper answers__wrapper--sum'>
+	// 		<div class='answers__blank'></div>
+	// 	 	<div class='answers__sum'>0</div>
+	// 	</div>`;
+	// $('.answers').append(answerBoard);
+	
 }
 
 // show user a message on the game screen
@@ -572,9 +587,9 @@ View.renderGameScreen = () => {
 	$('.game-header').removeClass('game-header--hidden');
 	$('.main').removeClass('main--hidden');
 	$('.game-container').removeClass('game-container--hidden');
-	View.updateQuestion();
-	View.resetAnswerBoard();
-	Controller.focusGuessInput();
+	// View.updateQuestion();
+	// View.resetAnswerBoard();
+	// Controller.focusGuessInput();
 }
 
 // update DOM elements from STORE at beginning of new round
@@ -679,7 +694,7 @@ Controller.handleNewGameBtn = () => {
 		SpeechController.removeCommand('new game');
 		Model.startNextGame();
 		View.toggleResultsScreen();
-		View.renderNewRound();
+		// View.renderNewRound();
 		View.toggleEndRound();
 		SpeechController.addCommand(COMMANDS.showMe);
 	});
@@ -693,7 +708,7 @@ Controller.handleNextBtn = () => {
 			View.playAudio('sounds/startsound.ogg');
 			Model.getNewQA();
 			View.toggleEndRound();
-			View.renderNewRound();
+			// View.renderNewRound();
 			SpeechController.addCommand(COMMANDS.showMe);
 		} else {
 			View.playAudio('sounds/endgame.ogg');
@@ -722,6 +737,7 @@ Controller.handleLetsPlayBtn = () => {
 		View.playAudio('sounds/startsound.ogg');
 		$('#instructions-modal').addClass('modal-background--hidden');
 		SpeechController.removeCommand('(let\'s) play');
+		View.renderGameScreen();
 		Model.getNewQA();  
 	});
 }
