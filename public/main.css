@@ -328,7 +328,6 @@ html {
 
 .dropdown__item--notice {
     font-style: italic;
-    padding: 0.5em 0.75em;
     border-bottom: solid var(--primary-text-color) 2px;
     color: var(--ter-color);
 }
@@ -355,9 +354,9 @@ html {
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
     .dropdown__content {
-        right: calc(50vw - 500px);
+        right: calc(50vw - 600px);
     }
 }
 
@@ -969,9 +968,9 @@ html {
     display:none;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
     .audio-ctrl {
-        left: calc(50% + 450px)
+        left: calc(50% + 550px)
     }
 }
 
