@@ -1,12 +1,14 @@
 const SpeechController = {};
 
-if (STORE.voiceSupport) {
+if (annyang) {
     annyang.debug();
 }
 
-SpeechController.start = () => {
+SpeechController.stop = () => {
     if (STORE.voiceSupport) {
-        annyang.start();
+        annyang.removeCommands();
+        annyang.abort();
+        console.log('annyang aborted');   
     }
 }
 
@@ -22,12 +24,8 @@ SpeechController.addCommand = (cmdName) => {
             SpeechController.clickTarget = cmdName.clickTarget;
         }
         annyang.addCommands(cmdName.command);
-    }
-}
-
-SpeechController.removeCommand = (cmdName) => {
-    if (STORE.voiceSupport) {
-        annyang.removeCommands(cmdName.command);
+        annyang.start({autorestart: true});
+        console.log('annyang started');
     }
 }
 

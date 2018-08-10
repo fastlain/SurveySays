@@ -174,8 +174,7 @@ Model.processGuess = (guess) => {
     
     console.log(`User guessed: ${guess}`);
     
-	//SpeechController.pauseListening();
-	SpeechController.removeCommand('show me *guess');
+	SpeechController.stop();
     guess = guess.toLowerCase();
 
     // if user submits empty string, display error message
@@ -636,6 +635,18 @@ View.displayVoiceSupport = () => {
 		$('#voice-support').text(
 			`All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your answer. Buttons can be activated by saying the words in quotes. Try it below...`);
 		
+		// create a microphone indicator icon
+		$('.guess-form__flex-wrapper').append(`<i id='mic' class='fas fa-microphone mic' aria-hidden='true'></i>`);
+		const $mic = $('#mic');
+		// continuously check for annyang listening and adjust mic classes
+		setInterval(() => {
+			if (annyang.isListening()) {
+				$mic.removeClass('fa-microphone-slash mic--off').addClass('fa-microphone mic--on');
+			} else {
+				$mic.removeClass('fa-microphone mic--on').addClass('fa-microphone-slash mic--off');
+			}
+		}, 100);
+
 		// check if micophone is enabled
 		navigator.getUserMedia({audio:true}, 
 			// success callback: clear any prior message
@@ -686,7 +697,7 @@ Controller.focusGuessInput = () => {
 Controller.handleNewGameBtn = () => {
 	$('#new-game-btn').click(() => {
 		View.playAudio('sounds/startsound.mp3');
-		SpeechController.removeCommand('new game');
+		SpeechController.stop();
 		Model.startNextGame();
 		View.toggleResultsScreen();
 		// View.renderNewRound();
@@ -697,7 +708,7 @@ Controller.handleNewGameBtn = () => {
 
 Controller.handleNextBtn = () => {
 	$('#next-btn').click(() => {
-		SpeechController.removeCommand('next');
+		SpeechController.stop();
 		$('.answers').addClass('answers--slideright');
 		setTimeout(() => {
 			Model.endRound();
@@ -705,8 +716,6 @@ Controller.handleNextBtn = () => {
 				View.playAudio('sounds/startsound.mp3');
 				Model.getNewQA();
 				View.toggleEndRound();
-				// View.renderNewRound();
-				SpeechController.addCommand(COMMANDS.showMe);
 			} else {
 				View.playAudio('sounds/endgame.mp3');
 				Model.storeGameScore();
@@ -737,7 +746,7 @@ Controller.handleLetsPlayBtn = () => {
 		setTimeout(() => {
 			$('#instructions-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
 		}, 350);
-		SpeechController.removeCommand('(let\'s) play');
+		SpeechController.stop();
 		View.renderGameScreen();
 		Model.getNewQA();  
 	});
@@ -745,7 +754,7 @@ Controller.handleLetsPlayBtn = () => {
 
 Controller.handleStartBtn = () => {
 	$('#start-btn').click((evt) => {
-		SpeechController.removeCommand('start (game)');
+		SpeechController.stop();
 		View.displayVoiceSupport();
         $('#instructions-modal').removeClass('modal-background--hidden');
 		SpeechController.addCommand(COMMANDS.letsPlay);
@@ -903,7 +912,6 @@ Controller.handleResultsScoreboardToggle = () => {
 
 function initialize() {
 	Model.checkVoiceSupport();
-	SpeechController.start();
     Controller.handleMuteBtn();
     SpeechController.addCommand(COMMANDS.startGame);
 	Controller.handleStartBtn();

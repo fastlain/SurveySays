@@ -563,9 +563,7 @@ html {
 .guess-form {
     margin: 0 auto;
     width: 90%;
-    max-width: 500px;
-    /* border: solid white 2px; */
-    /* border-radius: 10px; */
+    max-width: 600px;
     padding: 0 10px;
 }
 
@@ -608,6 +606,49 @@ html {
     }
 }
 
+@media (min-height: 800px) {
+    .guess-form__flex-btn {
+        font-size: 20px;
+    }
+}
+
+/***** mic *****/
+.mic {
+    font-size: 1.5rem;
+    padding: 0 10px;
+    margin: auto;
+    width: 4rem;
+    text-align: center;
+}
+
+.mic--on {
+    color: var(--ter-color);
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1, 1);
+    }
+    50% {
+        transform: scale(1.25, 1.25);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.mic--off {
+    color: var(--mid-text-color);
+}
+
+@media (max-height: 500px) {
+    .mic {
+        font-size: 14px;
+    }
+}
 /***** guesses *****/
 
 .guesses {
