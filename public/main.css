@@ -521,6 +521,10 @@ html {
 
 /***** game-container *****/
 
+.game-container {
+    overflow: hidden;
+}
+
 .game-container--hidden {
     display: none;
 }
