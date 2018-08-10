@@ -28,6 +28,7 @@ passport.use(jwtStrategy);
 // expose public assets on static server
 app.use(express.static('public'));
 app.use(express.static('dataentry'));
+app.use(express.static('public/favicon'));
 
 
 // declare `server` here, assign a value in runServer, and access it in closeServer
