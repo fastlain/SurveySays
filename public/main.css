@@ -12,13 +12,6 @@ html {
     box-sizing: inherit;
 }
 
-/***** Clearfix *****/
-
-.cf:after {
-    content: "";
-    display: table;
-    clear: both;
-}
 
 /*  ===============
     CSS VARIABLES
@@ -29,17 +22,18 @@ html {
 
 :root {
     --main-bg-color: #6B7A8F; /* Blueberry */
-    --main-bg-color-t70: rgb(107,122,143,0.7); /* 70% opacity */
-    --main-bg-color-t90: rgb(107,122,143,0.9); /* 90% opacity */
-    --sec-color: #F7882F; /* Apricot */
-    --sec-color-dark10: #DE6F16; 
+    --main-bg-color-dark10: #565F71;
+    --main-bg-color-t70: rgba(107,122,143,0.7); /* 70% opacity */
+    --main-bg-color-t90: rgba(107,122,143,0.9); /* 90% opacity */
+    --sec-color: #BF5808; 
+    --sec-color-dark10: #823D08; 
     --ter-color: #F7C331; /* Citrus */
     --ter-color-dark10: #DEAA18;
     --qrt-color: #DCC7AA; /* Apple Core */
 
     --primary-text-color: #FFFFFF; /* White */
     --mid-text-color: #686868; /* Grey */
-    --dark-text-color: #333333; /* Dark Grey */
+    --dark-text-color: #555; /* Dark Grey */
 }
 
 /***** Fonts *****/
@@ -98,7 +92,6 @@ html {
     display: inline-block;
     cursor: pointer;
     transition: background-color 300ms, box-shadow 300ms;
-
 }
 
 .btn:hover,
@@ -111,6 +104,25 @@ html {
     display: block;
     margin: 0 20px 0 auto;
     font-size: 5vmin;
+    animation-name: pulse-small;
+    animation-duration: 2s;
+    animation-delay: 300ms;
+    animation-iteration-count: infinite;    
+}
+
+@keyframes pulse-small {
+    0% {
+        transform: scale(1, 1);
+    }
+    25% {
+        transform: scale(1.1, 1.1);
+    }
+    50% {
+        transform: scale(1, 1);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
 }
 
 @media (min-width: 600px) and (min-height: 600px) {
@@ -166,6 +178,7 @@ html {
 
 .btn--ter-color {
     background-color: var(--ter-color);
+    color: var(--dark-text-color);
     transition: background-color 300ms, box-shadow 300ms;
 }
 
@@ -417,7 +430,8 @@ html {
 /***** instructions *****/
 
 .instructions {
-    background-color: var(--main-bg-color);
+    background-color: var(--main-bg-color-dark10);
+    color: var(--primary-text-color);
     width: 85%;
     max-width: 600px;
     margin: 0;
@@ -453,7 +467,7 @@ html {
 /***** login *****/
 
 .login {
-    background-color: var(--main-bg-color);
+    background-color: var(--main-bg-color-dark10);
     min-width: 300px;
     max-width: 400px;
     width: 90%;
@@ -693,7 +707,7 @@ html {
 }
 
 .guesses__icon--x {
-    background-color: var(--sec-color-dark10);
+    background-color: var(--sec-color);
     animation-name: popout;
     animation-duration: 300ms;
 }
@@ -792,12 +806,10 @@ html {
     background: var(--qrt-color);
     padding: 5px;
     margin: 0 3px;
-    /* flex-grow: 5;
-    flex-basis: 0; */
     width: 90%;
     border-radius: 5px;
     font-weight: bold;
-    color: var(--mid-text-color);
+    color: var(--dark-text-color);
 }
 
 .answers__text--guessed {
@@ -828,36 +840,32 @@ html {
 
 .answers__points {
     background: var(--ter-color);
+    color: var(--dark-text-color);
     padding: 5px;
     margin: 0 3px;
     max-width: 100px;
     min-width: 30px;
     width: 10%;
-    /* flex-grow: 1;
-    flex-basis: 0; */
     border-radius: 5px;
 }
 
 .answers__points--revealed {
-    color: var(--mid-text-color);
     font-style: italic;
 }
 
 .answers__blank {
     margin: 0 3px;
     width: 90%;
-    /* flex-grow: 5;
-    flex-basis: 0; */
 }
 
 .answers__sum {
-    background: var(--main-bg-color);
+    background: #565F71;
     padding: 5px;
     margin: 0 3px;
     max-width: 100px;
     min-width: 30px;
     width: 10%;
-    /* flex-grow: 1; */
+    font-weight: bold;
     border-radius: 5px;
 }
 
@@ -932,10 +940,10 @@ html {
 .results__score-box {
     grid-column: 2 / 3;
     background: var(--ter-color);
+    color: var(--dark-text-color);
     padding: 10px;
     border-radius: 5px;
     align-self: center;
-    /* justify-self: flex-start; */
     font-size: 1.25rem;
     font-weight: bold;
     text-align: center;
@@ -944,6 +952,7 @@ html {
 
 .results__score-box--total {
     background: var(--main-bg-color);
+    color: var(--primary-text-color);
 }
 
 @media (max-height: 550px) {

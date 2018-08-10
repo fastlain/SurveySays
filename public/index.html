@@ -36,7 +36,7 @@
         <h2 class='front-header__tagline'>A voice-enabled Family Feud-style quiz game</h2>
     </header>
 
-    <header class='game-header game-header--hidden' role='banner'>
+    <header class='game-header game-header--hidden'>
         <h1 class='game-header__title'>
             Survey
             <img class='game-header__speech-bubble' src='img/bubble--noshadow.svg' alt='speech bubble'> Says
@@ -45,7 +45,7 @@
 
     <nav id='dropdown-container' class='dropdown' role='navigation'>
         <button id='dropdown-btn' class='dropdown__btn btn btn--clear btn--biggertxt' type='button' aria-label='Dropdown Menu'>
-            <i class='fas fa-bars' aria-hidden></i>
+            <i class='fas fa-bars' aria-hidden='true'></i>
         </button>
         <ul id='dropdown-content' class='dropdown__content dropdown__content--hidden'>
             <li id='user-notice' class='dropdown__item dropdown__item--hidden dropdown__item--notice'></li>
@@ -167,17 +167,16 @@
         </div>
     </main>
 
-    <button id='mute-container' class='audio-ctrl' type='button' aria-label='Toggle sound'>
-        <i class='audio-ctrl__icon fas fa-volume-up' aria-hidden='true' title='Sound On'></i>
-        <i class='audio-ctrl__icon audio-ctrl__icon--hidden fas fa-volume-off' aria-hidden='true' title='Sound Muted'></i>
-    </button>
-
     <footer class='page-footer' role='contentinfo'>
         <p class='page-footer_para'>Created by Michael Allain</p>
         <p class='page-footer_para'>        
             <a href="https://github.com/fastlain/SurveySays" target='_blank' aria-label='GitHub for SurveySays'><i class='page-footer__icon fab fa-github' aria-hidden='true' title='GitHub for SurveySays'></i></a>
             <a href="https://www.linkedin.com/in/allainm/" target='_blank' aria-label='LinkedIn for Michael Allain'><i class='page-footer__icon fab fa-linkedin' aria-hidden='true' title='LinkedIn for Michael Allain'></i></a>
         </p>
+        <button id='mute-container' class='audio-ctrl' type='button' aria-label='Toggle sound'>
+                <i class='audio-ctrl__icon fas fa-volume-up' aria-hidden='true' title='Sound On'></i>
+                <i class='audio-ctrl__icon audio-ctrl__icon--hidden fas fa-volume-off' aria-hidden='true' title='Sound Muted'></i>
+            </button>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
