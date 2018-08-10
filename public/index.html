@@ -78,7 +78,7 @@
             <input id='password-inpt' class='inpt login__inpt' type='password'>
             <label id='re-password-lbl' class='login__lbl login__lbl--hidden' for='re-password-inpt'>Re-enter Password:</label>
             <input id='re-password-inpt' class='inpt login__inpt login__inpt--hidden' type='password'>
-            <p id='login-msg' class='login__msg login__msg--hidden'>This is a test message</p>
+            <p id='login-msg' class='login__msg login__msg--hidden' aria-live='polite'>This is a test message</p>
             <button id='login-btn' class='btn btn--centered' type='button'>Log In</button>
             <button id='create-user-btn' class='btn btn--centered btn--hidden' type='button'>Create User</button>
             <button id='swap-login-create' class='btn btn--clear btn--centered btn--underline' type='button'>Create a new user account
@@ -122,7 +122,7 @@
                     </div>
             </section>
 
-            <section class='answers' role='region'>
+            <section class='answers' role='region' aria-live='polite'>
             </section>
 
             <form id='guess-form' class='guess-form'>
@@ -135,12 +135,12 @@
 
             <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered btn--shrink' type='button'> Next </button>
 
-            <p class='message' role='region'></p>
+            <p class='message' role='region' aria-live='polite'></p>
 
         </div>
 
         <div class='results-container results-container--hidden'>
-            <div class='results'>
+            <div class='results' aria-live='polite'>
                 <h2 class='results__heading'>Round 1:</h2>
                 <div class='results__score-box'></div>
                 <h2 class='results__heading'>Round 2:</h2>
@@ -162,7 +162,7 @@
                 <i id='scoreboard__caret' class='scoreboard__caret fas fa-caret-left' aria-hidden></i>
                 <h2 class='scoreboard__heading'>High Scores</h2>
                 <h3 id='scoreboard-username' class='scoreboard__username'></h3>
-                <div id='user-scoreboard-grid' class='scoreboard__flex scoreboard__flex--hidden'></div>
+                <div id='user-scoreboard-grid' class='scoreboard__flex scoreboard__flex--hidden' aria-live='polite'></div>
             </div>
         </div>
     </main>

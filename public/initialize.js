@@ -555,13 +555,13 @@ View.resetAnswerBoard = () => {
 		setTimeout(() => {
 			if (i === numAnswers) {
 				answer = 
-				`<div class='answers__wrapper answers__wrapper--sum'>
+				`<div class='answers__wrapper answers__wrapper--sum' aria-live='polite'>
 					<div class='answers__blank'></div>
-				 	<div class='answers__sum'>0</div>
+				 	<div class='answers__sum' aria-label='points'>0</div>
 				</div>`;
 			} else {
 				answer = 
-				`<div class='answers__wrapper'>
+				`<div class='answers__wrapper' aria-live='polite'>
 					<div class='answers__text'>${i+1}</div>
 					<div class='answers__points'></div>
 				</div>`;
