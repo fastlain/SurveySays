@@ -887,10 +887,17 @@ Controller.handlePromoLoginBtn = () => {
 Controller.handleResultsScoreboardToggle = () => {
 	//todo: add event handler for keypress (since this isn't a native button)
 	$('#user-scoreboard').click(() => {
-		$('#user-scoreboard-grid').toggleClass('scoreboard__flex--hidden');
+		if ($('#user-scoreboard-grid').is(':visible')) {
+			$('#user-scoreboard-grid').slideUp(300);
+			$('.results').slideDown(300);
+		} else {
+			$('#user-scoreboard-grid').slideDown(300);
+			$('.results').slideUp(300);
+		}
 		$('#scoreboard__caret').toggleClass('fa-caret-left');
 		$('#scoreboard__caret').toggleClass('fa-caret-down');
-		$('.results').toggle();
+
+
 	});
 }
 
