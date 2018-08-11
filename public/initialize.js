@@ -320,6 +320,7 @@ Model.logIn = (username, password) => {
 	function handleError(err) {
 		console.log(err);
 		View.loginMessage('Invalid username or password');
+		$('#username-inpt').focus();
 	}
 }
 
@@ -756,7 +757,8 @@ Controller.handleStartBtn = () => {
 	$('#start-btn').click((evt) => {
 		SpeechController.stop();
 		View.displayVoiceSupport();
-        $('#instructions-modal').removeClass('modal-background--hidden');
+		$('#instructions-modal').removeClass('modal-background--hidden');
+		$('#username-inpt').focus();
 		SpeechController.addCommand(COMMANDS.letsPlay);
 	});
 }
@@ -791,6 +793,7 @@ Controller.handleNavLoginLogoutBtn = () => {
 		if (STORE.user === null) {
 			// show login modal
 			$('#login-modal').removeClass('modal-background--hidden');
+			$('#username-inpt').focus();
 		} else {
 			// logout
 			Model.logOut();
@@ -856,6 +859,8 @@ Controller.handleSwapLoginCreateBtn = () => {
 		$('#re-password-inpt').toggleClass('login__inpt--hidden');
 		$('#create-user-btn').toggleClass('btn--hidden');
 		$('#login-btn').toggleClass('btn--hidden');
+
+		$('#username-inpt').focus();
 	});
 }
 
@@ -890,6 +895,7 @@ Controller.handleLoginBtn = () => {
 Controller.handlePromoLoginBtn = () => {
 	$('#login-promo-btn').click(() => {
 		$('#login-modal').removeClass('modal-background--hidden');
+		$('#username-inpt').focus();
 	});
 }
 
@@ -903,10 +909,7 @@ Controller.handleResultsScoreboardToggle = () => {
 			$('#user-scoreboard-grid').slideDown(300);
 			$('.results').slideUp(300);
 		}
-		$('#scoreboard__caret').toggleClass('fa-caret-left');
-		$('#scoreboard__caret').toggleClass('fa-caret-down');
-
-
+		$('#scoreboard__caret').toggleClass('fa-caret-left fa-caret-down');
 	});
 }
 
