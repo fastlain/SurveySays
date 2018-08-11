@@ -502,7 +502,7 @@ html {
     margin: 10px auto;
     text-align: center;
     font-style: italic;
-    color: var(--sec-color);
+    color: var(--ter-color);
 }
 
 .login__msg--hidden {
@@ -824,9 +824,11 @@ html {
 @keyframes flip {
     from {
         transform: scaleY(-1);
+        background: var(--qrt-color);
     }
     to {
         transform: scaleY(1);
+        background: var(--sec-color);
     }
 }
 
