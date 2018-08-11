@@ -281,6 +281,7 @@ Model.createNewUser = (username, password) => {
 		const errFieldCap = errField.charAt(0).toUpperCase() + errField.slice(1);
 		
 		View.loginMessage(`${errFieldCap} ${errMessage}`);
+		$('#username-inpt').focus();
 	}
 }
 
