@@ -740,12 +740,17 @@ html {
     max-width: 600px;
     margin: 0 auto;
     padding: 5px;
-    /* border: solid white 2px; */
-    /* border-radius: 10px; */
 }
 
 .question__text {
     margin: 0;
+    font-size: 3vmin;
+}
+
+@media (max-width: 640px), (max-height: 640px) {
+    .question__text {
+        font-size: 16px;
+    }
 }
 
 @media (max-height: 500px) {
@@ -824,11 +829,9 @@ html {
 @keyframes flip {
     from {
         transform: scaleY(-1);
-        background: var(--qrt-color);
     }
     to {
         transform: scaleY(1);
-        background: var(--sec-color);
     }
 }
 
