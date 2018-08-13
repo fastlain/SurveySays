@@ -1,5 +1,6 @@
 'use strict';
 
+// create data store for global state variables
 const STORE = {
     muted: false,
     round: 1,
@@ -26,6 +27,7 @@ const STORE = {
 	user: null
 }
 
+// declare MVC namespaces
 const Model = {};
 const View = {};
 const Controller = {};
@@ -170,9 +172,7 @@ Model.processGuess = (guess) => {
     // clear prior messages
 	View.message('');
 	// place cursor focus in guess input
-	Controller.focusGuessInput();
-    
-    console.log(`User guessed: ${guess}`);
+	$('#guess-input').focus();
     
 	SpeechController.stop();
     guess = guess.toLowerCase();
@@ -191,7 +191,6 @@ Model.processGuess = (guess) => {
     for (let i = 0; i < ansArr.length; i += 1) {
         for (let j = 0; j < ansArr[i].matches.length; j += 1) {
             if (guess.includes(ansArr[i].matches[j])) {
-                console.log(`matched ${ansArr[i].display}`);
                 
                 // check if answer has already been guessed
                 if (ansArr[i].guessed === true) {
@@ -268,12 +267,10 @@ Model.createNewUser = (username, password) => {
 	});
 
 	function handleSuccess(data) {
-		// console.log(data);
 		Model.logIn(username, password);
 	}
 
 	function handleError(err) {
-		// console.log(err.responseJSON);
 		const errField = err.responseJSON.location;
 		const errMessage = err.responseJSON.message;
 		
@@ -319,7 +316,6 @@ Model.logIn = (username, password) => {
 	}
 
 	function handleError(err) {
-		console.log(err);
 		View.loginMessage('Invalid username or password');
 		$('#username-inpt').focus();
 	}
@@ -398,6 +394,7 @@ Model.logOut = () => {
 	localStorage.removeItem('TOKEN');
 }
 
+// test if user agent supports Web Speech API
 Model.checkVoiceSupport = () => {
 	const ua = navigator.userAgent;
 
@@ -519,7 +516,7 @@ View.removeGuess = () => {
 		.attr('aria-label', 'guess used')
 		.children()
 		.removeClass('fa-check')	
-		.addClass('fa-times')
+		.addClass('fa-times');
 }
 
 // show all guesses in 'unused' state
@@ -530,7 +527,7 @@ View.resetGuesses = () => {
 		.attr('aria-label', 'guess remaining')
 		.children()
 		.removeClass('fa-times')	
-		.addClass('fa-check')
+		.addClass('fa-check');
 }
 
 // check and render current round score
@@ -548,11 +545,12 @@ View.updateQuestion = () => {
 	$('#question-text').text(STORE.QA.question);
 }
 
+// clear and regenerate the game answer board
 View.resetAnswerBoard = () => {
-	
 	const numAnswers = STORE.QA.answers.length;
 	$('.answers').removeClass('answers--slideright').html('');
 	let answer = '';
+	// generate answer board rows, with timeout delay for animation effect
 	for (let i = 0; i <= numAnswers; i += 1) {
 		setTimeout(() => {
 			if (i === numAnswers) {
@@ -570,7 +568,6 @@ View.resetAnswerBoard = () => {
 			}
 			$(answer).appendTo('.answers');
 		}, 175*i);
-
 	}	
 }
 
@@ -595,8 +592,7 @@ View.renderNewRound = () => {
 	View.updateQuestion();
 	View.resetAnswerBoard();
 	View.message('');
-	Controller.focusGuessInput();
-
+	$('#guess-input').focus();
 }
 
 // generate final results screen with game data for each round
@@ -634,14 +630,11 @@ View.toggleEndRound = () => {
 
 // show/hide Results screen
 View.toggleResultsScreen = () => {
-	const $gamecontainer = $('.game-container');
-	const $resultscontainer = $('.results-container');
-
-	$gamecontainer.toggleClass('game-container--hidden');
-	$resultscontainer.toggleClass('results-container--hidden');
+	$('.game-container').toggleClass('game-container--hidden');
+	$('.results-container').toggleClass('results-container--hidden');
 
 	// if results container is visible, focus on "new game" btn
-	if (!$resultscontainer.hasClass('results-container--hidden')) {
+	if (!$('.results-container').hasClass('results-container--hidden')) {
 		$('#new-game-btn').focus();
 	}
 }
@@ -655,13 +648,12 @@ View.displayVoiceSupport = () => {
 		
 		// create a microphone indicator icon
 		$('.guess-form__flex-wrapper').append(`<i id='mic' class='fas fa-microphone mic' aria-hidden='true'></i>`);
-		const $mic = $('#mic');
 		// continuously check for annyang listening and adjust mic classes
 		setInterval(() => {
 			if (annyang.isListening()) {
-				$mic.removeClass('fa-microphone-slash mic--off').addClass('fa-microphone mic--on');
+				$('#mic').removeClass('fa-microphone-slash mic--off').addClass('fa-microphone mic--on');
 			} else {
-				$mic.removeClass('fa-microphone mic--on').addClass('fa-microphone-slash mic--off');
+				$('#mic').removeClass('fa-microphone mic--on').addClass('fa-microphone-slash mic--off');
 			}
 		}, 100);
 
@@ -680,10 +672,12 @@ View.displayVoiceSupport = () => {
 	}
 }
 
+// show message to user in the login modal
 View.loginMessage = (message) => {
 	$('#login-msg').text(message).removeClass('login__msg--hidden');
 }
 
+// get user score history, sort scores, generate html for top 10 
 View.generateUserScoreBoard = () => {
 	let scoreboardHTML = '';
 	let userScores = STORE.user.scores;
@@ -705,11 +699,6 @@ View.generateUserScoreBoard = () => {
 	}
 	$('#scoreboard-username').text(STORE.user.username);
 	$('#user-scoreboard-grid').html(scoreboardHTML);
-}
-
-// place cursor focus in guess input
-Controller.focusGuessInput = () => {	
-	$('#guess-input').focus();
 }
 
 Controller.handleNewGameBtn = () => {
@@ -747,7 +736,6 @@ Controller.handleNextBtn = () => {
 Controller.handleShowMeBtn = () => {
 	$('#showme-btn').click((evt) => {
 		evt.preventDefault();
-		// get guess from input and convert to lower case
 		let guess = $('#guess-input').val();
 		// clear guess input
 		$('#guess-input').val('');
@@ -803,7 +791,7 @@ Controller.handleDropDownBtn = () => {
 	$(document).keydown(function(evt) { 	
 		if (evt.which === 27) { 			
 			$('#dropdown-content').addClass('dropdown__content--hidden');
-}
+		}
 	});
 }
 
@@ -825,18 +813,20 @@ Controller.handleNavLoginLogoutBtn = () => {
 	});	
 }
 
-// Close login modal by clicking "x", pressing 'escape', or click outside modal
 Controller.handleCloseLoginModal = () => {
+	// close on click 'x' btn
 	$('#close-login-btn').click(() => {
 		successCallback();
 	});
 
+	// close on click outside modal window
 	$('#login-modal').click((evt) => {	
 		if ($(evt.target).is($('#login-modal'))) {
 			successCallback();
 		}
 	});
-
+	
+	// close on press 'esc'
 	$(document).keydown(function(evt) { 	
 		if (evt.which === 27) { 			
 			successCallback();
@@ -851,7 +841,7 @@ Controller.handleCloseLoginModal = () => {
 	}
 }
 
-// reconfigure modal to accept login information vs new account information
+// reconfigure modal to accept login information vs create new user information
 Controller.handleSwapLoginCreateBtn = () => {
 
 	$('#swap-login-create').click((evt) => {
@@ -859,22 +849,22 @@ Controller.handleSwapLoginCreateBtn = () => {
 		const modalState = $('#login-modal').data('login-create');
 		
 		if (modalState === 'login') {
-			// swap state to create
+			// swap state to 'create'
 			$('#login-modal').data('login-create', 'create');
-			// change heading to create user
+			// change heading to 'Create New User'
 			$('#login-heading').text('Create New User');
-			// change text of swap-login-create
+			// change text of swap-login-create btn
 			$('#swap-login-create').text('Already have an account?');
 		} else {
 			// swap state to login
 			$('#login-modal').data('login-create', 'login');
-			// change heading to login
+			// change heading to 'Log In'
 			$('#login-heading').text('Log In');
 			// change text of swap-login-create
 			$('#swap-login-create').text('Create a new user account');
 		}
 
-		// toggle visibility of password re-entry lable/input and login/create buttons
+		// toggle visibility of password re-entry label/input and login/create buttons
 		$('#re-password-lbl').toggleClass('login__lbl--hidden');
 		$('#re-password-inpt').toggleClass('login__inpt--hidden');
 		$('#create-user-btn').toggleClass('btn--hidden');
@@ -884,6 +874,7 @@ Controller.handleSwapLoginCreateBtn = () => {
 	});
 }
 
+// attempt to creat new user with username and password input
 Controller.handleCreateUserBtn = () => {
 	$('#create-user-btn').click(() => {		
 		const username = $('#username-inpt').val();
@@ -900,6 +891,7 @@ Controller.handleCreateUserBtn = () => {
 	});
 }
 
+// attempt to log user in with username and password input
 Controller.handleLoginBtn = () => {
 	$('#login-btn').click(() => {
 		// clear any existing login messages
@@ -912,6 +904,7 @@ Controller.handleLoginBtn = () => {
 	});
 }
 
+// show login modal
 Controller.handlePromoLoginBtn = () => {
 	$('#login-promo-btn').click(() => {
 		$('#login-modal').removeClass('modal-background--hidden');
@@ -919,6 +912,7 @@ Controller.handlePromoLoginBtn = () => {
 	});
 }
 
+// toggle between showing full scoreboard vs round results
 Controller.handleResultsScoreboardToggle = () => {
 	$('#user-scoreboard').click(() => {
 		successCallback();
@@ -942,6 +936,7 @@ Controller.handleResultsScoreboardToggle = () => {
 	}
 }
 
+// initialize game and event handlers on document ready
 function initialize() {
 	Model.checkVoiceSupport();
     Controller.handleMuteBtn();
