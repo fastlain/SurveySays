@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 // import models and local data
 const {User} = require('../users/models');
 const {app, runServer, closeServer} = require('../server');
-const {TEST_DATABASE_URL, JWT_SECRET, JWT_EXPIRY} = require('../config'); // temp ?
+const {TEST_DATABASE_URL, JWT_SECRET, JWT_EXPIRY} = require('../config');
 
 describe('Auth endpoints', function () {
     const username = 'exampleUser';
