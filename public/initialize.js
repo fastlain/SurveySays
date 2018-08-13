@@ -821,30 +821,27 @@ Controller.handleNavLoginLogoutBtn = () => {
 // Close login modal by clicking "x", pressing 'escape', or click outside modal
 Controller.handleCloseLoginModal = () => {
 	$('#close-login-btn').click(() => {
-		$('#login-modal').addClass('modal-background--fadeout');
-		setTimeout(() => {
-			$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
-		}, 350);
-
+		successCallback();
 	});
 
 	$('#login-modal').click((evt) => {	
 		if ($(evt.target).is($('#login-modal'))) {
-			$('#login-modal').addClass('modal-background--fadeout');
-			setTimeout(() => {
-				$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
-			}, 350);
+			successCallback();
 		}
 	});
 
 	$(document).keydown(function(evt) { 	
 		if (evt.which === 27) { 			
-			$('#login-modal').addClass('modal-background--fadeout');
-			setTimeout(() => {
-				$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
-			}, 350);
+			successCallback();
 		}
 	});
+
+	function successCallback() {
+		$('#login-modal').addClass('modal-background--fadeout');
+		setTimeout(() => {
+			$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
+		}, 350);
+	}
 }
 
 // reconfigure modal to accept login information vs new account information
@@ -916,7 +913,6 @@ Controller.handlePromoLoginBtn = () => {
 }
 
 Controller.handleResultsScoreboardToggle = () => {
-	//todo: add event handler for keypress (since this isn't a native button)
 	$('#user-scoreboard').click(() => {
 		successCallback();
 	});
