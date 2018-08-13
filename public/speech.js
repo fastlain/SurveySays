@@ -1,23 +1,21 @@
 const SpeechController = {};
 
-if (annyang) {
-    annyang.debug();
-}
-
+// stop listening and remove commands
 SpeechController.stop = () => {
     if (STORE.voiceSupport) {
         annyang.removeCommands();
         annyang.abort();
-        console.log('annyang aborted');   
     }
 }
 
+// simulate a button click on the target
 SpeechController.simClick  = () => {
     if (STORE.voiceSupport) {
         $(`#${SpeechController.clickTarget}`).click();
     }
 }
 
+// add a voice command and start listening
 SpeechController.addCommand = (cmdName) => {
     if (STORE.voiceSupport) {
         if (cmdName.clickTarget) {
@@ -25,10 +23,10 @@ SpeechController.addCommand = (cmdName) => {
         }
         annyang.addCommands(cmdName.command);
         annyang.start({autorestart: true});
-        console.log('annyang started');
     }
 }
 
+// data store for speech commands
 const COMMANDS = {
     startGame: {
         command: {'start (game)': SpeechController.simClick },
