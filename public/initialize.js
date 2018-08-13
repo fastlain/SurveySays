@@ -838,7 +838,7 @@ Controller.handleCloseLoginModal = () => {
 	});
 
 	$(document).keydown(function(evt) { 	
-		if (evt.keyCode === 27) { 			
+		if (evt.which === 27) { 			
 			$('#login-modal').addClass('modal-background--fadeout');
 			setTimeout(() => {
 				$('#login-modal').addClass('modal-background--hidden').removeClass('modal-background--fadeout');
@@ -918,6 +918,16 @@ Controller.handlePromoLoginBtn = () => {
 Controller.handleResultsScoreboardToggle = () => {
 	//todo: add event handler for keypress (since this isn't a native button)
 	$('#user-scoreboard').click(() => {
+		successCallback();
+	});
+
+	$('#user-scoreboard').keydown((evt) => {
+		if (evt.which === 13 || evt.which === 32) {
+			successCallback();
+		}
+	});
+
+	function successCallback() {
 		if ($('#user-scoreboard-grid').is(':visible')) {
 			$('#user-scoreboard-grid').slideUp(300);
 			$('.results').slideDown(300);
@@ -926,7 +936,7 @@ Controller.handleResultsScoreboardToggle = () => {
 			$('.results').slideUp(300);
 		}
 		$('#scoreboard__caret').toggleClass('fa-caret-left fa-caret-down');
-	});
+	}
 }
 
 function initialize() {
