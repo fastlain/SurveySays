@@ -3,6 +3,8 @@
 A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation. 
 
 ### **_[Live link](https://surveysaysgame.herokuapp.com/)_**
+(Speech recongition uses an [experimental API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) and is currently only supported on Google Chrome on desktops)
+
 [![Build Status](https://travis-ci.org/fastlain/SurveySays.svg?branch=master)](https://travis-ci.org/fastlain/SurveySays)
 
 ## Introduction
@@ -26,6 +28,7 @@ Speech recognition is an exciting technology making its way into every area of s
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/en/)
 * npm
+* MongoDB
   
 ## Installation
 * Clone this repository:
@@ -35,8 +38,18 @@ Speech recognition is an exciting technology making its way into every area of s
 * Run npm install:
     * `npm install`
 
-## Running / Testing
+## Run Program
+* Start MongoDB local server
+    * `mongod`
+* Run npm start
+    * `npm start`
+* In browser navigate to `localhost:8080`
 
+### Testing
+* Start MongoDB local server
+    * `mongod`
+* Run npm test
+    * `npm test`
 
 ## Technology
 
