@@ -618,16 +618,32 @@ View.generateResults = () => {
 	}
 } 
 
-// show/hide 'Show Me...' and 'Next' buttons
+// show/hide 'Show Me...' and 'Next' buttons and focus on 'Next'
 View.toggleEndRound = () => {
-	$('#guess-form').toggleClass('guess-form--hidden');
-	$('#next-btn').toggleClass('btn--hidden');
+	const $guessform = $('#guess-form');
+	const $nextbtn = $('#next-btn');
+
+	if ($guessform.hasClass('guess-form--hidden')) {
+		$guessform.removeClass('guess-form--hidden');
+		$nextbtn.addClass('btn--hidden');
+	} else {
+		$nextbtn.removeClass('btn--hidden').focus();
+		$guessform.addClass('guess-form--hidden');
+	}
 }
 
 // show/hide Results screen
 View.toggleResultsScreen = () => {
-	$('.game-container').toggleClass('game-container--hidden');
-	$('.results-container').toggleClass('results-container--hidden');
+	const $gamecontainer = $('.game-container');
+	const $resultscontainer = $('.results-container');
+
+	$gamecontainer.toggleClass('game-container--hidden');
+	$resultscontainer.toggleClass('results-container--hidden');
+
+	// if results container is visible, focus on "new game" btn
+	if (!$resultscontainer.hasClass('results-container--hidden')) {
+		$('#new-game-btn').focus();
+	}
 }
 
 // check voice support and render message in instructions modal
@@ -635,7 +651,7 @@ View.displayVoiceSupport = () => {
 
     if (STORE.voiceSupport) {
 		$('#voice-support').text(
-			`All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your answer. Buttons can be activated by saying the words in quotes. Try it below...`);
+			`All aspects of the game can be controlled with your voice! Submit answers by saying "Show me" followed by your guess. Buttons can be activated by saying the words in quotes. Try it below...`);
 		
 		// create a microphone indicator icon
 		$('.guess-form__flex-wrapper').append(`<i id='mic' class='fas fa-microphone mic' aria-hidden='true'></i>`);
@@ -702,7 +718,6 @@ Controller.handleNewGameBtn = () => {
 		SpeechController.stop();
 		Model.startNextGame();
 		View.toggleResultsScreen();
-		// View.renderNewRound();
 		View.toggleEndRound();
 		SpeechController.addCommand(COMMANDS.showMe);
 	});
@@ -759,7 +774,7 @@ Controller.handleStartBtn = () => {
 		SpeechController.stop();
 		View.displayVoiceSupport();
 		$('#instructions-modal').removeClass('modal-background--hidden');
-		$('#username-inpt').focus();
+		$('#lets-play-btn').focus();
 		SpeechController.addCommand(COMMANDS.letsPlay);
 	});
 }
