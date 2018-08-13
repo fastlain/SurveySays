@@ -1,9 +1,9 @@
 # Survey Says
 
-A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation. 
+A voice-enabled Family Feud-style quiz game
 
 ### **_[Live link](https://surveysaysgame.herokuapp.com/)_**
-(Speech recongition uses an [experimental API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) and is currently only supported on Google Chrome on desktops)
+  * NOTE: Speech recongition uses an [experimental API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) and is currently only supported on **Google Chrome** on desktops
 
 [![Build Status](https://travis-ci.org/fastlain/SurveySays.svg?branch=master)](https://travis-ci.org/fastlain/SurveySays)
 
@@ -24,16 +24,17 @@ Speech recognition is an exciting technology making its way into every area of s
 #### Log In screen:
 ![Log in](public/screenshots/login.png)
 
-## Pre-requisites
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/en/)
-* npm
-* MongoDB
+## Prerequisites
+* You will need these programs installed to run Survey Says locally
+    * [Git](https://git-scm.com/)
+    * [Node.js](https://nodejs.org/en/)
+    * [npm](https://www.npmjs.com/)
+    * [MongoDB](https://www.mongodb.com/)
   
 ## Installation
 * Clone this repository:
     * `git clone https://github.com/fastlain/SurveySays.git`
-* cd into folder:
+* Move into folder:
     * `cd SurveySays/`
 * Run npm install:
     * `npm install`
@@ -43,9 +44,9 @@ Speech recognition is an exciting technology making its way into every area of s
     * `mongod`
 * Run npm start
     * `npm start`
-* In browser navigate to `localhost:8080`
+* In browser, navigate to `localhost:8080`
 
-### Testing
+## Test
 * Start MongoDB local server
     * `mongod`
 * Run npm test
@@ -54,7 +55,9 @@ Speech recognition is an exciting technology making its way into every area of s
 ## Technology
 
 ### Front End
-* HTML/CSS/JavaScript
+* HTML5
+* CSS3
+* JavaScript (ES6)
 
 * JavaScript Libraries
     * [jQuery](http://jquery.com/)
@@ -62,18 +65,16 @@ Speech recognition is an exciting technology making its way into every area of s
         * Annyang is a small Speech Recognition library built for use with the experimental [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
 ### Back End
-
 * [Node](https://nodejs.org/en/) and [Express](https://expressjs.com/)
     * [Passport](http://www.passportjs.org/) authentication
     * [Mocha](https://mochajs.org/) test framework and [Chai](http://www.chaijs.com/) assertion library
     * [Mongoose](http://mongoosejs.com/) for MongoDB object modeling
-
 * [MongoDB](https://www.mongodb.com/)
     * NoSQL (document-based) database
     * Hosted on the cloud with [mLab](https://mlab.com/)
 
+### Production
 * [Travis](https://travis-ci.org/) Continuous Integration
-  
 * [Heroku](https://www.heroku.com/) Cloud Application Platform
 
 ## Future Features
@@ -81,4 +82,4 @@ Speech recognition is an exciting technology making its way into every area of s
 * Global High Scores
 * Speech synthesis (game talks to you!)
 * Increased robustness of answer matching (e.g. common misspellings and mispronunciations)
-* Performance feedback (e.g. graph of scores over time, achievements/badges, etc.)
+* User performance feedback (e.g. graph of scores over time, achievements/badges, etc.)
