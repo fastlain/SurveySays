@@ -798,6 +798,13 @@ Controller.handleDropDownBtn = () => {
 			$('#dropdown-content').addClass('dropdown__content--hidden');
 		}
 	});	
+
+	// hide on press 'esc'
+	$(document).keydown(function(evt) { 	
+		if (evt.which === 27) { 			
+			$('#dropdown-content').addClass('dropdown__content--hidden');
+}
+	});
 }
 
 Controller.handleNavLoginLogoutBtn = () => {
