@@ -448,6 +448,7 @@ html {
 
 .instructions__subheading {
     margin: 5px auto;
+    color: var(--ter-color);
 }
 
 .instructions__para {
