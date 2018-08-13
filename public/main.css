@@ -468,7 +468,8 @@ html {
 }
 
 .instructions__para--mic-status {
-    color: var(--sec-color);
+    color: var(--ter-color);
+    font-style: italic;
 }
 
 /***** login *****/
