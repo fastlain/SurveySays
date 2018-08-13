@@ -55,8 +55,8 @@ Speech recognition is an exciting technology making its way into every area of s
 ## Creating new questions and answers
 * First, create a user account in the Survey Says game
 * To create questions, you must have admin access:
-    * To grant this, you'll need to access to edit your local Mongo database
-    * Find your user account in the `users` collection and edit the admin property from false to true
+    * To grant this, you'll need access to edit your local Mongo database
+    * Find your user account in the `users` collection and change the admin property from false to true
 * Navigate to localhost:8080/dataentry.html, login to your account, and follow the prompts to create new entries
 
 ## Technology
