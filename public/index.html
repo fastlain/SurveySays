@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Says</title>
-    <meta description='A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation.'>
-    <link rel='stylesheet' src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+    <meta description="A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation.">
+
+    <!-- Open Graph metadata -->
+    <meta property="og:title" content="SurveySays" />
+    <meta property="og:description" content="A Family Feud-style quiz game which utilizes speech recognition in gameplay and site navigation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://surveysaysgame.herokuapp.com/" />
+    <meta property="og:image" content="public/screenshots/surveysays_wide.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="SurveySays landing page screenshot" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
     <link href="https://fonts.googleapis.com/css?family=Audiowide|BioRhyme|Exo+2:400,700" rel='stylesheet'>
-    <link rel='stylesheet' href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity='sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+        crossorigin="anonymous">
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,7 +29,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    
+
     <link rel='stylesheet' href='main.css'>
 </head>
 
@@ -59,11 +72,13 @@
         <section class='instructions' role='region'>
             <h2 class='instructions__heading'>Instructions</h2>
             <h3 class='instructions__subheading'>Gameplay</h3>
-            <p class='instructions__para'>In each of 3 rounds, guess the most popular answers to a survey question. Collect as many points as you can before running out of guesses.</p>
+            <p class='instructions__para'>In each of 3 rounds, guess the most popular answers to a survey question.
+                Collect as many points as you can before running out of guesses.</p>
             <h3 class='instructions__subheading'>Voice Control</h3>
             <p id='mic-status' class='instructions__para instructions__para--mic-status'></p>
-            <p id='voice-support' class='instructions__para'></p> 
-            <button id='lets-play-btn' class='btn btn--quoted btn--centered btn--margins' type='button'> Let's Play! </button>
+            <p id='voice-support' class='instructions__para'></p>
+            <button id='lets-play-btn' class='btn btn--quoted btn--centered btn--margins' type='button'> Let's Play!
+            </button>
         </section>
     </div>
 
@@ -72,7 +87,7 @@
             <h2 id='login-heading' class='login__heading'>Log In</h2>
             <label for='username-inpt'>Username:</label>
             <input id='username-inpt' class='inpt login__inpt' type='text'>
-            <label for='password-inpt'>Password: 
+            <label for='password-inpt'>Password:
                 <span class='login__sublabel'>(10 character minimum)</span>
             </label>
             <input id='password-inpt' class='inpt login__inpt' type='password'>
@@ -81,14 +96,15 @@
             <p id='login-msg' class='login__msg login__msg--hidden' aria-live='polite'>This is a test message</p>
             <button id='login-btn' class='btn btn--centered' type='button'>Log In</button>
             <button id='create-user-btn' class='btn btn--centered btn--hidden' type='button'>Create User</button>
-            <button id='swap-login-create' class='btn btn--clear btn--centered btn--underline' type='button'>Create a new user account
+            <button id='swap-login-create' class='btn btn--clear btn--centered btn--underline' type='button'>Create a
+                new user account
             </button>
             <button id='close-login-btn' class='login__close-btn btn btn--clear' type='button' aria-label='close window'>
-                    <i class='fas fa-times' aria-hidden='true' title='close window'></i>
+                <i class='fas fa-times' aria-hidden='true' title='close window'></i>
             </button>
         </form>
     </div>
-    
+
     <main class='main main--hidden' role='main'>
         <div class='game-container'>
             <header class='game-info'>
@@ -128,12 +144,14 @@
             <form id='guess-form' class='guess-form'>
                 <label class='guess-form__lbl lbl' for='guess-input'>Enter a guess:</label>
                 <div class='guess-form__flex-wrapper'>
-                    <button id='showme-btn' class='btn btn--quoted btn--shrink guess-form__flex-btn' type='submit'> Show Me... </button>
+                    <button id='showme-btn' class='btn btn--quoted btn--shrink guess-form__flex-btn' type='submit'>
+                        Show Me... </button>
                     <input id='guess-input' class='inpt guess-form__flex-inpt' type='text'>
                 </div>
             </form>
 
-            <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered btn--shrink' type='button'> Next </button>
+            <button id='next-btn' class='btn btn--quoted btn--hidden btn--centered btn--shrink' type='button'> Next
+            </button>
 
             <p class='message' role='region' aria-live='polite'></p>
 
@@ -150,15 +168,18 @@
                 <h2 class='results__heading'>Total: </h2>
                 <div class='results__score-box results__score-box--total'><span id='total-score'></span></div>
             </div>
-            <button id='new-game-btn' class='btn btn--quoted btn--centered btn--shrink' type='button'> New Game </button>
+            <button id='new-game-btn' class='btn btn--quoted btn--centered btn--shrink' type='button'> New Game
+            </button>
             <div id='login-promo' class='login-promo'>
                 <p class='login-promo__para'>
-                    <button id='login-promo-btn' class='btn btn--centered btn--margins btn--ter-color btn--inline btn--ital' type='button'> Log In 
+                    <button id='login-promo-btn' class='btn btn--centered btn--margins btn--ter-color btn--inline btn--ital'
+                        type='button'> Log In
                     </button>
                     to save your scores and never see the same question twice!
                 </p>
             </div>
-            <div id='user-scoreboard' class='scoreboard scoreboard--hidden' role='button' tabindex='0' aria-label='toggle scoreboard' aria-pressed='false'>
+            <div id='user-scoreboard' class='scoreboard scoreboard--hidden' role='button' tabindex='0' aria-label='toggle scoreboard'
+                aria-pressed='false'>
                 <i id='scoreboard__caret' class='scoreboard__caret fas fa-caret-left' aria-hidden></i>
                 <h2 class='scoreboard__heading'>High Scores</h2>
                 <h3 id='scoreboard-username' class='scoreboard__username'></h3>
@@ -169,14 +190,16 @@
 
     <footer class='page-footer' role='contentinfo'>
         <p class='page-footer_para'>Created by Michael Allain</p>
-        <p class='page-footer_para'>        
-            <a href="https://github.com/fastlain/SurveySays" target='_blank' aria-label='GitHub for SurveySays'><i class='page-footer__icon fab fa-github' aria-hidden='true' title='GitHub for SurveySays'></i></a>
-            <a href="https://www.linkedin.com/in/allainm/" target='_blank' aria-label='LinkedIn for Michael Allain'><i class='page-footer__icon fab fa-linkedin' aria-hidden='true' title='LinkedIn for Michael Allain'></i></a>
+        <p class='page-footer_para'>
+            <a href="https://github.com/fastlain/SurveySays" target='_blank' aria-label='GitHub for SurveySays'><i
+                    class='page-footer__icon fab fa-github' aria-hidden='true' title='GitHub for SurveySays'></i></a>
+            <a href="https://www.linkedin.com/in/allainm/" target='_blank' aria-label='LinkedIn for Michael Allain'><i
+                    class='page-footer__icon fab fa-linkedin' aria-hidden='true' title='LinkedIn for Michael Allain'></i></a>
         </p>
         <button id='mute-container' class='audio-ctrl' type='button' aria-label='Toggle sound'>
-                <i class='audio-ctrl__icon fas fa-volume-up' aria-hidden='true' title='Sound On'></i>
-                <i class='audio-ctrl__icon audio-ctrl__icon--hidden fas fa-volume-off' aria-hidden='true' title='Sound Muted'></i>
-            </button>
+            <i class='audio-ctrl__icon fas fa-volume-up' aria-hidden='true' title='Sound On'></i>
+            <i class='audio-ctrl__icon audio-ctrl__icon--hidden fas fa-volume-off' aria-hidden='true' title='Sound Muted'></i>
+        </button>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
