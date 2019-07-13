@@ -658,7 +658,7 @@ View.displayVoiceSupport = () => {
 		}, 100);
 
 		// check if micophone is enabled
-		navigator.getUserMedia({audio:true}, 
+        navigator.mediaDevices.getUserMedia({ audio: true },
 			// success callback: clear any prior message
 			function() {
 				$('#mic-status').text('');
